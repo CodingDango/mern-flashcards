@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-my-primary: theme('color.green.400');
+  --color-my-secondary: #DF0572;
+
+  /* Spacing */
+  --spacing-my-xs: theme('spacing.2');
+  --spacing-my-sm: theme('spacing.4');
+  --spacing-my-md: theme('spacing.6');
+  --spacing-my-lg: theme('spacing.12');
+  --spacing-my-xl: theme('spacing.16');
+}
+
+body {
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
