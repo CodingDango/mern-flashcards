@@ -1,5 +1,7 @@
 # TODO LIST
 
+## PROJECT NAME: MERN Flashcards Web App
+
 - When screen is quite small, do prevent options menu from clipping, copy vercel's solution. to sort of slide upwards from the bottom and darken everything else.
 - Fix light and dark theme toggle to have a green border when clicked.
 - Implement dark and light theme
