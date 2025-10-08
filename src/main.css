@@ -17,3 +17,15 @@ body {
   color: white;
   font-family: 'Inter', sans-serif;
 }
+
+.button {
+  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90;
+}
+
+.button--white {
+  @apply text-black bg-white;
+}
+
+.button--primary {
+  @apply text-white bg-my-primary/80;
+}

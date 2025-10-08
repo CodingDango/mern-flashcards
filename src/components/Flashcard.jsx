@@ -55,7 +55,7 @@
                   <OptionsMenu
                     id={optionsMenuId}
                     button={
-                      <button className='p-my-xs rounded-md hover:bg-neutral-800 cursor-pointer'>
+                      <button className='p-my-xs rounded-md hover:bg-neutral-800 cursor-pointer transition-colors duration-200'>
                         <BsThreeDots size={20}/>
                       </button>}
                     options={options}
@@ -64,14 +64,19 @@
               </div>
               <p>{question}</p>
               <div className='flex-1 flex items-end'>
-                <button className='w-full px-4 py-2 bg-my-primary/75 rounded-lg font-medium cursor-pointer' onClick={() => setIsFlipped(true)} >Show Answer</button>
+                <button 
+                  className='w-full button button--primary font-medium' 
+                  onClick={() => setIsFlipped(true)}
+                >Show Answer</button>
               </div>
             </div>
           </div>
 
           {/* === BACK FACE === */}
           <div className="h-full absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-            <div className='flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-neutral-975 border-neutral-800'>
+            <div 
+              inert={isFlipped ? undefined : true}
+              className='flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-neutral-975 border-neutral-800'>
               {/* You might want a header on the back too */}
               <h2 className='text-lg font-medium flex justify-between items-center'>
                 <span>{topic}</span> 
@@ -80,7 +85,10 @@
   
               <p>{answer}</p>
               <div className='flex-1 flex items-end'>
-                <button className='w-full px-4 py-2 bg-white text-black rounded-lg font-medium cursor-pointer' onClick={() => setIsFlipped(false)}>Hide Answer</button>
+                <button 
+                  className='w-full button button--white font-medium' 
+                  onClick={() => setIsFlipped(false)}
+                >Hide Answer</button>
               </div>
             </div>
           </div>
