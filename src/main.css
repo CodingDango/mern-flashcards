@@ -29,3 +29,7 @@ body {
 .button--primary {
   @apply text-white bg-my-primary/80;
 }
+
+.text-input {
+  @apply px-3 py-2 bg-neutral-950 rounded-md;
+}

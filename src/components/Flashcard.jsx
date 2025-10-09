@@ -4,7 +4,7 @@
   import { IoCloseOutline } from 'react-icons/io5';
   import { useOptionsMenuManagerContext } from '../context/OptionsMenuManagerContext';
   import OptionsMenu from './OptionsMenu'; // Assuming you have this component
-
+  
   const Flashcard = ({ topic, question, answer, optionsMenuId, ...rest }) => {
     // 1. State to control the flip
     const [isFlipped, setIsFlipped] = useState(false);
@@ -46,9 +46,9 @@
           <div 
             inert={isFlipped ? true : undefined}
             className="h-full [backface-visibility:hidden]">
-            <div className='h-full justify-start flex flex-col gap-my-md p-my-sm rounded-lg border bg-neutral-950 border-neutral-800'>
-              <div className='flex justify-between items-center'>
-                <h2 className='text-lg font-medium'>{topic}</h2>
+            <div className='h-full justify-start flex flex-col gap-my-sm p-my-sm rounded-lg border bg-neutral-950 border-neutral-800'>
+              <div className='flex justify-between gap-x-my-sm'>
+                <h2 className='text-lg font-medium flex-1 min-w-0 break-words '>{topic}</h2>
 
                 {/* Add the stopPropagation handler to the menu's wrapper */}
                 <div onClick={handleOptionsClick}>
@@ -62,8 +62,10 @@
                   />
                 </div>
               </div>
-              <p>{question}</p>
-              <div className='flex-1 flex items-end'>
+              
+              <p className='max-h-[125px] overflow-y-auto flex-1 break-words'>{question}</p>
+              
+              <div className='mt-auto flex items-end'>
                 <button 
                   className='w-full button button--primary font-medium' 
                   onClick={() => setIsFlipped(true)}
@@ -78,8 +80,8 @@
               inert={isFlipped ? undefined : true}
               className='flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-neutral-975 border-neutral-800'>
               {/* You might want a header on the back too */}
-              <h2 className='text-lg font-medium flex justify-between items-center'>
-                <span>{topic}</span> 
+              <h2 className='flex justify-between gap-x-my-sm text-lg font-medium'>
+                <span className='flex-1 min-w-0 break-words'>{topic}</span> 
                 <span>Answer</span>
               </h2>
   

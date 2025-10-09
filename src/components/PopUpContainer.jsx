@@ -47,7 +47,7 @@ export default function PopUpContainer({
               <IoClose size={36}/>
             </button>
           </div>
-          <div className="pt-my-md">
+          <div className="pt-my-sm">
             {elements}
           </div>
         </div>
