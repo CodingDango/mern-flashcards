@@ -12,7 +12,9 @@ const ThemeToggle = () => {
           border-neutral-800 cursor-pointer 
           bg-neutral-700 has-checked:bg-black
           transition-colors duration-200
-          focus-within:border-my-primary
+          has-[>input:focus-visible]:ring-2
+          has-[>input:focus-visible]:ring-my-primary
+          select-none
         "
     >
       <input
