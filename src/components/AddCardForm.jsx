@@ -18,11 +18,8 @@ const cardSchema = z.object({
     .trim()
     .min(5, { message: "Question is too short. (minimum of 3 characters)." }),
 
-  answer: z
-    .string()
-    .trim()
-    .nonempty({ message: "Answer cannot be empty." }),
-}); 
+  answer: z.string().trim().nonempty({ message: "Answer cannot be empty." }),
+});
 
 const AddCardForm = ({ setFlashcards }) => {
   const {
@@ -35,49 +32,51 @@ const AddCardForm = ({ setFlashcards }) => {
   const onSubmit = (data) => {
     if (Object.keys(errors).length > 0) return;
 
-    setFlashcards(prev => [...prev, data]);
+    setFlashcards((prev) => [...prev, data]);
     reset();
   };
 
   return (
-    <form 
-      className="flex flex-col gap-my-md" 
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <FormField 
-        labelText={'topic'}
+    <form className="flex flex-col gap-my-md" onSubmit={handleSubmit(onSubmit)}>
+      <FormField
+        labelText={"topic"}
         errorMsg={errors.topic?.message}
-        input={'input'}
+        input={"input"}
         inputAttributes={{
-          ...register('topic'),
-          placeholder: 'Enter a topic...',
-          className: 'text-input'
+          ...register("topic"),
+          placeholder: "Enter a topic...",
+          className: "text-input",
         }}
       />
 
-      <FormField 
-        labelText={'question'}
+      <FormField
+        labelText={"question"}
         errorMsg={errors.question?.message}
-        input={'textarea'}
+        input={"textarea"}
         inputAttributes={{
-          ...register('question'),
-          placeholder: 'Enter a question...',
-          className: 'text-input resize-none'
+          ...register("question"),
+          placeholder: "Enter a question...",
+          className: "text-input resize-none",
+          rows:'3'
         }}
       />
 
-      <FormField 
-        labelText={'answer'}
+      <FormField
+        labelText={"answer"}
         errorMsg={errors.answer?.message}
-        input={'input'}
+        input={"input"}
         inputAttributes={{
-          ...register('answer'),
-          placeholder: 'Enter an answer...',
-          className: 'text-input'
+          ...register("answer"),
+          placeholder: "Enter an answer...",
+          className: "text-input",
+          
         }}
       />
 
-      <button type="submit" className="w-full button button--primary">
+      <button
+        type="submit"
+        className="w-full button button--primary button--large"
+      >
         Add Card
       </button>
     </form>

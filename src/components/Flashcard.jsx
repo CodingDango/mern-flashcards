@@ -63,7 +63,7 @@
                 </div>
               </div>
               
-              <p className='max-h-[125px] overflow-y-auto flex-1 break-words'>{question}</p>
+              <p className='max-h-[125px] overflow-y-scroll flex-1 break-words'>{question}</p>
               
               <div className='mt-auto flex items-end'>
                 <button 

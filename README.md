@@ -20,4 +20,5 @@
 - Add the add card UI form
 - Add the add card functionality form.
 - When adding a question that is too long, make sure to overflow to the body text div. not the card itself
-- - Fix the add flash card form accepting white space as values
+- Fix the add flash card form accepting white space as values
+- Add local storage to when adding and removing flashcards.

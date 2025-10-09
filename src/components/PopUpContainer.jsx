@@ -39,9 +39,9 @@ export default function PopUpContainer({
         h-screen z-100 flex justify-center 
         items-center p-4 "
     >
-      <div ref={popUpRef} className="px-my-sm py-my-md rounded-lg bg-neutral-900 text-white max-w-lg overflow-y-auto w-full">
+      <div ref={popUpRef} className="px-my-sm py-my-md rounded-lg border border-neutral-800 bg-neutral-900 text-white max-w-lg overflow-y-auto w-full">
         <div className="flex flex-col">
-          <div className="pb-my-sm w-full flex justify-between items-center border-b border-neutral-700">
+          <div className="pb-my-sm w-full flex justify-between items-center border-b border-neutral-800">
             <h2 className="text-lg">{headerText}</h2>
             <button className="cursor-pointer" onClick={closePopUp}>
               <IoClose size={36}/>
