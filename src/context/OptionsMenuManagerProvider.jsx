@@ -32,7 +32,6 @@ const OptionsMenuMangerProvider = ({children}) => {
     };
   });
 
-
   return (
     <OptionsMenuManagerContext.Provider value={value}>
       {children}

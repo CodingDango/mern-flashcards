@@ -1,6 +1,7 @@
 import { IoIosAdd } from "react-icons/io";
-import FlashcardList from "./FlashcardList";
 import { usePopUpContext } from "../context/PopUpContext";
+import FlashcardList from "./FlashcardList";
+import AddCardForm from "./AddCardForm";
 
 const Main = () => {
   const popUpContext = usePopUpContext();
@@ -25,7 +26,7 @@ const Main = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-medium">Flash Cards Deck</h1>
         <button
-          onClick={() => popUpContext.openPopUp("Hello world")}
+          onClick={() => popUpContext.openPopUp("Add Flash Card", <AddCardForm/>)}
           className="button button--white"
         >
           <span className="flex gap-my-xs items-center font-medium">

@@ -29,7 +29,9 @@ const PopUpProvider = ({children}) => {
         isOpen={isOpen}
         closePopUp={closePopUp}
       />
+      <div inert={isOpen ? true : undefined}>
         {children}
+      </div>
     </PopUpContext.Provider>
   );
 }
