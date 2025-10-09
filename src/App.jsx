@@ -9,7 +9,6 @@ function App() {
         <div className='w-full max-w-6xl'>
           <div className='flex flex-col gap-my-lg'>
             <Header/>
-            
             <OptionsMenuManagerProvider>
               <Main/>
             </OptionsMenuManagerProvider>

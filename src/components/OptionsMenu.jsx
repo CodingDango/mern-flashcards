@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerContext";
 
 export const identifierClass = 'options-menu';
