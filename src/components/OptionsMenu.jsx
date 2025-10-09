@@ -8,7 +8,7 @@ const OptionsMenu = ({ button, options, id }) => {
 
   return (
     <div className={`z-10 relative ${identifierClass}`}>
-      <div onClick={() => value.setOpenOptionsMenuId(id)}>{button}</div>
+      <div onClick={() => value.setOpenOptionsMenuId(isOpen ? null : id)}>{button}</div>
 
       {isOpen && (
         <div className="absolute">

@@ -1,4 +1,4 @@
-  import { useState } from 'react';
+  import { useEffect, useRef, useState } from 'react';
   import { BsThreeDots } from 'react-icons/bs';
   import { FaRegEdit } from 'react-icons/fa';
   import { IoCloseOutline } from 'react-icons/io5';
@@ -10,6 +10,8 @@
     const [isFlipped, setIsFlipped] = useState(false);
     const optionsMenuContext = useOptionsMenuManagerContext();
     const isOptionsMenuOpen = optionsMenuContext.openOptionsMenuId === optionsMenuId;
+    const showAnswerBtn = useRef(null);
+    const hideAnswerBtn = useRef(null);
 
     const options = [
       <span key="edit" className="flex items-center gap-my-xs">
@@ -26,6 +28,14 @@
     const handleOptionsClick = (e) => {
       e.stopPropagation();
     };
+
+    useEffect(() => {
+      if (isFlipped) {
+        hideAnswerBtn.current.focus();
+      } else {
+        showAnswerBtn.current.focus();
+      }
+    }, [isFlipped])
 
     return (
       // The "Stage" container. It sets up the 3D perspective.
@@ -45,8 +55,8 @@
           {/* === FRONT FACE === */}
           <div 
             inert={isFlipped ? true : undefined}
-            className="h-full [backface-visibility:hidden]">
-            <div className='h-full justify-start flex flex-col gap-my-sm p-my-sm rounded-lg border bg-neutral-950 border-neutral-800'>
+            className="max-h-[280px] h-full [backface-visibility:hidden]">
+            <div className='h-full justify-start flex flex-col gap-my-md p-my-sm rounded-lg border bg-neutral-950 border-neutral-800'>
               <div className='flex justify-between gap-x-my-sm'>
                 <h2 className='text-lg font-medium flex-1 min-w-0 break-words '>{topic}</h2>
 
@@ -62,11 +72,19 @@
                   />
                 </div>
               </div>
+
+              <p 
+                className='overflow-y-scroll flex-1 break-words'
+                tabIndex="0"
+                onWheel={e => {
+                  e.stopPropagation();
+                  e.currentTarget.scrollTop += e.deltaY * 0.25; 
+                }}
+              >{question}</p>
               
-              <p className='max-h-[125px] overflow-y-scroll flex-1 break-words'>{question}</p>
-              
-              <div className='mt-auto flex items-end'>
-                <button 
+              <div className='flex items-end'>
+                <button
+                  ref={showAnswerBtn} 
                   className='w-full button button--primary font-medium' 
                   onClick={() => setIsFlipped(true)}
                 >Show Answer</button>
@@ -88,6 +106,7 @@
               <p>{answer}</p>
               <div className='flex-1 flex items-end'>
                 <button 
+                  ref={hideAnswerBtn}
                   className='w-full button button--white font-medium' 
                   onClick={() => setIsFlipped(false)}
                 >Hide Answer</button>

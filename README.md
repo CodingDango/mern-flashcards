@@ -22,3 +22,5 @@
 - When adding a question that is too long, make sure to overflow to the body text div. not the card itself
 - Fix the add flash card form accepting white space as values
 - Add local storage to when adding and removing flashcards.
+- Seamless switching between card flips using TAB.
+- When clicking on options menu again while it is opened, it should close.
