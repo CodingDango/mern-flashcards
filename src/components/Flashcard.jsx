@@ -3,8 +3,10 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerContext";
-import OptionsMenu from "./OptionsMenu"; // Assuming you have this component
 import { useFlashcardsContext } from "../context/FlashcardsContext";
+import { usePopUpContext } from "../context/PopUpContext";
+import OptionsMenu from "./OptionsMenu"; 
+import EditCardForm from "./EditCardForm";
 
 const Flashcard = ({
   topic,
@@ -15,6 +17,7 @@ const Flashcard = ({
 }) => {
   // 1. State to control the flip
   const { openOptionsMenuId } = useOptionsMenuManagerContext();
+  const { openPopUp, closePopUp } = usePopUpContext();
   const { setFlashcards } = useFlashcardsContext();
   const [ isFlipped, setIsFlipped ] = useState(false);
   const optionsMenuId = `${flashcardId}-options`
@@ -31,9 +34,17 @@ const Flashcard = ({
           Edit
         </span>
       ),
-      callback: () => {
-        null;
-      },
+      callback: () => openPopUp(
+        'Edit Card', 
+        <EditCardForm 
+          topic={topic} 
+          question={question}
+          answer={answer} 
+          flashcardId={flashcardId} 
+          setFlashcards={setFlashcards}
+          closePopUp={closePopUp}
+        />
+      ),
     },
     {
       element: (

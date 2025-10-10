@@ -10,11 +10,12 @@ const Main = () => {
 
   return (
     <div className="flex flex-col gap-my-md">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-medium">Flash Cards Deck</h1>
+
+      <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-center gap-my-sm">
+        <h1 className="2xs:flex-1 text-2xl font-medium">Flash Cards Deck</h1>
         <button
           onClick={() => openPopUp("Add Flash Card", <AddCardForm addFlashcard={addFlashcard}/>)}
-          className="button button--white"
+          className="w-full 2xs:w-auto button button--white"
         >
           <span className="flex gap-my-xs items-center font-medium">
             Add Card
@@ -22,7 +23,7 @@ const Main = () => {
           </span>
         </button>
       </div>
-    
+
       <FlashcardList flashcards={flashcards} />
     </div>
   );

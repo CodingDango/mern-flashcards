@@ -4,16 +4,15 @@
 
 ### UNFINISHED
 
-- When screen is quite small, do prevent options menu from clipping, copy vercel's solution. to sort of slide upwards from the bottom and darken everything else.
 - Implement dark and light theme
-- When removing, editing, or adding a flash card, make sure to save it to the localStorage afterwards.
-- When clicking on options menu, everything else should be unfocusable except the options displayed, remove focus from the current button to something invisible within the options menu to switch focus? it can be anything.and use up and down arrow to navigate the options. either click out the dropdown menu to exit, or to press the Escape button.
-- Improve responsiveness when in mobile
-- Add the edit functionality
 
 ### IN-PROGRESS
 
 ### FINISHED
+- Add the edit functionality
+- When removing, editing, or adding a flash card, make sure to save it to the localStorage afterwards.
+- Improve responsiveness when in mobile
+- When screen is quite small, do prevent options menu from clipping, make them face right by default.
 - Show a message if flashcards are empty
 - Redesign the scrollbars
 - Add the remove functionality.

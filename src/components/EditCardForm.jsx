@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { FaPlusCircle } from "react-icons/fa";
 import FormField from "./FormField";
 
 const cardSchema = z.object({
@@ -22,19 +21,33 @@ const cardSchema = z.object({
   answer: z.string().trim().nonempty({ message: "Answer cannot be empty." }),
 });
 
-const AddCardForm = ({ addFlashcard }) => {
+const EditCardForm = ({ topic, question, answer, flashcardId, setFlashcards, closePopUp}) => {
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(cardSchema) });
+  } = useForm({ 
+    resolver: zodResolver(cardSchema),
+    defaultValues: {topic, question, answer}
+  });
 
   const onSubmit = ({topic, question, answer}) => {
     if (Object.keys(errors).length > 0) return;
 
-    addFlashcard(topic, question, answer);
-    reset();
+    debugger
+
+    setFlashcards(prev => {
+      const copy = [...prev];
+      const indexOfCard = copy.findIndex((flashcard) => flashcard.id === flashcardId);
+      
+      if (indexOfCard >= 0) {
+        copy[indexOfCard] = {topic, question, answer, id: flashcardId}
+      }
+
+      return copy;
+    });
+    
+    closePopUp();
   };
 
   return (
@@ -70,7 +83,6 @@ const AddCardForm = ({ addFlashcard }) => {
           ...register("answer"),
           placeholder: "Enter an answer...",
           className: "text-input",
-          
         }}
       />
 
@@ -78,11 +90,10 @@ const AddCardForm = ({ addFlashcard }) => {
         type="submit"
         className="w-full button button--primary items-center gap-my-xs"
       >
-        Add Card
-        <FaPlusCircle/>
+        Apply Changes
       </button>
     </form>
   );
 };
 
-export default AddCardForm;
+export default EditCardForm;

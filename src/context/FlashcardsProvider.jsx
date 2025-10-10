@@ -27,10 +27,9 @@ const FlashcardsProvider = ({children}) => {
         topic, 
         question, 
         answer, 
-        id: `flashcard-${flashcards.length}`
+        id: `flashcard-${prev.length}`
       }]);
     },
-
 
     flashcards,
   };

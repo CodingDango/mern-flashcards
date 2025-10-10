@@ -11,8 +11,8 @@ const OptionsMenu = ({ button, options, id }) => {
       <div onClick={() => value.setOpenOptionsMenuId(isOpen ? null : id)}>{button}</div>
 
       {isOpen && (
-        <div className="absolute">
-          <div className="w-[200px] flex flex-col bg-neutral-900 border border-neutral-800 rounded-lg p-my-xs">
+        <div className="absolute right-0">
+          <div className="shadow-md shadow-black w-[200px] flex flex-col bg-neutral-900 border border-neutral-800 rounded-lg p-my-xs">
             {options.map(({element, callback}, idx) => (
               <button
                 key={`${id}-button-${idx}`}

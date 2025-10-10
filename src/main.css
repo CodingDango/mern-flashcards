@@ -11,6 +11,10 @@
   --spacing-my-md: theme('spacing.6');
   --spacing-my-lg: theme('spacing.12');
   --spacing-my-xl: theme('spacing.16');
+
+  /* Breakpoints */
+  --breakpoint-xs: 30rem;
+  --breakpoint-2xs: 25rem;
 }
 
 body {
@@ -19,7 +23,7 @@ body {
 }
 
 .button {
-  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 font-medium;
+  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 font-medium flex justify-center;
 }
 
 .button--white {
@@ -28,10 +32,6 @@ body {
 
 .button--primary {
   @apply text-white bg-my-primary/80;
-}
-
-.button--large {
-  @apply py-3
 }
 
 .text-input {
