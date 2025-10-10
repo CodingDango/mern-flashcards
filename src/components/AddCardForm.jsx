@@ -21,7 +21,7 @@ const cardSchema = z.object({
   answer: z.string().trim().nonempty({ message: "Answer cannot be empty." }),
 });
 
-const AddCardForm = ({ setFlashcards }) => {
+const AddCardForm = ({ addFlashcard }) => {
   const {
     register,
     reset,
@@ -29,10 +29,10 @@ const AddCardForm = ({ setFlashcards }) => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(cardSchema) });
 
-  const onSubmit = (data) => {
+  const onSubmit = ({topic, question, answer}) => {
     if (Object.keys(errors).length > 0) return;
-
-    setFlashcards((prev) => [...prev, data]);
+    
+    addFlashcard(topic, question, answer);
     reset();
   };
 

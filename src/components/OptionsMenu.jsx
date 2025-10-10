@@ -13,9 +13,10 @@ const OptionsMenu = ({ button, options, id }) => {
       {isOpen && (
         <div className="absolute">
           <div className="w-[200px] flex flex-col bg-neutral-900 border border-neutral-800 rounded-lg p-my-xs">
-            {options.map((element, idx) => (
+            {options.map(({element, callback}, idx) => (
               <button
-                key={idx}
+                key={`${id}-button-${idx}`}
+                onClick={callback}
                 className={`rounded-lg p-my-xs text-start cursor-pointer hover:bg-neutral-800`}
               >
                 {element}
