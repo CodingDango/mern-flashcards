@@ -78,7 +78,7 @@ const AddCardForm = ({ addFlashcard }) => {
         type="submit"
         className="w-full button button--primary items-center gap-my-xs"
       >
-        Add Card
+        Add new Deck
         <FaPlusCircle/>
       </button>
     </form>

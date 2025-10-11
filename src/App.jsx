@@ -11,7 +11,9 @@ function App() {
         <Sidebar/>
       </div>
       <FlashcardsProvider>
-        <Main/>
+        <div className='row-span-1'>
+          <Main/>
+        </div>
       </FlashcardsProvider>
     </AppLayout>
   );

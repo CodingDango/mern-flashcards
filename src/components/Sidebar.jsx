@@ -1,67 +1,55 @@
-import { GiReactor } from "react-icons/gi";
-import { AiOutlineHome } from 'react-icons/ai';
-import { HiOutlineSquare3Stack3D } from 'react-icons/hi2';
-import { PiCards } from 'react-icons/pi';
-import { FiSettings } from 'react-icons/fi';
-import { BiLogOut } from 'react-icons/bi';
-import SidebarLink from "./SidebarLink";
+import { GiReactor as BrandIcon } from "react-icons/gi";
+import { AiOutlineHome as HomeIcon } from 'react-icons/ai';
+import { HiOutlineSquare3Stack3D as StackIcon } from 'react-icons/hi2';
+import { PiCards as CardsIcon } from 'react-icons/pi';
+import { FiSettings as SettingsIcon } from 'react-icons/fi';
+import { BiLogOut as LogOutIcon } from 'react-icons/bi';
+import SidebarItem from "./SidebarItem";
+import UserDisplay from "./UserDisplay";
 
 const Sidebar = () => {
+
   return (
-    <aside className='w-2xs  h-full bg-black-lg rounded-lg p-my-md'>
+    <nav className='w-3xs h-full bg-black-lg py-8 px-my-md'>
+
       <div className="flex flex-col gap-my-md h-full">
         <div className='flex gap-my-sm items-center'>
-          <GiReactor size={32} className='text-my-primary'/>
-          <span className='text-xl font-medium'>Reactor Deck</span>
+          <BrandIcon size={32} className='text-my-primary'/>
+          <span className='text-xl font-medium'>Reactor</span>
         </div>
 
-        <section className="flex flex-col *:p-my-xs">
-          <h2 className="text-black-light">General</h2>
-          
-          <SidebarLink
-            text='dashboard'
-            icon={<AiOutlineHome size={20}/>}
-            href='#'
-          />
-
-          <SidebarLink
-            text='collections'
-            icon={<HiOutlineSquare3Stack3D size={20}/>}
-            href='#'
-          />
-
-          <SidebarLink
-            text='collections'
-            icon={<PiCards size={20}/>}
-            href='#'
-          />
+        <section>
+          <h2 className="text-black-light px-my-xs pb-my-xs">General</h2>
+          <ul className="flex flex-col">
+            <li>
+              <SidebarItem text='dashboard' icon={<HomeIcon size={20}/>} href='#'/>
+            </li>
+            <li>
+              <SidebarItem text='collections' icon={<StackIcon size={20}/>} href='#'/>
+            </li>
+            <li>
+              <SidebarItem text='cards' icon={<CardsIcon size={20}/>} href='#'/>
+            </li>
+          </ul>
         </section>
 
-        <section className="flex flex-col *:p-my-xs">
-          <h2 className="text-black-light">Others</h2>
-          <SidebarLink
-            text='settings'
-            icon={<FiSettings size={20}/>}
-            href='#'
-          />
-          <SidebarLink
-            text='logout'
-            icon={<BiLogOut size={20}/>}
-            href='#'
-          />
+        <section>
+          <h2 className="text-black-light px-my-xs pb-my-xs">Others</h2>
+          <ul className="flex flex-col w-full">
+            <li>
+              <SidebarItem text='settings' icon={<SettingsIcon size={20}/>} href='#'/>
+            </li>
+            <li>
+              <SidebarItem as="button" text='logout' icon={<LogOutIcon size={20}/>} href='#'/> 
+            </li>
+          </ul>
         </section>
 
-        <div className="flex-1 flex items-end">
-          <div className="flex gap-my-xs items-center">
-            <div className="w-[40px] h-[40px] rounded-full bg-black-light"></div>
-            <div>
-              <h2 className="font-medium">Jane Doe</h2>
-              <p className="text-sm text-black-light">example@gmail.com</p>
-            </div>
-          </div>
+        <div className="flex-1 flex flex-col justify-end">
+          <UserDisplay name={'jane doe'} email={'example@gmail.com'}/>
         </div>
       </div>
-    </aside>
+    </nav>
   );
 }
 

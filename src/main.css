@@ -48,7 +48,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: theme('color.neutral.900');
 }
 
 ::-webkit-scrollbar-thumb {
