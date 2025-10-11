@@ -28,7 +28,7 @@ const Flashcard = ({
 
   const options = [
     {
-      element: (
+      content: (
         <span key="edit" className="flex items-center gap-my-xs">
           <FaRegEdit size={16} />
           Edit
@@ -47,7 +47,7 @@ const Flashcard = ({
       ),
     },
     {
-      element: (
+      content: (
         <span key="remove" className="flex items-center gap-my-xs">
           <IoCloseOutline size={16} className="scale-125" />
           Remove
@@ -98,7 +98,7 @@ const Flashcard = ({
           inert={isFlipped ? true : undefined}
           className="max-h-[280px] h-full [backface-visibility:hidden]"
         >
-          <div className="h-full justify-start flex flex-col gap-my-md p-my-sm rounded-lg border bg-neutral-950 border-neutral-800">
+          <div className="h-full justify-start flex flex-col gap-my-md p-my-sm rounded-lg border bg-black-lg border-neutral-800">
             <div className="flex justify-between gap-x-my-sm">
               <h2 className="text-lg font-medium flex-1 min-w-0 break-words ">
                 {topic}
@@ -109,11 +109,6 @@ const Flashcard = ({
                 <OptionsMenu
                   id={optionsMenuId}
                   options={options}
-                  button={
-                    <button className="p-my-xs rounded-md hover:bg-neutral-800 cursor-pointer transition-colors duration-200">
-                      <BsThreeDots size={20} />
-                    </button>
-                  }
                 />
               </div>
             </div>
@@ -145,7 +140,7 @@ const Flashcard = ({
         <div className="h-full absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div
             inert={isFlipped ? undefined : true}
-            className="flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-neutral-975 border-neutral-800"
+            className="flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-black-lg border-neutral-800"
           >
             {/* You might want a header on the back too */}
             <h2 className="flex justify-between gap-x-my-sm text-lg font-medium">

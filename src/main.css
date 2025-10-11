@@ -3,12 +3,14 @@
 @theme {
   /* Colors */
   --color-my-primary: theme('color.green.400');
+  --color-my-secondary: theme('color.pink.500');
   --color-black-xl: theme('color.neutral.950');
   --color-black-lg: theme('color.neutral.900');
   --color-black-md: theme('color.neutral.800');
   --color-black-sm: theme('color.neutral.700');
   --color-black-xs: theme('color.neutral.600');
   --color-black-light: theme('color.neutral.400');
+  --color-background: #333333;
   
   /* Spacing */
   --spacing-my-xs: theme('spacing.2');

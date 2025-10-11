@@ -7,10 +7,19 @@ import { BsFilter } from 'react-icons/bs';
 import { useFlashcardsContext } from "../context/FlashcardsContext";
 import FlashcardList from "./FlashcardList";
 import AddCardForm from "./AddCardForm";
+import DeckList from "./DeckList";
 
 const Main = () => {
   const { openPopUp } = usePopUpContext();
   const { flashcards, setFlashcards, addFlashcard } = useFlashcardsContext();
+  const decks = [
+    {
+      id: 'deck-1',
+      title: 'Web Development',
+      cardCount: 4,
+      progress: '50'
+    },
+  ];
 
   return (
     <main className="flex flex-col gap-my-lg py-8 px-8">
@@ -40,11 +49,11 @@ const Main = () => {
                   <span className="px-3 bg-black-xs/30 rounded-md">2</span>
                 </div>
               </button>
-            </li>
+            </li> 
           </ul>
 
           <div className="grid grid-cols-2 gap-my-md">
-            <div className="flex items-center bg-black-lg border border-black-md px-4 py-3 rounded-md">
+            <div className="flex items-center bg-black-xl border border-black-md px-4 py-3 rounded-md">
               <div className="pr-4 border-r border-black-xs">
                 <FaSearch size={20} className="text-black-light"/>
               </div>
@@ -85,7 +94,7 @@ const Main = () => {
               >
                 <span className="flex gap-my-xs items-center">
                   <FaPlusCircle/>
-                  Add new Deck
+                  Add Deck
                 </span>
               </button>
             </div>
@@ -94,7 +103,7 @@ const Main = () => {
         </div>
       </section> 
 
-      <FlashcardList flashcards={flashcards} />
+      <DeckList decks={decks}/>
     </main>
   );
 };

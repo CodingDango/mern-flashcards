@@ -7,13 +7,12 @@ import Sidebar from './components/Sidebar';
 function App() {
   return (
     <AppLayout>
-      <div className='row-span-2'>
         <Sidebar/>
-      </div>
+
       <FlashcardsProvider>
-        <div className='row-span-1'>
+
           <Main/>
-        </div>
+
       </FlashcardsProvider>
     </AppLayout>
   );

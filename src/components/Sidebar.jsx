@@ -10,7 +10,7 @@ import UserDisplay from "./UserDisplay";
 const Sidebar = () => {
 
   return (
-    <nav className='w-3xs h-full bg-black-lg py-8 px-my-md border-r border-black-md'>
+    <nav className='w-3xs bg-black-xl py-8 px-my-md border-r border-black-md'>
 
       <div className="flex flex-col gap-my-md h-full">
         <div className='flex gap-my-sm items-center'>

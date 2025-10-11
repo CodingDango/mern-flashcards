@@ -1,5 +1,5 @@
 const AppLayout = ({children}) => (
-  <div className='bg-black-xl max-h-screen grid grid-cols-[auto_1fr] grid-rows-2 overflow-x-hidden overflow-y-auto'>
+  <div className='bg-black min-h-screen grid grid-cols-[auto_1fr] grid-rows-1'>
     {children}
   </div>
 );
