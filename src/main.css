@@ -28,7 +28,7 @@ body {
 }
 
 .button {
-  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 font-medium flex justify-center;
+  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 flex justify-center font-medium;
 }
 
 .button--white {
