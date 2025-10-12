@@ -1,39 +1,39 @@
 import { useState } from "react";
-import { PopUpContext } from "./PopUpContext";
-import PopUpContainer from "../components/PopUpContainer";
+import { ModalContext } from "./ModalContext";
+import ModalContainer from "../components/ModalContainer";
 
-const PopUpProvider = ({children}) => {
+const ModalProvider = ({children}) => {
   const [headerText, setHeaderText] = useState(null);
   const [elements, setElements] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   
-  const openPopUp = (headerText, elements) => {
+  const openModal = (headerText, elements) => {
     setHeaderText(headerText);
     setElements(elements);
     setIsOpen(true);
   }
 
-  const closePopUp = () => {
+  const closeModal = () => {
     setHeaderText('');
     setElements(null);
     setIsOpen(false);
   };
   
-  const providedValue = { openPopUp, closePopUp };
+  const providedValue = { openModal, closeModal };
   
   return (
-    <PopUpContext.Provider value={providedValue}>
-      <PopUpContainer 
+    <ModalContext.Provider value={providedValue}>
+      <ModalContainer 
         headerText={headerText}
         elements={elements}
         isOpen={isOpen}
-        closePopUp={closePopUp}
+        closeModal={closeModal}
       />
       <div inert={isOpen ? true : undefined}>
         {children}
       </div>
-    </PopUpContext.Provider>
+    </ModalContext.Provider>
   );
 }
 
-export default PopUpProvider;
+export default ModalProvider;

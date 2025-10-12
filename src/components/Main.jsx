@@ -2,27 +2,27 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaSearch } from 'react-icons/fa';
 import { FaSliders } from 'react-icons/fa6';
 import { FaChevronDown } from 'react-icons/fa6';
-import { usePopUpContext } from "../context/PopUpContext";
+import { useModalContext } from "../context/ModalContext";
 import { BsFilter } from 'react-icons/bs';
 import { useFlashcardsContext } from "../context/FlashcardsContext";
-import FlashcardList from "./FlashcardList";
-import AddCardForm from "./AddCardForm";
+import { useState } from "react";
+import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
 
 const Main = () => {
-  const { openPopUp } = usePopUpContext();
+  const { openModal, closeModal } = useModalContext();
   const { flashcards, setFlashcards, addFlashcard } = useFlashcardsContext();
-  const decks = [
+  const [decks, setDecks] = useState([
     {
       id: 'deck-1',
       title: 'Web Development',
       cardCount: 4,
       progress: '50'
     },
-  ];
+  ]);
 
   return (
-    <main className="flex flex-col gap-my-lg py-8 px-8">
+    <main className="flex flex-col gap-my-lg py-my-lg px-8">
 
       <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">
         <div className="flex gap-my-md items-end">
@@ -35,7 +35,7 @@ const Main = () => {
         <div className="flex flex-col gap-my-md">
           <ul className="flex gap-my-xs">
             <li>
-              <button className="button button--primary w-[150px]">
+              <button className="button button--white w-[150px]">
                 <div className="w-full flex justify-between items-center gap-my-xs font-normal">
                   <span>All</span>
                   <span className="px-3 bg-black-xs/30 rounded-md">6</span>
@@ -89,8 +89,11 @@ const Main = () => {
               </button>
               
               <button
-                onClick={() => openPopUp("Add Flash Card", <AddCardForm addFlashcard={addFlashcard}/>)}
-                className="flex-1 2xs:w-auto button button--primary"
+                onClick={() => openModal(
+                  "Add Deck", 
+                  <AddDeckForm setDecks={setDecks} closeModal={closeModal}/>
+                )}
+                className="flex-1 2xs:w-auto button button--white"
               >
                 <span className="flex gap-my-xs items-center">
                   <FaPlusCircle/>

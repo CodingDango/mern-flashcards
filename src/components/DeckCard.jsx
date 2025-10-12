@@ -1,32 +1,22 @@
-import { IoCloseOutline } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
-import { FaRegStar } from 'react-icons/fa';
 import { CgWebsite } from 'react-icons/cg';
 import { FaBookOpen } from 'react-icons/fa6';
-import OptionsMenu from "./OptionsMenu";
-import OptionsMenuItem from "./OptionsMenuItem";
+import DeckOptionsMenu from "./DeckOptionsMenu";
 
-const options = [
-  {
-    icon: <FaRegStar size={16}/>,
-    text: 'favorite',
-    callback: () => console.log('Pressed options menu edit!')
-  },
-  {
-    icon: <FaRegEdit size={16}/>,
-    text: 'edit',
-    callback: () => console.log('Pressed options menu edit!')
-  },
-  {
-    icon: <IoCloseOutline size={16} className="scale-125" />,
-    text: 'remove',
-    callback: () => console.log('Pressed options menu remove!')
-  },
-]
+const handleViewDeck = (e) => {
+  console.log('navigating to view!');
+}
+
+const handleStudyNow = (e) => {
+  console.log('studying deck!');
+  e.stopPropagation();
+}
 
 const DeckCard = ({ deck }) => {
   return (
-    <div className="relative bg-black-xl rounded-lg border border-black-md p-my-sm">
+    <div 
+      onClick={handleViewDeck}
+      className="cursor-pointer relative bg-black-xl rounded-lg border border-black-md p-my-sm">
+
       <div className="absolute h-my-xs w-full bg-black-md left-0 top-0 rounded-tr-lg rounded-tl-lg">
         <div className="absolute h-my-xs w-[50%] bg-my-secondary left-0 top-0 rounded-tr-lg rounded-br-lg rounded-tl-lg"></div>
       </div>
@@ -39,17 +29,21 @@ const DeckCard = ({ deck }) => {
             </span>
             <span className="text-xl">{deck.title}</span>
           </div>
-          <OptionsMenu options={options} id={`${deck.id}-options`}/>
+          <div onClick={(e) => e.stopPropagation()}>
+            <DeckOptionsMenu id={`${deck.id}-options`}/>
+          </div>
         </div>  
 
         <div className="flex flex-col gap-my-xs">
           <p className="text-black-light">Last studied: October 2, 2025</p>
           <p className="text-black-light">Total cards: {deck.cardCount}</p>
-          <p className="text-black-light">Progress: 50%</p>
+          <p className="text-black-light">Cards Completed: 2</p>
         </div>
 
         <div className="flex-1 flex items-end">
-          <button className="button button--white">
+          <button 
+            onClick={handleStudyNow}
+            className="button button--white">
             <div className="flex items-center gap-my-xs">
               <FaBookOpen/>
               Study Now

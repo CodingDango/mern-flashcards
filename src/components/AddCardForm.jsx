@@ -26,7 +26,7 @@ const AddCardForm = ({ addFlashcard }) => {
   const {
     register,
     reset,
-    handleSubmit,
+    handleSubmit, 
     formState: { errors },
   } = useForm({ resolver: zodResolver(cardSchema) });
 

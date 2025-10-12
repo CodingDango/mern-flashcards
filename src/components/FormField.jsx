@@ -13,6 +13,10 @@ const FormField = ({labelText, errorMsg, input, inputAttributes}) => {
         <textarea {...inputAttributes}></textarea>
       )}
 
+      {input === 'radio' && (
+        <input/>
+      )}
+
       {errorMsg && <span className="text-red-400">{errorMsg}</span>}
     </label>
   );
