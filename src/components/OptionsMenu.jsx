@@ -1,6 +1,6 @@
 import { BsThreeDots } from "react-icons/bs";
 import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerContext";
-import OptionsMenuItem from "./OptionsMenuItem";
+import _ from 'lodash';
 
 export const identifierClass = "options-menu";
 
@@ -29,8 +29,19 @@ const OptionsMenu = ({
       {isOpen && (
         <div className={`absolute ${ mode === 'skewer' ? 'right-0' : 'right-0 left-0 top-[110%]'}`}>
           <div className={`border border-black-md shadow-lg shadow-black-xl ${mode === 'skewer' ? 'w-[200px]' : 'w-full'} flex flex-col bg-black-lg rounded-lg p-my-xs`}>
-            {options.map((option, idx) => (
-             <OptionsMenuItem {...option}/> 
+            {options.map(({icon, text, callback}, idx) => (
+              <button
+                key={idx} 
+                onClick={callback}
+                className='
+                  bg-transparent p-my-xs
+                  hover:bg-black-md rounded-lg cursor-pointer'
+              >
+                <span className="flex items-center gap-my-xs">
+                  {icon}
+                  {_.startCase(text)}
+                </span> 
+              </button>
             ))}
           </div>
         </div>

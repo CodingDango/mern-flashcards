@@ -6,9 +6,11 @@ import { useModalContext } from "../context/ModalContext";
 import { BsFilter } from 'react-icons/bs';
 import { useFlashcardsContext } from "../context/FlashcardsContext";
 import { useState } from "react";
+
 import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
 import OptionsMenu from "./OptionsMenu";
+import FilterDropdown from "./FilterDropdown";
 
 const Main = () => {
   const { openModal, closeModal } = useModalContext();
@@ -67,51 +69,20 @@ const Main = () => {
 
             <div className="flex gap-my-md">
 
-              <div className="flex-1">
-                <OptionsMenu
-                  mode={'dropdown'}
-                  button={(
-                    <button className="w-full h-full button bg-black-lg border border-black-md">
-                      <div className="w-full flex justify-between items-center">
-                        <div className="flex items-center">
-                          <span className="pr-my-sm border-r border-r-black-xs text-black-light">
-                            <FaSliders size={20}/>
-                          </span>
-                          <span className="pl-my-sm">Filters</span>
-                        </div>
-                        <FaChevronDown />
-                      </div>
-                    </button>
-                  )}
-                  id={'filters-options'}
-                  options={[{text: 'Finished'}, {text: 'Not Started'}]}
-                />
-              </div>
+              <FilterDropdown
+                text={'filters'}
+                id={'filters-options'}
+                options={[{text: 'Finished'}, {text: 'Not Started'}]}
+                icon={FaSliders}
+              />
 
-              <div className="flex-1">
-                <OptionsMenu
-                  mode={'dropdown'}
-                  button={(
-                    <button className="w-full h-full button bg-black-lg border border-black-md">
-                      <div className="w-full flex justify-between items-center">
-                        <div className="flex items-center">
-                          <span className="pr-my-sm border-r border-r-black-xs text-black-light">
-                            <BsFilter size={20}/>
-                          </span>
-                          <span className="pl-my-sm">Time</span>
-                        </div>
-                        <FaChevronDown />
-                      </div>
-                    </button>
-                  )}
-                  id={'time-filters-options'}
-                  options={[{text: 'Newest Created'}, {text: 'Oldest Created'}, {text: 'Latest Studied'}, {text: 'Oldest Studied'}]}
-                />
-              </div>
+              <FilterDropdown
+                text={'time'}
+                id={'time-filters-options'}
+                options={[{text: 'Newest Created'}, {text: 'Oldest Created'}, {text: 'Newest Studied'}, {text: 'Oldest Studied'}]}
+                icon={BsFilter}
+              />
 
-
-
-        
               <button
                 onClick={() => openModal(
                   "Add Deck", 
