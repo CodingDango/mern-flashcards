@@ -3,6 +3,7 @@ import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerConte
 import OptionsMenuItem from "./OptionsMenuItem";
 
 export const identifierClass = "options-menu";
+
 const defaultButton = (
   <button className="p-my-xs rounded-md hover:bg-neutral-800 cursor-pointer transition-colors duration-200">
     <BsThreeDots size={20} />
@@ -11,6 +12,7 @@ const defaultButton = (
 
 const OptionsMenu = ({ 
   button = defaultButton,
+  mode = 'skewer',
   options, 
   id 
 }) => {
@@ -18,12 +20,15 @@ const OptionsMenu = ({
   const isOpen = value.openOptionsMenuId === id;
 
   return (
-    <div className={`z-10 relative ${identifierClass}`}>
-      <div onClick={() => value.setOpenOptionsMenuId(isOpen ? null : id)}>{button}</div>
+    <div className={`w-full h-full z-5 relative ${identifierClass}`}>
+      <div
+        className="w-full h-full"
+        onClick={() => value.setOpenOptionsMenuId(isOpen ? null : id)}
+      >{button}</div>
 
       {isOpen && (
-        <div className="absolute right-0">
-          <div className="shadow-lg shadow-black-xl w-[200px] flex flex-col bg-black-lg rounded-lg p-my-xs">
+        <div className={`absolute ${ mode === 'skewer' ? 'right-0' : 'right-0 left-0 top-[110%]'}`}>
+          <div className={`border border-black-md shadow-lg shadow-black-xl ${mode === 'skewer' ? 'w-[200px]' : 'w-full'} flex flex-col bg-black-lg rounded-lg p-my-xs`}>
             {options.map((option, idx) => (
              <OptionsMenuItem {...option}/> 
             ))}

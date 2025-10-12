@@ -10,7 +10,7 @@ const OptionsMenuItem = ({icon, text, callback}) => {
     >
       <span className="flex items-center gap-my-xs">
         {icon}
-        {_.capitalize(text)}
+        {_.startCase(text)}
       </span> 
     </button>
   );

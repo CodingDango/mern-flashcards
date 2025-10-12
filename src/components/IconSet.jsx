@@ -12,8 +12,7 @@ const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
             relative
             flex justify-center items-center
             outline-2 outline-offset-2 outline-transparent
-            has-[>input:focus-visible]:bg-black-xs
-            has-[>input:focus-visible]:outline-black-xs
+            has-[>input:focus-visible]:outline-white
             has-[>input:checked]:bg-black-xs
             has-[>input:checked]:outline-black-xs
             w-[40px] h-[40px] rounded-full justify-self-center cursor-pointer"

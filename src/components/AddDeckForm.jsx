@@ -1,6 +1,23 @@
+import {
+  FaBook,
+  FaFlask,
+  FaCode,
+  FaGlobeAmericas,
+  FaPaintBrush,
+  FaMusic,
+  FaGraduationCap,
+  FaLandmark,
+  FaSeedling,
+  FaCog,
+  FaLanguage,
+  FaLightbulb
+} from 'react-icons/fa';
+
+import { IoBarChartSharp } from 'react-icons/io5';
+import { MdOutlinePsychology, MdOutlineCalculate } from 'react-icons/md';
+import { GiGalaxy } from 'react-icons/gi';
 import { z } from "zod";
-import { FaReact } from "react-icons/fa6";
-import { CgWebsite } from 'react-icons/cg';
+
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
 import IconSet from "./IconSet";
@@ -25,15 +42,32 @@ const themeColors = [
 ];
 
 const icons = [
-  FaReact,
-  CgWebsite,
-  FaReact,
-  FaReact,
-  FaReact,
-  FaReact,
-]
+  // --- General & Academia ---
+  FaBook,             // For Literature, English, or any book-based subject
+  FaGraduationCap,    // For general academia, goals, or a specific course
+  MdOutlinePsychology,// For Psychology, Sociology, or cognitive sciences
 
-const getEnumFromIndices = (arr) => [...arr.keys()].map(String);
+  // --- STEM ---
+  FaFlask,            // For Chemistry or general science
+  MdOutlineCalculate, // For Mathematics, Physics, or Accounting
+  FaCode,             // For Programming, Computer Science, or IT
+  FaSeedling,         // For Biology, Environmental Science, or Botany
+  IoBarChartSharp,    // For Economics, Business, Data Analysis, or Statistics
+  GiGalaxy,           // For Astronomy, Physics, or space-related topics
+
+  // --- Humanities & Arts ---
+  FaGlobeAmericas,    // For Geography, History, or Social Studies
+  FaLandmark,         // For History, Architecture, or Government/Civics
+  FaLanguage,         // For learning a new language or Linguistics
+  FaPaintBrush,       // For Art, Art History, or Design
+  FaMusic,            // For Music Theory, Music History, or learning an instrument
+  
+  // --- Miscellaneous ---
+  FaCog,              // For Engineering, Mechanics, or how things work
+  FaLightbulb
+];
+
+const getEnumFromIndices = (arr) => arr.map((val, idx) => idx.toString());
 
 const deckSchema = z.object({
   title: z.string().trim().min(3, { message: "Deck title is too short." }).max(20),
