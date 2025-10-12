@@ -1,21 +1,26 @@
+import { FaReact } from 'react-icons/fa6';
 import { forwardRef } from 'react';
 
-const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
+const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
   return (
     <div className="grid grid-cols-8 p-my-sm gap-y-my-sm border border-black-md bg-black-xl rounded-lg">
-      {colors.map((colorHex, idx) => (
+      {icons.map((Icon, idx) => (
+        
         <label
           key={idx}
-          style={{ backgroundColor: colorHex }}
           className="
-            border-1 border-transparent
+            relative
+            flex justify-center items-center
             outline-2 outline-offset-2 outline-transparent
-            has-[>input:focus-visible]:border-black
-            has-[>input:focus-visible]:outline-white
-            has-[>input:checked]:border-black
-            has-[>input:checked]:outline-white
+            has-[>input:focus-visible]:bg-black-xs
+            has-[>input:focus-visible]:outline-black-xs
+            has-[>input:checked]:bg-black-xs
+            has-[>input:checked]:outline-black-xs
             w-[40px] h-[40px] rounded-full justify-self-center cursor-pointer"
+            
         >
+          
+          <Icon size={35}/>
           <input
             {...rest} // Pass along onChange, onBlur etc.
             type="radio"
@@ -32,4 +37,4 @@ const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
   );
 });
 
-export default ColorPalletePicker;
+export default IconSet;

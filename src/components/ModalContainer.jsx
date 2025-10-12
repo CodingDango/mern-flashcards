@@ -42,7 +42,7 @@ export default function ModalContainer({
       <div ref={modalRef} className="px-my-sm py-my-md rounded-lg bg-black-lg border border-black-md text-white max-w-xl overflow-y-auto w-full">
         <div className="flex flex-col">
           <div className="pb-my-sm w-full flex justify-between items-center">
-            <h2 className="text-xl">{headerText}</h2>
+            <h2 className="text-xl font-medium">{headerText}</h2>
             <button className="cursor-pointer" onClick={closeModal}>
               <IoClose size={36}/>
             </button>

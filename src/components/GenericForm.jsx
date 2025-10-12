@@ -1,20 +1,17 @@
-// GenericForm.jsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaPlusCircle } from "react-icons/fa";
-import FormField from "./FormField";
 
-// This component is completely reusable!
 const GenericForm = ({ schema, onSubmit, fields, submitText, onFormClose }) => {
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
+  } = useForm({ resolver: zodResolver(schema), mode: "onBlur" }); // Added onBlur mode for better UX
 
   const handleFormSubmit = (data) => {
-    onSubmit(data); 
+    onSubmit(data);
     reset();
     if (onFormClose) onFormClose();
   };
@@ -22,24 +19,34 @@ const GenericForm = ({ schema, onSubmit, fields, submitText, onFormClose }) => {
   return (
     <form className="flex flex-col gap-my-md" onSubmit={handleSubmit(handleFormSubmit)}>
       
-      {fields.map((field) => (
-        <FormField
-          key={field.name}
-          labelText={field.labelText}
-          errorMsg={errors[field.name]?.message}
-          input={field.inputComponent} 
-          inputAttributes={{
-            ...register(field.name),
-            placeholder: field.placeholder,
-            className: field.className,
-            ...field.inputAttributes, 
-          }}
-        />
-      ))}
+      {fields.map((fieldConfig) => {
+        const { name, label, component: FieldComponent, ...restOfProps } = fieldConfig;
+        const error = errors[name];
+
+        return (
+          <div key={name} className="flex flex-col gap-my-xs">
+            {label && (
+              <label htmlFor={name} className="font-medium">
+                {label}
+              </label>
+            )}
+
+            <FieldComponent
+              id={name}
+              {...register(name)}
+              {...restOfProps} 
+            />
+
+            {error && (
+              <p className="text-red-400 text-sm">{error.message}</p>
+            )}
+          </div>
+        );
+      })}
 
       <button
         type="submit"
-        className="w-full button button--white items-center gap-my-xs"
+        className="w-full button button--white items-center gap-my-xs mt-my-sm"
       >
         <FaPlusCircle />
         {submitText}

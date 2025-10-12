@@ -1,59 +1,87 @@
-// AddDeckForm.jsx
+import { z } from "zod";
+import { FaReact } from "react-icons/fa6";
+import { CgWebsite } from 'react-icons/cg';
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
-import { z } from "zod";
-import { useEffect, useState } from "react";
+import IconSet from "./IconSet";
+
+const themeColors = [
+  'oklch(70.4% 0.191 22.216)',
+  'oklch(70.5% 0.213 47.604)',
+  'oklch(76.9% 0.188 70.08)',
+  'oklch(79.5% 0.184 86.047)',
+  'oklch(76.8% 0.233 130.85)',
+  'oklch(72.3% 0.219 149.579)',
+  'oklch(69.6% 0.17 162.48)',
+  'oklch(70.4% 0.14 182.503)',
+  'oklch(71.5% 0.143 215.221)',
+  'oklch(68.5% 0.169 237.323)',
+  'oklch(62.3% 0.214 259.815)',
+  'oklch(58.5% 0.233 277.117)',
+  'oklch(60.6% 0.25 292.717)',
+  'oklch(62.7% 0.265 303.9)',
+  'oklch(74% 0.238 322.16)',
+  '#C90078',
+];
+
+const icons = [
+  FaReact,
+  CgWebsite,
+  FaReact,
+  FaReact,
+  FaReact,
+  FaReact,
+]
+
+const getEnumFromIndices = (arr) => [...arr.keys()].map(String);
 
 const deckSchema = z.object({
-  title: z.string().trim().min(3, { message: "Deck title is too short." }),
-  colors: z.enum(["option-a", "option-b", "option-c"], {
-    message: "Please select an option",
+  title: z.string().trim().min(3, { message: "Deck title is too short." }).max(20),
+  color: z.enum(getEnumFromIndices(themeColors), {
+    message: "Please select a color.",
   }),
-  // icon: z.string()...
+  icon: z.enum(getEnumFromIndices(icons), {
+    message: "Please select an icon.",
+  }),
 });
 
 const deckFields = [
   {
     name: "title",
-    labelText: "Deck Title",
+    label: "Deck Title",
+    component: 'input', 
+    type: "text",      
     placeholder: "Enter a title...",
-    inputComponent: "input",
     className: "text-input border border-black-md",
   },
   {
     name: "color",
-    labelText: "Deck Color",
-    inputComponent: "radio",
-    className:
-      "p-1 h-10 w-full block bg-neutral-900 border border-neutral-700 cursor-pointer rounded-lg disabled:cursor-not-allowed disabled:opacity-50",
-    inputAttributes: { type: "color" },
+    label: "Deck Color",
+    component: ColorPalletePicker, 
+    colors: themeColors,           
   },
-  // ... you would add your icon selector field here
+  {
+    name: "icon",
+    label: "Deck Icon",
+    component: IconSet, 
+    icons: icons
+  },
 ];
 
 const AddDeckForm = ({ setDecks, closeModal }) => {
-  const [pickedColor, setPickedColor] = useState(null);
-
-  useEffect(() => {
-
-  })
-
-  const handleAddDeck = ({ title, color }) => {
-    setDecks((prev) => [...prev, { title, color }]);
+  const handleAddDeck = ({ title, color : colorIdx, icon : iconIdx}) => {
+    console.log(title, colorIdx, iconIdx);
+    // setDecks((prev) => [...prev, { title, color }]);
   };
 
   return (
     <>
       <GenericForm
-      schema={deckSchema}
-      onSubmit={handleAddDeck}
-      fields={deckFields}
-      submitText="Add New Deck"
-      onFormClose={closeModal}
-      />
-      <ColorPalletePicker
-        colors={['#4E56C0', '#9B5DE0', '#D78FEE', '#FDCFFA', '#4E56C0', '#9B5DE0', '#D78FEE', '#FDCFFA', '#4E56C0', '#9B5DE0', '#D78FEE', '#FDCFFA', '#4E56C0', '#9B5DE0', '#D78FEE', '#FDCFFA']}
-        setPickedColor={setPickedColor}
+        schema={deckSchema}
+        fields={deckFields}
+        onSubmit={handleAddDeck}
+        submitText="Add New Deck"
+        onFormClose={closeModal}
       />
     </>
   );
