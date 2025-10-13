@@ -1,9 +1,5 @@
-'use client'
-
-import OptionsMenuManagerProvider from "@/context/OptionsMenuManagerProvider";
-import ModalProvider from "@/context/ModalProvider";
-
 import { Inter } from "next/font/google";
+import UIProviders from "@/context/UIProviders";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,11 +18,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} antialiased`}
       >
-        <OptionsMenuManagerProvider>
-          <ModalProvider>
+        <UIProviders>
           {children}
-          </ModalProvider>
-        </OptionsMenuManagerProvider>
+        </UIProviders>
       </body>
     </html>
   );

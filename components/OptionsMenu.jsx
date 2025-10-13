@@ -14,7 +14,7 @@ const OptionsMenu = ({
   button = defaultButton,
   mode = 'skewer',
   options, 
-  id 
+  id,
 }) => {
   const value = useOptionsMenuManagerContext();
   const isOpen = value.openOptionsMenuId === id;

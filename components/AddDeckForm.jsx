@@ -104,8 +104,12 @@ const deckFields = [
 
 const AddDeckForm = ({ setDecks, closeModal }) => {
   const handleAddDeck = ({ title, color : colorIdx, icon : iconIdx}) => {
-    console.log(title, colorIdx, iconIdx);
-    // setDecks((prev) => [...prev, { title, color }]);
+    setDecks(prev => [...prev, {
+      id: `deck-${prev.length}`,
+      title,
+      color: themeColors[colorIdx], 
+      Icon: icons[iconIdx],
+    }]);
   };
 
   return (

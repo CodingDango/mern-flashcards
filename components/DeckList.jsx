@@ -8,7 +8,7 @@ const DeckList = ({ decks }) => {
         decks.map((deck, idx) => (
           <DeckCard
             key={idx}
-            deck={deck}
+            {...deck}
           />
         ))}
 
@@ -19,7 +19,7 @@ const DeckList = ({ decks }) => {
                 <MdAddCard size={50} />
               </div>
               <div className="flex flex-col gap-my-xs text-center">
-                <h2 className="text-xl">Add a Card</h2>
+                <h2 className="text-xl">Add a Deck</h2>
                 <p>Decks appear here after you add them with the Add Deck button.</p>
               </div>
             </div>
