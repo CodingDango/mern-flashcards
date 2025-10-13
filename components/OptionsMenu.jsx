@@ -13,6 +13,7 @@ const defaultButton = (
 const OptionsMenu = ({ 
   button = defaultButton,
   mode = 'skewer',
+  onSelect,
   options, 
   id,
 }) => {
@@ -29,10 +30,13 @@ const OptionsMenu = ({
       {isOpen && (
         <div className={`absolute ${ mode === 'skewer' ? 'right-0' : 'right-0 left-0 top-[110%]'}`}>
           <div className={`border border-black-md shadow-lg shadow-black-xl ${mode === 'skewer' ? 'w-[200px]' : 'w-full'} flex flex-col bg-black-lg rounded-lg p-my-xs`}>
-            {options.map(({icon, text, callback}, idx) => (
+            {options.map(({icon, text, callback, ...rest}, idx) => (
               <button
                 key={idx} 
-                onClick={callback}
+                onClick={() => {
+                  onSelect && onSelect({icon, text, callback, ...rest});
+                  callback && callback();
+                }}
                 className='
                   bg-transparent p-my-xs
                   hover:bg-black-md rounded-lg cursor-pointer'

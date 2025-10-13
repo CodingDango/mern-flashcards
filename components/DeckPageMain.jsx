@@ -94,16 +94,28 @@ const DeckPageMain = () => {
             <div className="flex gap-my-md">
               
               <FilterDropdown
-                text={'filters'}
                 id={'filters-options'}
-                options={[{text: 'All'}, {text: 'Unfinished'}, {text: 'Not Started'}, {text: 'Finished'}]}
+                name={'status'}
+                handleFilterChange={handleFilterChange}
+                options={[
+                  {text: 'All', value: 'all'}, 
+                  {text: 'Unfinished', value: 'unfinished'}, 
+                  {text: 'Not Started', value: 'notStarted'}, 
+                  {text: 'Finished', value: 'finished'}
+                ]}
                 icon={FaSliders}
               />
 
               <FilterDropdown
-                text={'time'}
                 id={'time-filters-options'}
-                options={[{text: 'Newest Created'}, {text: 'Oldest Created'}, {text: 'Newest Studied'}, {text: 'Oldest Studied'}]}
+                name={'sortBy'}
+                handleFilterChange={handleFilterChange}
+                options={[
+                  {text: 'Newest Created', value: 'newestCreated'}, 
+                  {text: 'Oldest Created', value: 'oldestCreated'}, 
+                  {text: 'Newest Studied', value: 'newestStudied'}, 
+                  {text: 'Oldest Studied', value: 'oldestStudied'}
+                ]}
                 icon={BsFilter}
               />
 

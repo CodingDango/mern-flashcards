@@ -1,7 +1,7 @@
 import { startCase } from "lodash";
 import { FaChevronDown } from "react-icons/fa";
 
-const FilterButton = ({text, icon : Icon}) => (
+const FilterButton = ({text, icon : Icon, onSelect = () => null}) => (
   <button className="w-full h-full button bg-black-lg border border-black-md">
     <div className="w-full flex justify-between items-center">
       <div className="flex items-center">
