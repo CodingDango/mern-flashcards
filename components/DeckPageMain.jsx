@@ -1,18 +1,19 @@
+'use client'
+
 import { FaPlusCircle } from "react-icons/fa";
 import { FaSearch } from 'react-icons/fa';
 import { FaSliders } from 'react-icons/fa6';
 import { FaChevronDown } from 'react-icons/fa6';
-import { useModalContext } from "../context/ModalContext";
+import { useModalContext } from "@/context/ModalContext";
 import { BsFilter } from 'react-icons/bs';
-import { useFlashcardsContext } from "../context/FlashcardsContext";
+import { useFlashcardsContext } from "@/context/FlashcardsContext";
 import { useState } from "react";
 
 import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
-import OptionsMenu from "./OptionsMenu";
 import FilterDropdown from "./FilterDropdown";
 
-const Main = () => {
+const DeckPageMain = () => {
   const { openModal, closeModal } = useModalContext();
   const { flashcards, setFlashcards, addFlashcard } = useFlashcardsContext();
   const [decks, setDecks] = useState([
@@ -106,4 +107,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default DeckPageMain;

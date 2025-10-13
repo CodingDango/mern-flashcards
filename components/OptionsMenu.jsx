@@ -1,5 +1,5 @@
 import { BsThreeDots } from "react-icons/bs";
-import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerContext";
+import { useOptionsMenuManagerContext } from "@/context/OptionsMenuManagerContext";
 import _ from 'lodash';
 
 export const identifierClass = "options-menu";

@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
-import { useOptionsMenuManagerContext } from "../context/OptionsMenuManagerContext";
-import { useFlashcardsContext } from "../context/FlashcardsContext";
-import { usePopUpContext } from "../context/PopUpContext";
+import { useOptionsMenuManagerContext } from "@/context/OptionsMenuManagerContext";
+import { useFlashcardsContext } from "@/context/FlashcardsContext";
+import { usePopUpContext } from "@/context/PopUpContext";
 import OptionsMenu from "./OptionsMenu"; 
 import EditCardForm from "./EditCardForm";
 

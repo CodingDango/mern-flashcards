@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { OptionsMenuManagerContext } from "./OptionsMenuManagerContext";
 import { identifierClass as optionsMenuClass } from "../components/OptionsMenu";
 
-const OptionsMenuMangerProvider = ({children}) => {
+const OptionsMenuManagerProvider = ({children}) => {
   const [openOptionsMenuId, setOpenOptionsMenuId] = useState(null);
 
   const value = {
@@ -21,7 +21,7 @@ const OptionsMenuMangerProvider = ({children}) => {
       setOpenOptionsMenuId(null);
     }
   }
-+
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
@@ -40,4 +40,4 @@ const OptionsMenuMangerProvider = ({children}) => {
 };
 
 
-export default OptionsMenuMangerProvider;
+export default OptionsMenuManagerProvider;
