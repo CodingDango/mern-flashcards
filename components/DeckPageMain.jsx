@@ -43,6 +43,11 @@ const DeckPageMain = () => {
     console.log(filters);
   }, [filters]);
 
+  useEffect(() => {
+    debugger
+    console.log(decks)
+  }, [decks])
+
   return (
     <Main>
       <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">

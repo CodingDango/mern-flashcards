@@ -1,6 +1,5 @@
 'use client'
 
-import { CgWebsite } from 'react-icons/cg';
 import { FaBookOpen } from 'react-icons/fa6';
 import { startCase } from 'lodash';
 import DeckOptionsMenu from "./DeckOptionsMenu";
@@ -14,7 +13,9 @@ const handleStudyNow = (e) => {
   e.stopPropagation();
 }
 
-const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', date = 'None', options=true}) => {
+const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', dateCreated, options=true}) => {
+  if (!title) return;
+
   debugger
   return (
     <div 
@@ -47,8 +48,8 @@ const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', date 
 
         <div className="flex flex-col gap-my-xs">
           <p>
-            <span className='text-black-light'>Last studied: </span>
-            <span>{date}</span>
+            <span className='text-black-light'>Date Created: </span>
+            <span>{dateCreated}</span>
             </p>
           <p>
             <span className='text-black-light'>Total cards: </span>
