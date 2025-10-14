@@ -51,7 +51,7 @@ const AddDeckForm = ({ setDecks, closeModal }) => {
       body: JSON.stringify({title, colorIdx, iconKey})
     });
 
-    const {received: data} = await res.json();
+    const {data} = await res.json();
     const createdDate = DateTime.fromISO(data.dateCreated);
     const localDate = createdDate.toLocaleString(DateTime.DATE_MED);
 
@@ -62,7 +62,6 @@ const AddDeckForm = ({ setDecks, closeModal }) => {
       dateCreated: localDate,
       color: deckThemeColors[data.colorIdx],
       Icon: deckIcons[data.iconKey],
-      date
     }]);
   };
 

@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Computer Science",
+    "colorIdx": "11",
+    "iconKey": "FaCode",
+    "id": "deck-b126594c-c107-4a1f-8e05-ad3b8ee76c4a",
+    "dateCreated": "2025-10-14T17:21:29.638Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "Precalculus",
+    "colorIdx": "4",
+    "iconKey": "MdOutlineCalculate",
+    "id": "deck-546d1b62-39cc-4df1-ae2d-257b41e64b6f",
+    "dateCreated": "2025-10-14T17:23:21.570Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "Critical Thinking",
+    "colorIdx": "1",
+    "iconKey": "MdOutlinePsychology",
+    "id": "deck-bd894ee3-f094-4714-9724-74e61b73446a",
+    "dateCreated": "2025-10-14T17:24:03.930Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "awdwdwdwdw",
+    "colorIdx": "12",
+    "iconKey": "MdOutlineCalculate",
+    "id": "deck-c05ac851-9e16-4f79-8bbf-a76a17bb2ce7",
+    "dateCreated": "2025-10-14T17:24:26.124Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdwdwdwdwdw",
+    "colorIdx": "3",
+    "iconKey": "FaLandmark",
+    "id": "deck-927cae0b-b4c7-4926-974e-c19d256ca1b6",
+    "dateCreated": "2025-10-14T17:24:41.003Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "ASDWDWDW",
+    "colorIdx": "0",
+    "iconKey": "FaGraduationCap",
+    "id": "deck-1c5c5928-03c4-4d3b-854c-2c98e893b88c",
+    "dateCreated": "2025-10-14T17:26:29.783Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdwdw",
+    "colorIdx": "2",
+    "iconKey": "MdOutlinePsychology",
+    "id": "deck-36d449c8-cd1d-437a-b596-b3e45f02f776",
+    "dateCreated": "2025-10-14T17:28:20.592Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  }
+]
