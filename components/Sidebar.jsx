@@ -7,7 +7,12 @@ import { BiLogOut as LogOutIcon } from 'react-icons/bi';
 import SidebarItem from "./SidebarItem";
 import UserDisplay from "./UserDisplay";
 
-const Sidebar = () => {
+const Sidebar = ({activeRoute = ''}) => {
+  const sidebarLinks = [
+    {text: 'dashboard', Icon: HomeIcon, href: '/'},
+    {text: 'decks', Icon: StackIcon, href: '/decks'},
+    {text: 'cards', Icon: CardsIcon, href: '/cards'},
+  ];
 
   return (
     <nav className='w-3xs bg-black-xl py-8 px-my-md border-r border-black-md'>
@@ -21,15 +26,11 @@ const Sidebar = () => {
         <section>
           <h2 className="text-black-light px-my-xs pb-my-xs">General</h2>
           <ul className="flex flex-col">
-            <li>
-              <SidebarItem text='dashboard' icon={<HomeIcon size={20}/>} href='#'/>
-            </li>
-            <li>
-              <SidebarItem text='collections' icon={<StackIcon size={20}/>} href='#'/>
-            </li>
-            <li>
-              <SidebarItem text='cards' icon={<CardsIcon size={20}/>} href='#'/>
-            </li>
+            {sidebarLinks.map((parameters, idx) => (
+              <li key={idx}>
+                <SidebarItem {...parameters} isActive={parameters.text === activeRoute}/>
+              </li>
+            ))}
           </ul>
         </section>
 
@@ -37,10 +38,10 @@ const Sidebar = () => {
           <h2 className="text-black-light px-my-xs pb-my-xs">Others</h2>
           <ul className="flex flex-col w-full">
             <li>
-              <SidebarItem text='settings' icon={<SettingsIcon size={20}/>} href='#'/>
+              <SidebarItem text='settings' Icon={SettingsIcon} href='#'/>
             </li>
             <li>
-              <SidebarItem as="button" text='logout' icon={<LogOutIcon size={20}/>} href='#'/> 
+              <SidebarItem as="button" text='logout' Icon={LogOutIcon} href='#'/> 
             </li>
           </ul>
         </section>

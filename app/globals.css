@@ -2,7 +2,7 @@
 
 @theme {
   /* Colors */
-  --color-my-primary: theme('color.green.400');
+  --color-my-primary: theme('color.green.500');
   --color-my-secondary: theme('color.pink.500');
   --color-black-xl: theme('color.neutral.950');
   --color-black-lg: theme('color.neutral.900');
@@ -31,6 +31,10 @@ body {
 
 .button {
   @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 flex justify-center items-center font-medium;
+}
+
+.button--circle {
+  @apply p-my-xs rounded-full;
 }
 
 .button--white {

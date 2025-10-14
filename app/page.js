@@ -1,7 +1,12 @@
-import { redirect } from "next/navigation"
+import AppLayout from "@/components/AppLayout";
+import Dashboard from "@/components/Dashboard";
+import Sidebar from "@/components/Sidebar";
 
-const Home = () => {
-  return <div>Hello world</div>
-}
+const DashboardPage = () => (
+  <AppLayout>
+    <Sidebar activeRoute="dashboard"/>
+    <Dashboard/>
+  </AppLayout>
+);
 
-export default Home;
+export default DashboardPage;

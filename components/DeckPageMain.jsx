@@ -12,6 +12,7 @@ import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
+import Main from "./Main";
 
 const favoriteDecks = 4;
 
@@ -43,8 +44,7 @@ const DeckPageMain = () => {
   }, [filters]);
 
   return (
-    <main className="flex flex-col gap-my-lg py-my-lg px-8">
-
+    <Main>
       <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">
         <div className="flex gap-my-md items-end">
           <h1 className="2xs:flex-1 text-3xl font-medium">My Decks</h1>
@@ -78,7 +78,7 @@ const DeckPageMain = () => {
           </ul>
 
           <div className="grid grid-cols-[2fr_3fr] gap-my-md">
-            <div className="flex items-center bg-black-xl border border-black-md px-4 py-3 rounded-md">
+            <div className="flex items-center border border-black-md px-4 py-3 rounded-md">
               <div className="pr-4 border-r border-black-xs">
                 <FaSearch size={20} className="text-black-light"/>
               </div>
@@ -142,7 +142,7 @@ const DeckPageMain = () => {
       </section> 
 
       <DeckList decks={decks}/>
-    </main>
+    </Main>
   );
 };
 

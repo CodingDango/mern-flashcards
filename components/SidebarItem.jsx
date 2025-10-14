@@ -1,22 +1,29 @@
+import Link from 'next/link';
 import _ from 'lodash';
 
-const SidebarItem = ({as = 'a', text, icon, href, onClick}) => {
+const SidebarItem = ({as = 'a', text, Icon, href, onClick, isActive}) => {
   const content = (
     <div className="flex gap-my-xs items-center">
-      <span aria-hidden='true' >{icon}</span>
+      <span aria-hidden='true' >
+        {Icon && <Icon size={20}/>}
+      </span>
       <span>{_.startCase(text)}</span>
     </div>
   );
   
-  const parentClass = 'p-my-xs text-start rounded-md hover:bg-black-md cursor-pointer w-full block';
+  const parentClass = `
+    p-my-xs text-start rounded-md 
+    hover:bg-black-md cursor-pointer w-full 
+    block ${isActive ? 'bg-black-lg' : ''}
+  `;
 
   return (
     <>
       {as === 'a' && (
         
-        <a className={parentClass} href={href}>
+        <Link className={parentClass} href={href}>
           {content}
-        </a>
+        </Link>
       )}
 
       {as === 'button' && (

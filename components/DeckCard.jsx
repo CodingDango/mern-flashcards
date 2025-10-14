@@ -1,3 +1,5 @@
+'use client'
+
 import { CgWebsite } from 'react-icons/cg';
 import { FaBookOpen } from 'react-icons/fa6';
 import { startCase } from 'lodash';
@@ -12,12 +14,12 @@ const handleStudyNow = (e) => {
   e.stopPropagation();
 }
 
-const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', date = 'None'}) => {
+const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', date = 'None', options=true}) => {
   debugger
   return (
     <div 
       onClick={handleViewDeck}
-      className="cursor-pointer relative bg-black-xl rounded-lg border border-black-md p-my-sm">
+      className="min-h-[250px] cursor-pointer relative rounded-xl border border-black-md p-my-sm">
 
       <div className="absolute h-my-xs w-full bg-black-md left-0 top-0 rounded-tr-lg rounded-tl-lg">
         <div 
@@ -36,20 +38,32 @@ const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', date 
             </span>
             <span className="text-xl">{startCase(title)}</span>
           </div>
-          <div onClick={(e) => e.stopPropagation()}>
-            <DeckOptionsMenu id={`${id}-options`}/>
-          </div>
+          {options && (
+            <div onClick={(e) => e.stopPropagation()}>
+              <DeckOptionsMenu id={`${id}-options`}/>
+            </div>
+          )}
         </div>  
 
         <div className="flex flex-col gap-my-xs">
-          <p className="text-black-light">Last studied: {date}</p>
-          <p className="text-black-light">Total cards: {cardCount}</p>
-          <p className="text-black-light">Cards Completed: 0</p>
+          <p>
+            <span className='text-black-light'>Last studied: </span>
+            <span>{date}</span>
+            </p>
+          <p>
+            <span className='text-black-light'>Total cards: </span>
+            <span>{cardCount}</span>
+            </p>
+          <p>
+            <span className='text-black-light'>Cards Completed: </span>
+            <span>0</span>
+            </p>
         </div>
 
         <div className="flex-1 flex items-end">
           <button 
             onClick={handleStudyNow}
+            // style={{backgroundColor: color}}
             className="button button--white">
             <div className="flex items-center gap-my-xs">
               <FaBookOpen/>

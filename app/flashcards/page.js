@@ -5,7 +5,7 @@ import DeckPageMain from "@/components/DeckPageMain";
 
 const DeckPage = () => (
   <AppLayout>
-      <Sidebar activeRoute="decks"/>
+      <Sidebar/>
       <FlashcardsProvider>
         <DeckPageMain/>
       </FlashcardsProvider>
