@@ -13,9 +13,7 @@ import DeckList from "./DeckList";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
 import Main from "./Main";
-
-const favoriteDecks = 4;
-
+import { getDecks } from "@/libs/actions";
 
 const DeckPageMain = () => {
   const { openModal, closeModal } = useModalContext();
@@ -26,6 +24,20 @@ const DeckPageMain = () => {
     status: 'all',
     sortBy: 'newestCreated'
   });
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        debugger
+        const decks = await getDecks();
+        setDecks(decks);
+      } catch (e) {
+        console.log('Could not load decks.');
+      }
+    }
+
+    load();
+  }, [setDecks]);
 
   const handleFilterChange = (name, value) => {
     setFilters(prev => ({...prev, [name]: value}));
@@ -38,16 +50,6 @@ const DeckPageMain = () => {
     sortBy: 'newestCreated'
   });
     
-
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
-
-  useEffect(() => {
-    debugger
-    console.log(decks)
-  }, [decks])
-
   return (
     <Main>
       <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">
@@ -75,7 +77,7 @@ const DeckPageMain = () => {
                 name={'category'}
                 value={'favorites'}
                 label={'Favorites'}
-                count={favoriteDecks}
+                count={0}
                 isActive={filters.category === 'favorites'}
                 onFilterChange={handleFilterChange}
               />

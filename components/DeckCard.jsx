@@ -1,8 +1,10 @@
 'use client'
 
+import { DateTime } from 'luxon';
 import { FaBookOpen } from 'react-icons/fa6';
 import { startCase } from 'lodash';
 import DeckOptionsMenu from "./DeckOptionsMenu";
+import { deckIcons, deckThemeColors } from '@/libs/config';
 
 const handleViewDeck = (e) => {
   console.log('navigating to view!');
@@ -13,10 +15,15 @@ const handleStudyNow = (e) => {
   e.stopPropagation();
 }
 
-const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', dateCreated, options=true}) => {
+const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0', dateCreated, options=true}) => {
   if (!title) return;
 
-  debugger
+  const color = deckThemeColors[colorIdx];
+  const Icon = deckIcons[iconKey];
+
+  const date = DateTime.fromISO(dateCreated);
+  const localDate = date.toLocaleString(DateTime.DATE_MED);
+
   return (
     <div 
       onClick={handleViewDeck}
@@ -49,7 +56,7 @@ const DeckCard = ({ id, title, color, Icon, cardCount = 0, progress = '0', dateC
         <div className="flex flex-col gap-my-xs">
           <p>
             <span className='text-black-light'>Date Created: </span>
-            <span>{dateCreated}</span>
+            <span>{localDate}</span>
             </p>
           <p>
             <span className='text-black-light'>Total cards: </span>

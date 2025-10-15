@@ -10,7 +10,7 @@ export async function GET(request) {
   const fileData = await fs.readFile(dbPath);
   const db = JSON.parse(fileData);
 
-  return NextResponse.json({db});
+  return NextResponse.json({data: db});
 }
 
 export async function POST(request) {
@@ -33,3 +33,4 @@ export async function POST(request) {
   
   return NextResponse.json({data: newDeckData , message: "success"});
 }
+

@@ -14,13 +14,16 @@ const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
             className="
               relative
               flex justify-center items-center
+              cursor-pointer
               outline-2 outline-offset-2 outline-transparent
               has-[>input:focus-visible]:outline-white
               has-[>input:checked]:bg-black-xs
               has-[>input:checked]:outline-black-xs
-              w-[40px] h-[40px] rounded-full justify-self-center cursor-pointer"
+              w-[40px] h-[40px] rounded-full justify-self-center"
           >
-            <Icon size={30}/>
+            <div className='cursor-pointer'>
+              <Icon size={30}/>
+            </div>
             <input
               {...rest} // Pass along onChange, onBlur etc.
               type="radio"

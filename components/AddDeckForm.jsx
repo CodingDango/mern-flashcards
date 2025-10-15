@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { date, z } from "zod";
+import { z } from "zod";
+import { createDeck } from '@/libs/actions';
 import { deckThemeColors, deckIcons } from '@/libs/config';
+import { useState } from 'react';
 
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
@@ -42,27 +44,23 @@ const deckFields = [
 ];
 
 const AddDeckForm = ({ setDecks, closeModal }) => {
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleAddDeck = async ({ title, color : colorIdx, icon : iconKey}) => { 
-    const res = await fetch('/api/decks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({title, colorIdx, iconKey})
-    });
+    setIsPending(true);
 
-    const {data} = await res.json();
-    const createdDate = DateTime.fromISO(data.dateCreated);
-    const localDate = createdDate.toLocaleString(DateTime.DATE_MED);
-
-    debugger
-
-    setDecks(prev => [...prev, {
-      ...data,
-      dateCreated: localDate,
-      color: deckThemeColors[data.colorIdx],
-      Icon: deckIcons[data.iconKey],
-    }]);
+    setTimeout(async () => {
+      try {
+        const data = await createDeck({title, colorIdx, iconKey});
+        setDecks(prev => [...prev, data]);
+        setIsPending(true);
+        closeModal();
+      } catch(e) {
+        setError(e);
+        setIsPending(false);
+      } 
+    }, 2000);
   };
 
   return (
@@ -73,6 +71,9 @@ const AddDeckForm = ({ setDecks, closeModal }) => {
         onSubmit={handleAddDeck}
         submitText="Add New Deck"
         onFormClose={closeModal}
+        isPending={isPending}
+        pendingText={'Adding...'}
+        error={error}
       />
     </>
   );

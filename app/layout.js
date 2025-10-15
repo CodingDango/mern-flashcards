@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import UIProviders from "@/context/UIProviders";
 import "./globals.css";
+import QueryProvider from "@/context/QueryProvider";
 
 const inter = Inter({
   variable: "--font-inter",

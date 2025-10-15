@@ -4,7 +4,7 @@ import DeckCard from './DeckCard';
 const DeckList = ({ decks }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(250px,_auto)] gap-my-md">
-      {decks.length > 0 &&
+      {decks && decks.length > 0 &&
         decks.map((deck, idx) => (
           <DeckCard
             key={idx}
@@ -12,7 +12,7 @@ const DeckList = ({ decks }) => {
           />
         ))}
 
-      {decks.length === 0 && (
+      {decks &&decks.length === 0 && (
         <div className="grid place-items-center col-span-full">
           <div className="flex items-center flex-col gap-my-sm">
               <div className="bg-my-primary/75 p-my-sm rounded-full">
