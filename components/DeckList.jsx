@@ -24,7 +24,6 @@ const DeckList = ({ decks }) => {
               </div>
             </div>
         </div>
-        
       )}
     </div>
   );

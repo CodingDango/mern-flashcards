@@ -52,7 +52,7 @@ const AddDeckForm = ({ setDecks, closeModal }) => {
 
     setTimeout(async () => {
       try {
-        const data = await createDeck({title, colorIdx, iconKey});
+        const {data} = await createDeck({title, colorIdx, iconKey});
         setDecks(prev => [...prev, data]);
         setIsPending(true);
         closeModal();

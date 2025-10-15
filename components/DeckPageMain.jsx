@@ -7,6 +7,8 @@ import { FaSliders } from 'react-icons/fa6';
 import { useModalContext } from "@/context/ModalContext";
 import { BsFilter } from 'react-icons/bs';
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ClipLoader } from "react-spinners";
 
 import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
@@ -17,27 +19,19 @@ import { getDecks } from "@/libs/actions";
 
 const DeckPageMain = () => {
   const { openModal, closeModal } = useModalContext();
-  const [decks, setDecks] = useState([]);
+  const [decks, setDecks] = useState([]); // i dont know.
+
+  const { data: responseData, isLoading, error } = useQuery({
+    queryKey: ['decks'],
+    queryFn: getDecks
+  });
+
   const [filters, setFilters] = useState({
     category: 'all',
     searchQuery: '',
     status: 'all',
     sortBy: 'newestCreated'
   });
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        debugger
-        const decks = await getDecks();
-        setDecks(decks);
-      } catch (e) {
-        console.log('Could not load decks.');
-      }
-    }
-
-    load();
-  }, [setDecks]);
 
   const handleFilterChange = (name, value) => {
     setFilters(prev => ({...prev, [name]: value}));
@@ -147,8 +141,16 @@ const DeckPageMain = () => {
           </div>
         </div>
       </section> 
-
-      <DeckList decks={decks}/>
+      
+      {isLoading 
+        ? (
+          <div className="col-span-full grid place-items-center">
+            <ClipLoader color="#ffffff" size={50}/>
+          </div>
+        ) : (
+          <DeckList decks={responseData && responseData.data}/>
+        )
+      }
     </Main>
   );
 };
