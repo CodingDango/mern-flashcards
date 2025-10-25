@@ -4,26 +4,25 @@ import { FaPlusCircle } from "react-icons/fa";
 import { RiResetLeftFill } from "react-icons/ri";
 import { FaSearch } from 'react-icons/fa';
 import { FaSliders } from 'react-icons/fa6';
+
 import { useModalContext } from "@/context/ModalContext";
 import { BsFilter } from 'react-icons/bs';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ClipLoader } from "react-spinners";
+import { getDecks } from "@/libs/actions";
 
 import AddDeckForm from "./AddDeckForm";
 import DeckList from "./DeckList";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
 import Main from "./Main";
-import { getDecks } from "@/libs/actions";
 
 const DeckPageMain = () => {
   const { openModal, closeModal } = useModalContext();
-  const [decks, setDecks] = useState([]); // i dont know.
 
-  const { data: responseData, isLoading, error } = useQuery({
+  const { data: responseData, isFetching, error } = useQuery({
     queryKey: ['decks'],
-    queryFn: getDecks
+    queryFn: getDecks,
   });
 
   const [filters, setFilters] = useState({
@@ -36,32 +35,47 @@ const DeckPageMain = () => {
   const handleFilterChange = (name, value) => {
     setFilters(prev => ({...prev, [name]: value}));
   }
-
+  
   const resetFilters = () => setFilters({
     category: 'all',
     searchQuery: '',
     status: 'all',
     sortBy: 'newestCreated'
   });
-    
+
+  let allDecks = responseData?.data || [];
+
+  const filteredDecks = useMemo(() => {
+    if (!allDecks) return [];
+
+    const {category, searchQuery, status, sortBy} = filters;
+
+    console.log('im running!');
+
+    return (
+      allDecks
+        .filter((deck) => deck.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  }, [responseData, filters])
+  
   return (
     <Main>
       <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">
         <div className="flex gap-my-md items-end">
           <h1 className="2xs:flex-1 text-3xl font-medium">My Decks</h1>
-          <p className="text-black-light">{decks.length} decks</p>
+          <p className="text-black-light">{allDecks.length} decks</p>
         </div>
       </div>
 
       <section>
-        <div className="flex flex-col gap-my-md">
+        <div className="flex flex-col gap-my-sm">
           <ul className="flex gap-my-xs">
             <li>
               <FilterTab
                 name={'category'}
                 value={'all'}
                 label={'All'}
-                count={decks.length}
+                count={allDecks.length}
                 isActive={filters.category === 'all'}
                 onFilterChange={handleFilterChange}
               />
@@ -92,7 +106,7 @@ const DeckPageMain = () => {
               />
             </div>
 
-            <div className="flex gap-my-md">
+            <div className="flex gap-my-md z-10">
               
               <FilterDropdown
                 id={'filters-options'}
@@ -127,7 +141,7 @@ const DeckPageMain = () => {
               <button
                 onClick={() => openModal(
                   "Add Deck", 
-                  <AddDeckForm setDecks={setDecks} closeModal={closeModal}/>
+                  <AddDeckForm {...{closeModal}}/>
                 )}
                 className="flex-1 2xs:w-auto button button--white"
               >
@@ -141,18 +155,15 @@ const DeckPageMain = () => {
           </div>
         </div>
       </section> 
-      
-      {isLoading 
-        ? (
-          <div className="col-span-full grid place-items-center">
-            <ClipLoader color="#ffffff" size={50}/>
-          </div>
-        ) : (
-          <DeckList decks={responseData && responseData.data}/>
-        )
-      }
+
+      <DeckList
+        allDecks={allDecks}
+        filteredDecks={filteredDecks}
+        isFetching={isFetching}
+      />
+
     </Main>
-  );
+  );``
 };
 
 export default DeckPageMain;

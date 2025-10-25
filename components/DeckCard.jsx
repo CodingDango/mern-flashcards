@@ -3,8 +3,11 @@
 import { DateTime } from 'luxon';
 import { FaBookOpen } from 'react-icons/fa6';
 import { startCase } from 'lodash';
-import DeckOptionsMenu from "./DeckOptionsMenu";
 import { deckIcons, deckThemeColors } from '@/libs/config';
+import { PiCards as CardsIcon } from 'react-icons/pi';
+import { FaCheck } from 'react-icons/fa';
+
+import DeckOptionsMenu from "./DeckOptionsMenu";
 
 const handleViewDeck = (e) => {
   console.log('navigating to view!');
@@ -27,12 +30,12 @@ const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0',
   return (
     <div 
       onClick={handleViewDeck}
-      className="min-h-[250px] cursor-pointer relative rounded-xl border border-black-md p-my-sm">
+      className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm">
 
-      <div className="absolute h-my-xs w-full bg-black-md left-0 top-0 rounded-tr-lg rounded-tl-lg">
+      <div className="absolute h-2 w-full bg-black-md left-0 top-0 rounded-tr-lg rounded-tl-lg">
         <div 
           style={{background: color, width: `${progress}%`}}
-          className="absolute h-my-xs left-0 top-0 rounded-tr-lg rounded-br-lg rounded-tl-lg">
+          className="absolute h-2 left-0 top-0 rounded-tr-lg rounded-br-lg rounded-tl-lg">
         </div>
       </div>
 
@@ -53,31 +56,38 @@ const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0',
           )}
         </div>  
 
-        <div className="flex flex-col gap-my-xs">
-          <p>
-            <span className='text-black-light'>Date Created: </span>
+        <div className="flex flex-col gap-1 text-black-light">
+          <p className='grid grid-cols-[110px_auto]'>
+            <span>Created On: </span>
             <span>{localDate}</span>
-            </p>
-          <p>
-            <span className='text-black-light'>Total cards: </span>
-            <span>{cardCount}</span>
-            </p>
-          <p>
-            <span className='text-black-light'>Cards Completed: </span>
-            <span>0</span>
-            </p>
+          </p>
+          <p className='grid grid-cols-[110px_auto]'>
+            <span>Last Studied: </span>
+            <span>{localDate}</span>
+          </p>
         </div>
 
-        <div className="flex-1 flex items-end">
+        <div className="flex-1 flex justify-between items-end">
           <button 
             onClick={handleStudyNow}
             // style={{backgroundColor: color}}
-            className="button button--white">
+            className="button bg-black-lg border border-black-md">
             <div className="flex items-center gap-my-xs">
               <FaBookOpen/>
               Study Now
             </div>
           </button>
+
+          <div className="flex gap-my-xs text-neutral-300">
+            <p className='px-my-sm py-my-xs bg-black-lg rounded-md flex gap-my-xs items-center'>
+              <CardsIcon size={20}/>
+              12
+            </p>
+            <p className='px-my-sm py-my-xs bg-black-lg rounded-md flex gap-my-xs items-center'>
+              <FaCheck size={16}/>
+              3
+            </p>
+          </div>
         </div>
       </div>
 

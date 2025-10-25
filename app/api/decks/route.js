@@ -4,9 +4,12 @@ import { DateTime } from "luxon";
 import fs from 'fs/promises'
 import path from 'path' 
 
-const dbPath = path.join(process.cwd(), 'data/deck.json');  
+const dbPath = path.join(
+  process.cwd(), 
+  'data/deck.json'
+);  
 
-export async function GET(request) {
+export async function GET() {
   const fileData = await fs.readFile(dbPath);
   const db = JSON.parse(fileData);
 
@@ -15,7 +18,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   const receivedData = await request.json();
-
+  
   const newDeckData = {
     ...receivedData,
     id: `deck-${randomUUID()}`,

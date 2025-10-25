@@ -17,7 +17,7 @@ const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
             w-[40px] h-[40px] rounded-full justify-self-center cursor-pointer"
         >
           <input
-            {...rest} // Pass along onChange, onBlur etc.
+            {...{...rest, id : `color-${idx}`}} // Pass along onChange, onBlur etc.
             type="radio"
             name={name} // Use the name prop for all radios
             value={idx}

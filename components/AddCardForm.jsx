@@ -31,14 +31,15 @@ const AddCardForm = ({ addFlashcard }) => {
   } = useForm({ resolver: zodResolver(cardSchema) });
 
   const onSubmit = ({topic, question, answer}) => {
-    if (Object.keys(errors).length > 0) return;
-
     addFlashcard(topic, question, answer);
     reset();
   };
 
   return (
-    <form className="flex flex-col gap-my-md" onSubmit={handleSubmit(onSubmit)}>
+    <form 
+      className="flex flex-col gap-my-md" 
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <FormField
         labelText={"topic"}
         errorMsg={errors.topic?.message}

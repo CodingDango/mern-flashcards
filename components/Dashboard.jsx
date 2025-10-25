@@ -22,7 +22,9 @@ const Dashboard = () => {
           <div className="flex flex-col gap-my-xs  border border-black-md p-my-md rounded-xl ">
             <div className='flex justify-between items-center gap-my-md'>
               <div className='flex gap-my-xs items-center'>
-                <StackIcon size={20}/>
+                <StackIcon size={24
+
+                }/>
                 <span className='text-lg'>Total Decks</span>  
               </div>
               <Link className='bg-white text-black button button--circle' href={'/decks'}>
@@ -35,7 +37,9 @@ const Dashboard = () => {
           <div className="flex flex-col gap-my-xs border border-black-md p-my-md rounded-xl ">
             <div className='flex justify-between items-center gap-my-md'>
               <div className='flex gap-my-xs items-center'>
-                <CardsIcon size={20}/>
+                <CardsIcon size={24
+
+                }/>
                 <span className='text-lg'>Total Cards</span>  
               </div>
               <Link className='bg-white text-black button button--circle' href={'/cards'}>
@@ -48,7 +52,7 @@ const Dashboard = () => {
           <div className="flex flex-col gap-my-xs bg-my-primary/75 p-my-md rounded-xl justify-center">
             <div className='flex justify-between items-center gap-my-md'>
               <div className='flex gap-my-xs items-center'>
-                <ProgressIcon size={20}/>
+                <ProgressIcon size={24}/>
                 <span className='text-lg'>Progress</span>  
               </div>
             </div>
@@ -56,13 +60,13 @@ const Dashboard = () => {
           </div>
         </div>
 
- <div className='border border-black-md rounded-xl flex flex-col gap-my-sm pt-my-md'>
-          <div className='flex items-center gap-my-sm px-my-md'>
+        <div className='border border-black-md rounded-xl grid grid-rows-[60px_1fr]'>
+          <div className='flex items-center gap-my-sm px-my-md '>
             <HeartBeat size={28}/>
-            <h3 className='text-2xl font-medium'>Recently Studied</h3>
+            <h3 className='text-xl font-medium'>Recently Studied</h3>
           </div>
 
-          <div className='mt-auto grid grid-cols-1 *:p-my-sm border-t border-black-md'>
+          <div className='grid grid-cols-1 *:p-my-sm border-t border-black-md'>
 
             <div className='flex justify-between items-center hover:bg-black-lg border-b border-black-md'>
               <div className='flex gap-my-sm items-center'>
@@ -75,10 +79,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
 
             </div>
 
@@ -93,10 +93,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
 
             </div>
 
@@ -111,10 +107,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
             </div>
 
             {/* <DeckCard title={'idk lol'} color={'#C90078'} Icon={FaBook} options={false}/>
@@ -124,10 +116,10 @@ const Dashboard = () => {
         </div>
 
 
-        <div className='border border-black-md rounded-xl flex flex-col gap-my-sm pt-my-md'>
-          <div className='flex items-center gap-my-sm px-my-md'>
+        <div className='border border-black-md rounded-xl grid grid-rows-[60px_1fr]'>
+          <div className='flex items-center gap-my-sm px-my-md '>
             <Eye size={28}/>
-            <h3 className='text-2xl font-medium'>Needs Review</h3>
+            <h3 className='text-xl font-medium'>Needs Review</h3>
           </div>
 
           <div className='mt-auto grid grid-cols-1 *:p-my-sm border-t border-black-md'>
@@ -143,10 +135,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
 
             </div>
 
@@ -161,10 +149,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
 
             </div>
 
@@ -179,10 +163,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className='flex justify-end items-center gap-my-xs'>
-                <span className='text-black-light'>Cards answered</span>
-                <span>10 / 19</span>
-              </div>
             </div>
 
             {/* <DeckCard title={'idk lol'} color={'#C90078'} Icon={FaBook} options={false}/>

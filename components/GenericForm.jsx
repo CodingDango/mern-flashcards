@@ -8,7 +8,6 @@ const GenericForm = ({
   onSubmit, 
   fields, 
   submitText, 
-  onFormClose,
   isPending,
   pendingText,
   error
@@ -20,16 +19,16 @@ const GenericForm = ({
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema), mode: "onBlur" }); // Added onBlur mode for better UX
 
-  const handleFormSubmit = async (data) => {
+  const handleOnSubmit = (data) => {
+    console.log('wtf why is this not working?');
     onSubmit(data);
-  };
+  }
 
   return (
     <form 
       className={`flex flex-col gap-my-md ${isPending ? 'pointer-events-none' : ' '}`} 
-      onSubmit={handleSubmit(handleFormSubmit)}
+      onSubmit={handleSubmit(handleOnSubmit)}
     >
-      
       {fields.map((fieldConfig) => {
         const { name, label, component: FieldComponent, ...restOfProps } = fieldConfig;
         const error = errors[name];

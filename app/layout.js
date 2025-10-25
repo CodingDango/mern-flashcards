@@ -19,11 +19,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} antialiased`}
       >
+        <QueryProvider>
           <UIProviders>
-            <QueryProvider>
-              {children}
-            </QueryProvider>            
+            {children}
           </UIProviders>
+        </QueryProvider>            
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
-import { DateTime } from 'luxon'
-import { z } from "zod";
-import { createDeck } from '@/libs/actions';
+'use client';
+
 import { deckThemeColors, deckIcons } from '@/libs/config';
-import { useState } from 'react';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createDeck } from '@/libs/actions';
+import { z } from "zod";
 
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
@@ -12,10 +13,10 @@ const getEnumFromIndices = (arr) => arr.map((val, idx) => idx.toString());
 
 const deckSchema = z.object({
   title: z.string().trim().min(3, { message: "Deck title is too short." }).max(20),
-  color: z.enum(getEnumFromIndices(deckThemeColors), {
+  colorIdx: z.enum(getEnumFromIndices(deckThemeColors), {
     message: "Please select a color.",
   }),
-  icon: z.enum([...Object.keys(deckIcons)], {
+  iconKey: z.enum([...Object.keys(deckIcons)], {
     message: "Please select an icon.",
   }),
 });
@@ -30,37 +31,40 @@ const deckFields = [
     className: "text-input border border-black-md",
   },
   {
-    name: "color",
+    name: "colorIdx",
     label: "Deck Color",
     component: ColorPalletePicker, 
     colors: deckThemeColors,           
   },
   {
-    name: "icon",
+    name: "iconKey",
     label: "Deck Icon",
     component: IconSet, 
     icons: [...Object.keys(deckIcons)]
   },
 ];
 
-const AddDeckForm = ({ setDecks, closeModal }) => {
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(null);
+const AddDeckForm = ({ closeModal }) => {
+  const queryClient = useQueryClient();
 
-  const handleAddDeck = async ({ title, color : colorIdx, icon : iconKey}) => { 
-    setIsPending(true);
+  const createDeckMutation = useMutation({
+    mutationFn: createDeck,
+    onSuccess: () => { 
+      queryClient.invalidateQueries() 
+    },
+    queryKey: ['decks']
+  });
 
-    setTimeout(async () => {
-      try {
-        const {data} = await createDeck({title, colorIdx, iconKey});
-        setDecks(prev => [...prev, data]);
-        setIsPending(true);
-        closeModal();
-      } catch(e) {
-        setError(e);
-        setIsPending(false);
-      } 
-    }, 2000);
+  const handleAddDeck = async ({ title, colorIdx, iconKey }) => {
+    try {
+      const {data} = await createDeckMutation.mutateAsync(
+        {title, colorIdx, iconKey}
+      );
+    } catch(err)  {
+      console.log(err);
+    }
+
+    closeModal(); 
   };
 
   return (
@@ -71,9 +75,9 @@ const AddDeckForm = ({ setDecks, closeModal }) => {
         onSubmit={handleAddDeck}
         submitText="Add New Deck"
         onFormClose={closeModal}
-        isPending={isPending}
+        isPending={createDeckMutation.isPending}
         pendingText={'Adding...'}
-        error={error}
+        error={createDeckMutation.error}
       />
     </>
   );

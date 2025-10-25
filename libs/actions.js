@@ -2,8 +2,13 @@
 
 import axios from 'axios'
 
-export async function createDeck(deck) {
-  const res = await axios.post('http://localhost:3000/api/decks', JSON.stringify(deck));
+// deck is {title, colorIdx, iconKey}
+export async function createDeck({title, colorIdx, iconKey}) {
+  const res = await axios.post(
+    'http://localhost:3000/api/decks', 
+    JSON.stringify({title, colorIdx, iconKey})
+  );
+
   return res.data;
 }
 

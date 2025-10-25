@@ -18,5 +18,75 @@
     "progress": 0,
     "totalCards": 0,
     "isFavorite": false
+  },
+  {
+    "title": "sadwdw",
+    "colorIdx": "10",
+    "iconKey": "MdOutlinePsychology",
+    "id": "deck-08b0715b-44c6-41e1-bb0a-b81cf663e106",
+    "dateCreated": "2025-10-18T01:23:54.018Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "Hello world!",
+    "colorIdx": "9",
+    "iconKey": "FaBook",
+    "id": "deck-1fea9026-da25-4c4a-970d-20e5d8a11761",
+    "dateCreated": "2025-10-18T10:40:00.207Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "adswdw",
+    "colorIdx": "0",
+    "iconKey": "FaBook",
+    "id": "deck-1395fa91-b3e5-45ad-9596-12553906a50d",
+    "dateCreated": "2025-10-18T12:41:08.690Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdwdw",
+    "colorIdx": "11",
+    "iconKey": "FaLanguage",
+    "id": "deck-0df7c3ec-62b6-4162-a5de-1c42811bc93d",
+    "dateCreated": "2025-10-18T12:41:14.461Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdsdw",
+    "colorIdx": "0",
+    "iconKey": "FaBook",
+    "id": "deck-2872cae2-1517-49f8-87dc-8ed072b66408",
+    "dateCreated": "2025-10-18T12:48:18.823Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdwdw",
+    "colorIdx": "0",
+    "iconKey": "FaBook",
+    "id": "deck-da7d6d90-4df0-4a22-a7a0-e23692ba95ba",
+    "dateCreated": "2025-10-22T02:46:41.644Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "asdwaf",
+    "colorIdx": "0",
+    "iconKey": "FaGraduationCap",
+    "id": "deck-8078c88f-46c9-4df1-a377-add913d4903a",
+    "dateCreated": "2025-10-25T10:21:16.819Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
   }
 ]
