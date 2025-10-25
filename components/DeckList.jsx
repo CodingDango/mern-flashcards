@@ -1,11 +1,16 @@
 import { MdAddCard } from "react-icons/md";
-import { HiOutlineSquare3Stack3D as StackIcon } from 'react-icons/hi2';
+import { HiOutlineSquare3Stack3D as StackIcon } from "react-icons/hi2";
 import { ClipLoader } from "react-spinners";
 
 import Notify from "./Notify";
 import DeckCard from "./DeckCard";
 
-const DeckList = ({ allDecks, filteredDecks, isFetching }) => {
+const DeckList = ({
+  allDecks,
+  filteredDecks,
+  isFetching,
+  onToggleFavorite,
+}) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
     lg:grid-cols-3 auto-rows-[minmax(240px,_auto)] 
@@ -14,19 +19,17 @@ const DeckList = ({ allDecks, filteredDecks, isFetching }) => {
 
   const decksToDisplay =
     filteredDecks &&
-    filteredDecks.map((deck, idx) => <DeckCard key={deck.id} {...deck} />);
+    filteredDecks.map((deck) => <DeckCard key={deck.id} onToggleFavorite={onToggleFavorite} {...deck} />);
 
   const status = getStatus(allDecks, filteredDecks, isFetching);
 
-return (
+  return (
     <div className={parentClass}>
-      {status 
-        ? (
-          <div className="col-span-full grid place-items-center">
-            {status}
-          </div>
-        ) : (decksToDisplay)
-      }
+      {status ? (
+        <div className="col-span-full grid place-items-center">{status}</div>
+      ) : (
+        decksToDisplay
+      )}
     </div>
   );
 };

@@ -1,14 +1,16 @@
 import { IoCloseOutline } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
-import { FaRegStar } from 'react-icons/fa';
+import { FaRegEdit, FaRegStar, FaStar } from 'react-icons/fa';
+import { useMemo } from "react";
 import OptionsMenu from "./OptionsMenu"
 
-const DeckOptionsMenu = ({id}) => {
+const DeckOptionsMenu = ({ deckId, isFavorite, onToggleFavorite }) => {
+  const menuId = useMemo(() => `${deckId}-options`);
+
   const options = [
     {
-      icon: <FaRegStar size={16}/>,
-      text: 'favorite',
-      callback: () => console.log('Pressed options menu edit!')
+      icon: isFavorite ? <FaStar size={16}/> : <FaRegStar size={16}/>,
+      text: isFavorite ? 'unfavorite' : 'favorite',
+      callback: () => onToggleFavorite(deckId)
     },
     {
       icon: <FaRegEdit size={16}/>,
@@ -23,7 +25,7 @@ const DeckOptionsMenu = ({id}) => {
   ]
 
   return (
-    <OptionsMenu options={options} id={id}/>
+    <OptionsMenu options={options} id={menuId}/>
   );
 }
 

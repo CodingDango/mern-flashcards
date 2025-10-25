@@ -18,7 +18,18 @@ const handleStudyNow = (e) => {
   e.stopPropagation();
 }
 
-const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0', dateCreated, options=true}) => {
+const DeckCard = ({ 
+  id, 
+  title, 
+  colorIdx, 
+  iconKey, 
+  dateCreated,
+  isFavorite,
+  onToggleFavorite, 
+  cardCount = 0,
+  progress = '0', 
+  options=true
+}) => {
   if (!title) return;
 
   const color = deckThemeColors[colorIdx];
@@ -32,7 +43,7 @@ const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0',
       onClick={handleViewDeck}
       className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm">
 
-      <div className="absolute h-2 w-full bg-black-md left-0 top-0 rounded-tr-lg rounded-tl-lg">
+      <div className="absolute h-2 w-full bg-black-lg left-0 top-0 rounded-tr-lg rounded-tl-lg">
         <div 
           style={{background: color, width: `${progress}%`}}
           className="absolute h-2 left-0 top-0 rounded-tr-lg rounded-br-lg rounded-tl-lg">
@@ -51,7 +62,10 @@ const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0',
           </div>
           {options && (
             <div onClick={(e) => e.stopPropagation()}>
-              <DeckOptionsMenu id={`${id}-options`}/>
+              <DeckOptionsMenu
+                deckId={id}
+                isFavorite={isFavorite} 
+                onToggleFavorite={onToggleFavorite}/>
             </div>
           )}
         </div>  
@@ -70,7 +84,6 @@ const DeckCard = ({ id, title, colorIdx, iconKey, cardCount = 0, progress = '0',
         <div className="flex-1 flex justify-between items-end">
           <button 
             onClick={handleStudyNow}
-            // style={{backgroundColor: color}}
             className="button bg-black-lg border border-black-md">
             <div className="flex items-center gap-my-xs">
               <FaBookOpen/>
