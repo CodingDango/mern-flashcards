@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getDecks } from "@/libs/actions";
+import { getDecks, removeDeck } from "@/libs/actions";
 import { useMemo, useState } from "react";
 import { useModalContext } from "@/context/ModalContext";
 import { toggleDeckFavorite } from "@/libs/actions";
@@ -15,25 +15,28 @@ const DeckPageMain = () => {
   const queryClient = useQueryClient();
 
   const { openModal, closeModal } = useModalContext();
-  
-  const { data: responseData, isLoading, error } = useQuery({
-    queryKey: ['decks'],
+
+  const {
+    data: responseData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["decks"],
     queryFn: getDecks,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
 
   const toggleFavoriteMutation = useMutation({
-    mutationFn: toggleDeckFavorite, 
+    mutationFn: toggleDeckFavorite,
 
     onMutate: async ({ deckId }) => {
-      await queryClient.cancelQueries({ queryKey: ['decks'] });
-      const previousDecksData = queryClient.getQueryData(['decks']);
+      await queryClient.cancelQueries({ queryKey: ["decks"] });
+      const previousDecksData = queryClient.getQueryData(["decks"]);
 
-      queryClient.setQueryData(['decks'], (oldData) => {
+      queryClient.setQueryData(["decks"], (oldData) => {
         if (!oldData || !oldData.data) return oldData;
 
-        const updatedDecks = oldData.data.map(deck => {
-          // THE FIX: Compare them as strings so types don't matter.
+        const updatedDecks = oldData.data.map((deck) => {
           if (String(deck.id) === String(deckId)) {
             return { ...deck, isFavorite: !deck.isFavorite };
           }
@@ -46,20 +49,48 @@ const DeckPageMain = () => {
       return { previousDecksData };
     },
 
-    // If the mutation fails, use the context we returned from onMutate to roll back
     onError: (err, deckId, context) => {
-      queryClient.setQueryData(['decks'], context.previousDecks);
-      // You would also show a toast notification here, e.g., toast.error("Failed to update favorite");
+      queryClient.setQueryData(["decks"], context.previousDecks);
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['decks'] });
+      queryClient.invalidateQueries({ queryKey: ["decks"] });
+    },
+  });
+
+  const removeDeckMutation = useMutation({
+    mutationFn: removeDeck,
+    onMutate: async ({ deckId }) => {
+      await queryClient.cancelQueries({ queryKey: ["decks"] });
+      const previousDecksData = queryClient.getQueryData(["decks"]);
+
+      queryClient.setQueryData(["decks"], (oldData) => {
+        const { data: decks } = oldData;
+
+        if (!oldData || !decks) return oldData;
+
+        const filteredDecks = decks.filter((deck) => deck.id !== deckId);
+        return { ...oldData, data: filteredDecks };
+      });
+
+      return { previousDecksData };
+    },
+    onError: (err, deckId, context) => {
+      queryClient.setQueryData(["decks"], context.previousDecks);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["decks"] });
     },
   });
 
   // A simple handler to call the mutation
   const handleToggleFavorite = (deckId) => {
     toggleFavoriteMutation.mutate({ deckId });
+  };
+
+  const handleOnRemoveDeck = (deckId) => {
+    removeDeckMutation.mutate({ deckId });
   };
 
   const [filters, setFilters] = useState({
@@ -116,9 +147,11 @@ const DeckPageMain = () => {
         filteredDecks={filteredDecks}
         isFetching={isLoading}
         onToggleFavorite={handleToggleFavorite}
+        onRemove={handleOnRemoveDeck}
       />
     </Main>
-  );``
+  );
+  ``;
 };
 
 export default DeckPageMain;

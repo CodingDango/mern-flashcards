@@ -20,11 +20,18 @@ export async function getDecks() {
 }
 
 export async function toggleDeckFavorite({ deckId }) {
-  console.log('hmm, am i inside now?');
-
   const res = await axios.put(
     DECK_ENDPOINT,
     JSON.stringify({ action: "favorite", deckId })
+  );
+
+  return res.data;
+}
+
+export async function removeDeck({ deckId }) {
+  const res = await axios.delete(
+    DECK_ENDPOINT,
+    { data: JSON.stringify({ deckId })}
   );
 
   return res.data;

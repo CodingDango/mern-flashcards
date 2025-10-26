@@ -3,7 +3,12 @@ import { FaRegEdit, FaRegStar, FaStar } from 'react-icons/fa';
 import { useMemo } from "react";
 import OptionsMenu from "./OptionsMenu"
 
-const DeckOptionsMenu = ({ deckId, isFavorite, onToggleFavorite }) => {
+const DeckOptionsMenu = ({ 
+  deckId, 
+  isFavorite, 
+  onToggleFavorite,
+  onRemove 
+}) => {
   const menuId = useMemo(() => `${deckId}-options`);
 
   const options = [
@@ -20,7 +25,7 @@ const DeckOptionsMenu = ({ deckId, isFavorite, onToggleFavorite }) => {
     {
       icon: <IoCloseOutline size={16} className="scale-125" />,
       text: 'remove',
-      callback: () => console.log('Pressed options menu remove!')
+      callback: () => onRemove(deckId)
     },
   ]
 

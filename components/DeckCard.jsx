@@ -26,6 +26,7 @@ const DeckCard = ({
   dateCreated,
   isFavorite,
   onToggleFavorite, 
+  onRemove,
   cardCount = 0,
   progress = '0', 
   options=true
@@ -65,7 +66,9 @@ const DeckCard = ({
               <DeckOptionsMenu
                 deckId={id}
                 isFavorite={isFavorite} 
-                onToggleFavorite={onToggleFavorite}/>
+                onToggleFavorite={onToggleFavorite}
+                onRemove={onRemove}
+              />
             </div>
           )}
         </div>  

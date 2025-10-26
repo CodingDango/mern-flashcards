@@ -26,7 +26,7 @@ export async function POST(request) {
 
   const decks = await getAllDecks();
   decks.push(newDeckData);
-  await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+  await fs.writeFile(dbPath, JSON.stringify(decks, null, 2));
 
   return NextResponse.json({ data: newDeckData, status: "success" });
 }
@@ -46,6 +46,20 @@ export async function PUT(request) {
   }
 
   return NextResponse.json({ status });
+}
+
+export async function DELETE(request) {
+  const { deckId } = await request.json();
+
+  try{
+    const allDecks = await getAllDecks();
+    const filteredDecks = allDecks.filter((deck) => deck.id !== deckId);
+    fs.writeFile(dbPath, JSON.stringify(filteredDecks, null, 2));
+
+    return NextResponse.json({ status: 'success' });
+  } catch (err) {
+    return NextResponse.json({ status: 'failed' });
+  }
 }
 
 async function getAllDecks() {

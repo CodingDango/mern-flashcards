@@ -10,6 +10,7 @@ const DeckList = ({
   filteredDecks,
   isFetching,
   onToggleFavorite,
+  onRemove
 }) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
@@ -19,7 +20,13 @@ const DeckList = ({
 
   const decksToDisplay =
     filteredDecks &&
-    filteredDecks.map((deck) => <DeckCard key={deck.id} onToggleFavorite={onToggleFavorite} {...deck} />);
+    filteredDecks.map((deck) => (
+      <DeckCard 
+        key={deck.id} 
+        onToggleFavorite={onToggleFavorite}
+        onRemove={onRemove} 
+        {...deck} />
+    ));
 
   const status = getStatus(allDecks, filteredDecks, isFetching);
 
