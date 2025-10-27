@@ -5,10 +5,10 @@ import axios from "axios";
 const DECK_ENDPOINT = "http://localhost:3000/api/decks";
 
 // deck is {title, colorIdx, iconKey}
-export async function createDeck({ title, colorIdx, iconKey }) {
+export async function createDeck(deck) {
   const res = await axios.post(
     DECK_ENDPOINT,
-    JSON.stringify({ title, colorIdx, iconKey })
+    JSON.stringify(deck)
   );
 
   return res.data;
@@ -35,4 +35,13 @@ export async function removeDeck({ deckId }) {
   );
 
   return res.data;
+}
+
+export async function editDeck({ deckId, data }) {
+  const res = await axios.put(
+    DECK_ENDPOINT,
+    JSON.stringify({ action: "edit", deckId, data})
+  );
+
+  return res.status;
 }

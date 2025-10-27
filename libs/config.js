@@ -36,7 +36,7 @@ export const deckThemeColors = [
   '#C90078',
 ];
 
-export const deckIcons = {
+export const deckIcons = [
   // --- General & Academia ---
   FaBook,             // For Literature, English, or any book-based subject
   FaGraduationCap,    // For general academia, goals, or a specific course
@@ -60,4 +60,4 @@ export const deckIcons = {
   // --- Miscellaneous ---
   FaCog,              // For Engineering, Mechanics, or how things work
   FaLightbulb
-};
+];

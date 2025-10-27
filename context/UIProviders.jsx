@@ -6,7 +6,7 @@ import ModalProvider from "@/context/ModalProvider";
 const UIProviders = ({ children }) => (
   <OptionsMenuManagerProvider>
     <ModalProvider>
-    {children}
+      {children}
     </ModalProvider>
   </OptionsMenuManagerProvider>
 )

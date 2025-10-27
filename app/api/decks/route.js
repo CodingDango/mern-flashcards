@@ -24,6 +24,8 @@ export async function POST(request) {
     isFavorite: false,
   };
 
+  console.log(newDeckData);
+
   const decks = await getAllDecks();
   decks.push(newDeckData);
   await fs.writeFile(dbPath, JSON.stringify(decks, null, 2));
@@ -32,17 +34,33 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-  const { action, deckId } = await request.json();
-  let status = 'none';
+  const { 
+    action, 
+    deckId, 
+    data : newDeck = null 
+  } = await request.json();
 
-  switch (action) {
-    case "favorite":
-      editDeck(deckId, (deck) => ({ ...deck, isFavorite: !deck.isFavorite }));
-      status = 'favorite!';
-      break;
+  const status = { 
+    statusCode: 400,
+    errorText: null
+  };
 
-    default:
-      break;
+  try {
+    switch (action) {
+      case "favorite":
+        editDeck(deckId, (deck) => ({ ...deck, isFavorite: !deck.isFavorite }));
+        break;
+    
+      case 'edit':
+        editDeck(deckId, (deck) => ({...deck, ...newDeck, id: deckId}));
+        console.log('Editing the deck!')
+
+      default:
+        break;
+    }
+  } catch (err) {
+    status.code = 200;
+    status.errorText = err;
   }
 
   return NextResponse.json({ status });

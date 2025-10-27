@@ -16,7 +16,7 @@ const deckSchema = z.object({
   colorIdx: z.enum(getEnumFromIndices(deckThemeColors), {
     message: "Please select a color.",
   }),
-  iconKey: z.enum([...Object.keys(deckIcons)], {
+  iconIdx: z.enum(getEnumFromIndices(deckIcons), {
     message: "Please select an icon.",
   }),
 });
@@ -37,10 +37,10 @@ const deckFields = [
     colors: deckThemeColors,           
   },
   {
-    name: "iconKey",
+    name: "iconIdx",
     label: "Deck Icon",
     component: IconSet, 
-    icons: [...Object.keys(deckIcons)]
+    icons: deckIcons
   },
 ];
 
@@ -55,10 +55,10 @@ const AddDeckForm = ({ closeModal }) => {
     queryKey: ['decks']
   });
 
-  const handleAddDeck = async ({ title, colorIdx, iconKey }) => {
+  const handleAddDeck = async ({ title, colorIdx, iconIdx }) => {
     try {
-      const {data} = await createDeckMutation.mutateAsync(
-        {title, colorIdx, iconKey}
+      const { data } = await createDeckMutation.mutateAsync(
+        {title, colorIdx, iconIdx}
       );
     } catch(err)  {
       console.log(err);

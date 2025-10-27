@@ -10,7 +10,8 @@ const DeckList = ({
   filteredDecks,
   isFetching,
   onToggleFavorite,
-  onRemove
+  onRemove,
+  onEdit
 }) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
@@ -24,7 +25,8 @@ const DeckList = ({
       <DeckCard 
         key={deck.id} 
         onToggleFavorite={onToggleFavorite}
-        onRemove={onRemove} 
+        onRemove={onRemove}
+        onEdit={onEdit}
         {...deck} />
     ));
 

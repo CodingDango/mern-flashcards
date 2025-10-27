@@ -22,11 +22,12 @@ const DeckCard = ({
   id, 
   title, 
   colorIdx, 
-  iconKey, 
+  iconIdx, 
   dateCreated,
   isFavorite,
   onToggleFavorite, 
   onRemove,
+  onEdit,
   cardCount = 0,
   progress = '0', 
   options=true
@@ -34,7 +35,7 @@ const DeckCard = ({
   if (!title) return;
 
   const color = deckThemeColors[colorIdx];
-  const Icon = deckIcons[iconKey];
+  const Icon = deckIcons[iconIdx];
 
   const date = DateTime.fromISO(dateCreated);
   const localDate = date.toLocaleString(DateTime.DATE_MED);
@@ -68,6 +69,8 @@ const DeckCard = ({
                 isFavorite={isFavorite} 
                 onToggleFavorite={onToggleFavorite}
                 onRemove={onRemove}
+                onEdit={onEdit}
+                deck={{title, colorIdx, iconIdx}}
               />
             </div>
           )}

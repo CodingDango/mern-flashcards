@@ -1,42 +1,12 @@
 [
   {
-    "title": "Philosophy",
-    "colorIdx": "2",
-    "iconKey": "MdOutlinePsychology",
-    "id": "deck-e3c39ae7-06dc-4099-a462-b25b5016b2d8",
-    "dateCreated": "2025-10-15T12:11:49.397Z",
+    "title": "Computer Science",
+    "colorIdx": "1",
+    "iconIdx": "3",
+    "id": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5",
+    "dateCreated": "2025-10-27T09:43:55.097Z",
     "progress": 0,
     "totalCards": 0,
     "isFavorite": true
-  },
-  {
-    "title": "sadwdw",
-    "colorIdx": "10",
-    "iconKey": "MdOutlinePsychology",
-    "id": "deck-08b0715b-44c6-41e1-bb0a-b81cf663e106",
-    "dateCreated": "2025-10-18T01:23:54.018Z",
-    "progress": 0,
-    "totalCards": 0,
-    "isFavorite": false
-  },
-  {
-    "title": "Hello world!",
-    "colorIdx": "9",
-    "iconKey": "FaBook",
-    "id": "deck-1fea9026-da25-4c4a-970d-20e5d8a11761",
-    "dateCreated": "2025-10-18T10:40:00.207Z",
-    "progress": 0,
-    "totalCards": 0,
-    "isFavorite": false
-  },
-  {
-    "title": "asdwdw",
-    "colorIdx": "11",
-    "iconKey": "FaLanguage",
-    "id": "deck-0df7c3ec-62b6-4162-a5de-1c42811bc93d",
-    "dateCreated": "2025-10-18T12:41:14.461Z",
-    "progress": 0,
-    "totalCards": 0,
-    "isFavorite": false
   }
 ]

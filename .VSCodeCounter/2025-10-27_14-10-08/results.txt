@@ -1,0 +1,105 @@
+Date : 2025-10-27 14:10:08
+Directory : d:\Coding Programs\Code\Web Dev\Practice\semanticReact
+Total : 62 files,  8295 codes, 35 comments, 345 blanks, all 8675 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          4 |      6,346 |          0 |          2 |      6,348 |
+| JavaScript JSX     |         38 |      1,533 |         19 |        239 |      1,791 |
+| JavaScript         |         11 |        326 |         13 |         75 |        414 |
+| PostCSS            |          1 |         51 |          3 |         13 |         67 |
+| Markdown           |          2 |         27 |          0 |         15 |         42 |
+| JSON with Comments |          1 |          7 |          0 |          1 |          8 |
+| XML                |          5 |          5 |          0 |          0 |          5 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                          | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                             |         62 |      8,295 |         35 |        345 |      8,675 |
+| . (Files)                                                                                     |          8 |      6,364 |          1 |         27 |      6,392 |
+| app                                                                                           |          6 |        172 |          3 |         41 |        216 |
+| app (Files)                                                                                   |          3 |         88 |          3 |         19 |        110 |
+| app\api                                                                                       |          1 |         64 |          0 |         18 |         82 |
+| app\api\decks                                                                                 |          1 |         64 |          0 |         18 |         82 |
+| app\cards                                                                                     |          1 |         10 |          0 |          2 |         12 |
+| app\decks                                                                                     |          1 |         10 |          0 |          2 |         12 |
+| components                                                                                    |         30 |      1,397 |         19 |        203 |      1,619 |
+| context                                                                                       |          8 |        136 |          0 |         36 |        172 |
+| data                                                                                          |          2 |         43 |          0 |          0 |         43 |
+| hooks                                                                                         |          1 |         91 |          7 |         22 |        120 |
+| libs                                                                                          |          2 |         87 |          5 |         16 |        108 |
+| public                                                                                        |          5 |          5 |          0 |          0 |          5 |
++-----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                      | language           | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\README.md                              | Markdown           |         23 |          0 |         14 |         37 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\TODOS.md                               | Markdown           |          4 |          0 |          1 |          5 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\api\decks\route.js                 | JavaScript         |         64 |          0 |         18 |         82 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\cards\page.js                      | JavaScript         |         10 |          0 |          2 |         12 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\decks\page.js                      | JavaScript         |         10 |          0 |          2 |         12 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\globals.css                        | PostCSS            |         51 |          3 |         13 |         67 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\layout.js                          | JavaScript         |         27 |          0 |          4 |         31 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\app\page.js                            | JavaScript         |         10 |          0 |          2 |         12 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\AddCardForm.jsx             | JavaScript JSX     |         78 |          0 |         12 |         90 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\AddDeckForm.jsx             | JavaScript JSX     |         75 |          0 |         12 |         87 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\AppLayout.jsx               | JavaScript JSX     |          6 |          0 |          1 |          7 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\ColorPalletePicker.jsx      | JavaScript JSX     |         31 |          2 |          2 |         35 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Dashboard.jsx               | JavaScript JSX     |        140 |          6 |         33 |        179 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\DeckCard.jsx                | JavaScript JSX     |         99 |          0 |         15 |        114 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\DeckFilters.jsx             | JavaScript JSX     |         94 |          0 |          8 |        102 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\DeckList.jsx                | JavaScript JSX     |         61 |          0 |         10 |         71 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\DeckOptionsMenu.jsx         | JavaScript JSX     |         33 |          0 |          4 |         37 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\DeckPageMain.jsx            | JavaScript JSX     |         52 |          0 |         10 |         62 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\EditCardForm.jsx            | JavaScript JSX     |         84 |          0 |         16 |        100 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\FilterButton.jsx            | JavaScript JSX     |         16 |          0 |          2 |         18 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\FilterDropdown.jsx          | JavaScript JSX     |         22 |          0 |          5 |         27 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\FilterTab.jsx               | JavaScript JSX     |         18 |          0 |          3 |         21 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Flashcard.jsx               | JavaScript JSX     |        147 |          9 |         13 |        169 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\FlashcardList.jsx           | JavaScript JSX     |         32 |          0 |          5 |         37 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\FlashcardsMain.jsx          | JavaScript JSX     |         18 |          0 |          4 |         22 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\GenericForm.jsx             | JavaScript JSX     |         62 |          0 |          9 |         71 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Header.jsx                  | JavaScript JSX     |         18 |          0 |          2 |         20 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\IconSet.jsx                 | JavaScript JSX     |         38 |          2 |          3 |         43 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Loading.jsx                 | JavaScript JSX     |          0 |          0 |          1 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Main.jsx                    | JavaScript JSX     |          7 |          0 |          0 |          7 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\ModalContainer.jsx          | JavaScript JSX     |         50 |          0 |          7 |         57 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Notify.jsx                  | JavaScript JSX     |         13 |          0 |          0 |         13 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\OptionsMenu.jsx             | JavaScript JSX     |         51 |          0 |          7 |         58 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Sidebar.jsx                 | JavaScript JSX     |         50 |          0 |          7 |         57 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\SidebarItem.jsx             | JavaScript JSX     |         32 |          0 |          6 |         38 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\Spinner.jsx                 | JavaScript JSX     |          7 |          0 |          0 |          7 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\ThemeToggle.jsx             | JavaScript JSX     |         50 |          0 |          4 |         54 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\components\UserDisplay.jsx             | JavaScript JSX     |         13 |          0 |          2 |         15 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\FlashcardsContext.jsx          | JavaScript JSX     |          4 |          0 |          2 |          6 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\FlashcardsProvider.jsx         | JavaScript JSX     |         37 |          0 |         10 |         47 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\ModalContext.jsx               | JavaScript JSX     |          3 |          0 |          1 |          4 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\ModalProvider.jsx              | JavaScript JSX     |         33 |          0 |          6 |         39 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\OptionsMenuManagerContext.jsx  | JavaScript JSX     |          3 |          0 |          1 |          4 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\OptionsMenuManagerProvider.jsx | JavaScript JSX     |         34 |          0 |          9 |         43 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\QueryProvider.jsx              | JavaScript JSX     |         11 |          0 |          4 |         15 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\context\UIProviders.jsx                | JavaScript JSX     |         11 |          0 |          3 |         14 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\data\cards.json                        | JSON               |          1 |          0 |          0 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\data\deck.json                         | JSON               |         42 |          0 |          0 |         42 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\eslint.config.mjs                      | JavaScript         |         21 |          0 |          5 |         26 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\hooks\useDecks.js                      | JavaScript         |         91 |          7 |         22 |        120 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\jsconfig.json                          | JSON with Comments |          7 |          0 |          1 |          8 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\libs\actions.js                        | JavaScript         |         34 |          1 |         10 |         45 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\libs\config.js                         | JavaScript         |         53 |          4 |          6 |         63 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\next.config.mjs                        | JavaScript         |          2 |          1 |          2 |          5 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\package-lock.json                      | JSON               |      6,270 |          0 |          1 |      6,271 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\package.json                           | JSON               |         33 |          0 |          1 |         34 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\postcss.config.mjs                     | JavaScript         |          4 |          0 |          2 |          6 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\public\file.svg                        | XML                |          1 |          0 |          0 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\public\globe.svg                       | XML                |          1 |          0 |          0 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\public\next.svg                        | XML                |          1 |          0 |          0 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\public\vercel.svg                      | XML                |          1 |          0 |          0 |          1 |
+| d:\Coding Programs\Code\Web Dev\Practice\semanticReact\public\window.svg                      | XML                |          1 |          0 |          0 |          1 |
+| Total                                                                                         |                    |      8,295 |         35 |        345 |      8,675 |
++-----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

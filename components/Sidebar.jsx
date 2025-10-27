@@ -46,9 +46,7 @@ const Sidebar = ({activeRoute = ''}) => {
           </ul>
         </section>
 
-        <div className="flex-1 flex flex-col justify-end">
-          <UserDisplay name={'jane doe'} email={'example@gmail.com'}/>
-        </div>
+        <UserDisplay name={'jane doe'} email={'example@gmail.com'}/>
       </div>
     </nav>
   );

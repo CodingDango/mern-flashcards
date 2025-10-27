@@ -36,6 +36,7 @@ const OptionsMenu = ({
                 onClick={() => {
                   onSelect && onSelect({icon, text, callback, ...rest});
                   callback && callback();
+                  value.setOpenOptionsMenuId(null);
                 }}
                 className='
                   bg-transparent p-my-xs
