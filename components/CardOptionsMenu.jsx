@@ -4,41 +4,40 @@ import { useMemo } from "react";
 import { useModalContext } from "@/context/ModalContext";
 
 import OptionsMenu from "./OptionsMenu";
-import EditDeckForm from "./EditDeckForm";
 
-const DeckOptionsMenu = ({
-  deckId,
+const CardOptionsMenu = ({
+  cardId,
   isFavorite,
   onToggleFavorite,
   onRemove,
-  deck,
+  card,
 }) => {
-  const menuId = useMemo(() => `${deckId}-options`);
+  const menuId = useMemo(() => `${cardId}-options`);
   const { openModal, closeModal } = useModalContext();
 
   const options = [
     {
       icon: isFavorite ? <FaStar size={16} /> : <FaRegStar size={16} />,
       text: isFavorite ? "unfavorite" : "favorite",
-      callback: () => onToggleFavorite(deckId),
+      callback: () => onToggleFavorite(cardId),
     },
     {
       icon: <FaRegEdit size={16} />,
       text: "edit",
       callback: () =>
         openModal(
-          "Edit Deck",
-          <EditDeckForm deck={{ ...deck, id: deckId }} closeModal={closeModal} />
+          "Edit Card",
+          <h1>Lol</h1>
         ),
     },
     {
       icon: <IoCloseOutline size={16} className="scale-125" />,
       text: "remove",
-      callback: () => onRemove(deckId),
+      callback: () => onRemove(cardId),
     },
   ];
 
   return <OptionsMenu options={options} id={menuId} />;
 };
 
-export default DeckOptionsMenu;
+export default CardOptionsMenu;

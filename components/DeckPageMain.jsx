@@ -24,7 +24,6 @@ const DeckPageMain = () => {
     handleFilterChange,
     handleToggleFavorite,
     handleRemoveDeck,
-    handleEdit,
   } = useDecks();
 
   const handleAddDeck = () => {
@@ -54,7 +53,6 @@ const DeckPageMain = () => {
         isFetching={isLoading}
         onToggleFavorite={handleToggleFavorite}
         onRemove={handleRemoveDeck}
-        onEdit={handleEdit}
       />
     </Main>
   );

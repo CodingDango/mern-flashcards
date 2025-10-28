@@ -1,68 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { FaRegEdit } from "react-icons/fa";
-import { IoCloseOutline } from "react-icons/io5";
 import { useOptionsMenuManagerContext } from "@/context/OptionsMenuManagerContext";
-import { useFlashcardsContext } from "@/context/FlashcardsContext";
-import { usePopUpContext } from "@/context/PopUpContext";
-import OptionsMenu from "./OptionsMenu"; 
-import EditCardForm from "./EditCardForm";
+import { deckIcons, deckThemeColors } from "@/libs/config";
+import { startCase } from "lodash";
+
+import CardOptionsMenu from "./CardOptionsMenu";
 
 const Flashcard = ({
-  topic,
   question,
   answer,
-  flashcardId,
-  ...rest
+  id,
+  isFavorite,
+  deck,
 }) => {
   // 1. State to control the flip
   const { openOptionsMenuId } = useOptionsMenuManagerContext();
-  const { openPopUp, closePopUp } = usePopUpContext();
-  const { setFlashcards } = useFlashcardsContext();
   const [ isFlipped, setIsFlipped ] = useState(false);
-  const optionsMenuId = `${flashcardId}-options`
+  const optionsMenuId = `${id}-options`
   const isOptionsMenuOpen = openOptionsMenuId === optionsMenuId;
+  const color = deckThemeColors[deck.colorIdx];
+  const Icon = deckIcons[deck.iconIdx];
 
   const showAnswerBtn = useRef(null);
   const hideAnswerBtn = useRef(null);
 
-  const options = [
-    {
-      content: (
-        <span key="edit" className="flex items-center gap-my-xs">
-          <FaRegEdit size={16} />
-          Edit
-        </span>
-      ),
-      callback: () => openPopUp(
-        'Edit Card', 
-        <EditCardForm 
-          topic={topic} 
-          question={question}
-          answer={answer} 
-          flashcardId={flashcardId} 
-          setFlashcards={setFlashcards}
-          closePopUp={closePopUp}
-        />
-      ),
-    },
-    {
-      content: (
-        <span key="remove" className="flex items-center gap-my-xs">
-          <IoCloseOutline size={16} className="scale-125" />
-          Remove
-        </span>
-      ),
-      callback: () => {
-        setFlashcards(prev => 
-          prev.filter(flashcard => 
-            flashcard.id !== flashcardId
-        ));
-      }
-    }
-  ];
-
-  // 4. Handler to stop the click from bubbling up to the card
   const handleOptionsClick = (e) => {
     e.stopPropagation();
   };
@@ -76,14 +36,10 @@ const Flashcard = ({
   }, [isFlipped]);
 
   return (
-    // The "Stage" container. It sets up the 3D perspective.
-    // Its dimensions define the clickable area, which never changes.
     <div
       className={`group h-full w-full rounded-lg [perspective:1000px] ${
         isOptionsMenuOpen ? "z-5" : "z-0"
       }`}
-      key={flashcardId}
-      {...rest}
     >
       {/* The Inner container that actually flips. */}
       <div
@@ -98,23 +54,28 @@ const Flashcard = ({
           inert={isFlipped ? true : undefined}
           className="max-h-[280px] h-full [backface-visibility:hidden]"
         >
-          <div className="h-full justify-start flex flex-col gap-my-md p-my-sm rounded-lg border bg-black-lg border-neutral-800">
+          <div className="h-full justify-start flex flex-col gap-my-sm p-my-sm rounded-lg border bg-transparent border-black-md">
             <div className="flex justify-between gap-x-my-sm">
-              <h2 className="text-lg font-medium flex-1 min-w-0 break-words ">
-                {topic}
-              </h2>
+              <div className="flex items-center gap-my-sm">
+                <span style={{ background: color }} className="p-2 rounded-full">
+                  <Icon size={22} />
+                </span>
+                <span className="text-xl line-clamp-1">{startCase(deck.title)}</span>
+              </div>
 
-              {/* Add the stopPropagation handler to the menu's wrapper */}
-              <div onClick={handleOptionsClick}>
-                <OptionsMenu
-                  id={optionsMenuId}
-                  options={options}
+              <div>
+                <CardOptionsMenu
+                  cardId={id}
+                  card={{question, answer}}
+                  isFavorite={isFavorite}
+                  onToggleFavorite={() => null}
+                  onRemove={() => null}
                 />
               </div>
             </div>
 
             <p
-              className="overflow-y-scroll flex-1 break-words"
+              className="line-clamp-3"
               tabIndex="0"
               onWheel={(e) => {
                 e.stopPropagation();
@@ -124,39 +85,58 @@ const Flashcard = ({
               {question}
             </p>
 
-            <div className="flex items-end">
-              <button
-                ref={showAnswerBtn}
-                className="w-full button button--primary font-medium"
-                onClick={() => setIsFlipped(true)}
-              >
-                Show Answer
-              </button>
+            <div className="flex-1 flex items-end">
+              <div className="w-full flex justify-between items-center">
+                <p className="text-black-light">Oct 7, 2023</p>
+                <button
+                  ref={showAnswerBtn}
+                  className="button--dark button button--primary font-medium"
+                  onClick={() => setIsFlipped(true)}
+                >
+                  Show Answer
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        
 
         {/* === BACK FACE === */}
         <div className="h-full absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div
             inert={isFlipped ? undefined : true}
-            className="flex flex-col h-full gap-my-md p-my-sm rounded-lg border bg-black-lg border-neutral-800"
+            className="flex flex-col h-full gap-my-sm p-my-sm rounded-lg border bg-transparent border-black-md"
           >
             {/* You might want a header on the back too */}
-            <h2 className="flex justify-between gap-x-my-sm text-lg font-medium">
-              <span className="flex-1 min-w-0 break-words">{topic}</span>
-              <span>Answer</span>
-            </h2>
+            <div className="flex justify-between gap-x-my-md">
+              <div className="flex items-center gap-my-sm">
+                <span className="text-black-light line-clamp-2">{startCase(question)}</span>
+              </div>
+              <div className="ml-auto">
+                <CardOptionsMenu
+                  cardId={id}
+                  card={{question, answer}}
+                  isFavorite={isFavorite}
+                  onToggleFavorite={() => null}
+                  onRemove={() => null}
+                />
+              </div>
+            </div>
 
-            <p>{answer}</p>
-            <div className="flex-1 flex items-end">
-              <button
-                ref={hideAnswerBtn}
-                className="w-full button button--white font-medium"
-                onClick={() => setIsFlipped(false)}
-              >
-                Hide Answer
-              </button>
+              
+
+            <div className="flex-1">
+              <p className="font-medium text-lg line-clamp-2">{answer}</p>
+            </div>
+            <div className="flex items-end">
+             <div className="w-full flex items-center justify-end">
+                <button
+                  ref={hideAnswerBtn}
+                  className="button button--white font-medium"
+                  onClick={() => setIsFlipped(false)}
+                >Hide Answer</button>
+              </div>
             </div>
           </div>
         </div>

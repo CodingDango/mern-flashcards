@@ -4,8 +4,8 @@ import Sidebar from "@/components/Sidebar";
 
 const FlashcardsPage = () => (
   <AppLayout>
-      <Sidebar/>
-      <FlashcardsMain/>
+    <Sidebar activeRoute="cards"/>
+    <FlashcardsMain/>
   </AppLayout>
 );
 

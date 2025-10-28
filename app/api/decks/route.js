@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import fs from "fs/promises";
 import path from "path";
 
-const dbPath = path.join(process.cwd(), "data/deck.json");
+const dbPath = path.join(process.cwd(), "data/decks.json");
 
 export async function GET() {
   const decks = await getAllDecks();
@@ -23,8 +23,6 @@ export async function POST(request) {
     totalCards: 0,
     isFavorite: false,
   };
-
-  console.log(newDeckData);
 
   const decks = await getAllDecks();
   decks.push(newDeckData);

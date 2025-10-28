@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "flashcard-1",
+    "question": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum neque ex quaerat, sequi sit cumque quibusdam expedita, ea eum officia ducimus perspiciatis eaque vel dolore a atque ipsum accusantium voluptatibus?",
+    "answer": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum, dolores.",
+    "isFavorite": false,
+    "deckId": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5"
+  }
+]

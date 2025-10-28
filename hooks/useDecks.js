@@ -1,12 +1,18 @@
-// hooks/useDecks.js
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getDecks,
   toggleDeckFavorite,
   removeDeck,
   editDeck,
-} from "../libs/actions"; // Import your API functions
+} from "../libs/actions"; 
+
+const filterStateDefault = {
+  category: "all",
+  searchQuery: "",
+  status: "all",
+  sortBy: "newestCreated",
+}
 
 // A custom hook is just a function that starts with "use" and calls other hooks.
 export function useDecks() {
@@ -81,38 +87,6 @@ export function useDecks() {
     },
   });
 
-  const editDeckMutation = useMutation({
-    mutationFn: editDeck,
-    // data is title, icon, and color
-    onMutate: async ({ deckId, data: { title, iconIdx, colorIdx } }) => {
-      await queryClient.cancelQueries({ queryKey: ["decks"] });
-      const previousDecksData = queryClient.getQueryData(["decks"]);
-      
-      queryClient.setQueryData(["decks"], (oldData) => {
-        const { data: decks } = oldData;
-
-        if (!oldData || !decks) return oldData;
-
-        const deckIdx = decks.findIndex((deck) => deck.id === deckId);
-
-        if (deckIdx >= 0) {
-          console.log(`editing deck ${deckIdx}`);
-        }
-
-        return { ...oldData, data: decks };
-      });
-
-      return { previousDecksData };
-    },
-    onError: (err, deckId, context) => {
-      queryClient.setQueryData(["decks"], context.previousDecks);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["decks"] });
-    },
-  });
-
   // HANDLERS
   const handleToggleFavorite = (deckId) =>
     toggleFavoriteMutation.mutate({ deckId });
@@ -120,30 +94,21 @@ export function useDecks() {
   const handleRemoveDeck = (deckId) => 
     removeDeckMutation.mutate({ deckId });
 
-  const handleEdit = (deckId, data) =>
-    editDeckMutation.mutate({ deckId, data });
-
   // FILTER STATE
-  const [filters, setFilters] = useState({
-    category: "all",
-    searchQuery: "",
-    status: "all",
-    sortBy: "newestCreated",
-  });
+  const [filters, setFilters] = useState({...filterStateDefault});
   const handleFilterChange = (name, value) =>
     setFilters((prev) => ({ ...prev, [name]: value }));
   const resetFilters = () =>
-    setFilters({
-      /* ... */
-    });
+    setFilters({...filterStateDefault})
 
   const allDecks = useMemo(() => responseData?.data || [], [responseData]);
 
   const filteredDecks = useMemo(() => {
-    const { searchQuery } = filters;
-    return allDecks.filter((deck) =>
-      deck.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const { searchQuery, category } = filters;
+
+    return allDecks
+      .filter((deck) => deck.title.toLowerCase().includes(searchQuery.toLowerCase()))
+      .filter((deck) => category === 'favorites' ? deck.isFavorite : true);
   }, [allDecks, filters]);
 
   // The hook returns an object with everything the UI component needs.
@@ -157,6 +122,5 @@ export function useDecks() {
     resetFilters,
     handleToggleFavorite,
     handleRemoveDeck,
-    handleEdit,
   };
 }

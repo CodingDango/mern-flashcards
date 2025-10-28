@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { deckThemeColors, deckIcons } from '@/libs/config';
+import { deckThemeColors, deckIcons } from "@/libs/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createDeck } from '@/libs/actions';
+import { createDeck } from "@/libs/actions";
 import { z } from "zod";
 
 import GenericForm from "./GenericForm";
@@ -12,7 +12,11 @@ import IconSet from "./IconSet";
 const getEnumFromIndices = (arr) => arr.map((val, idx) => idx.toString());
 
 const deckSchema = z.object({
-  title: z.string().trim().min(3, { message: "Deck title is too short." }).max(20),
+  title: z
+    .string()
+    .trim()
+    .min(3, { message: "Deck title is too short." })
+    .max(20),
   colorIdx: z.enum(getEnumFromIndices(deckThemeColors), {
     message: "Please select a color.",
   }),
@@ -25,46 +29,73 @@ const deckFields = [
   {
     name: "title",
     label: "Deck Title",
-    component: 'input', 
-    type: "text",      
+    component: "input",
+    type: "text",
     placeholder: "Enter a title...",
     className: "text-input border border-black-md",
   },
   {
     name: "colorIdx",
     label: "Deck Color",
-    component: ColorPalletePicker, 
-    colors: deckThemeColors,           
+    component: ColorPalletePicker,
+    colors: deckThemeColors,
   },
   {
     name: "iconIdx",
     label: "Deck Icon",
-    component: IconSet, 
-    icons: deckIcons
+    component: IconSet,
+    icons: deckIcons,
   },
 ];
 
 const AddDeckForm = ({ closeModal }) => {
   const queryClient = useQueryClient();
 
-  const createDeckMutation = useMutation({
+ const createDeckMutation = useMutation({
     mutationFn: createDeck,
-    onSuccess: () => { 
-      queryClient.invalidateQueries() 
+
+    onMutate: async (newDeckData) => {
+      await queryClient.cancelQueries({ queryKey: ["decks"] });
+      const previousDecksData = queryClient.getQueryData(["decks"]);
+      const optimisticDeck = {
+        id: `deck-temp-${Date.now()}`, 
+        ...newDeckData, 
+        dateCreated: new Date().toISOString(), 
+        cards: [], 
+      };
+
+      queryClient.setQueryData(["decks"], (oldData) => ({
+        ...oldData,
+        data: [...oldData.data, optimisticDeck],
+      }));
+      
+      return { previousDecksData };
     },
-    queryKey: ['decks']
-  });
+
+    onError: (err, variables, context) => {
+      if (context?.previousDecksData) {
+        queryClient.setQueryData(["decks"], context.previousDecksData);
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["decks"] });
+    },
+});
+
 
   const handleAddDeck = async ({ title, colorIdx, iconIdx }) => {
     try {
-      const { data } = await createDeckMutation.mutateAsync(
-        {title, colorIdx, iconIdx}
-      );
-    } catch(err)  {
+      const { data } = await createDeckMutation.mutateAsync({
+        title,
+        colorIdx,
+        iconIdx,
+      });
+    } catch (err) {
       console.log(err);
     }
 
-    closeModal(); 
+    closeModal();
   };
 
   return (
@@ -76,7 +107,7 @@ const AddDeckForm = ({ closeModal }) => {
         submitText="Add New Deck"
         onFormClose={closeModal}
         isPending={createDeckMutation.isPending}
-        pendingText={'Adding...'}
+        pendingText={"Adding..."}
         error={createDeckMutation.error}
       />
     </>

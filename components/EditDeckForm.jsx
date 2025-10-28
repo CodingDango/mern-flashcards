@@ -54,23 +54,23 @@ const EditDeckForm = ({ deck, closeModal }) => {
   const editDeckMutation = useMutation({
     mutationFn: editDeck,
     // data is title, icon, and color
-    onMutate: async ({ id: deckId, data: { title, iconIdx, colorIdx } }) => {
+    onMutate: async ({ deckId, data: { title, iconIdx, colorIdx } }) => {
       await queryClient.cancelQueries({ queryKey: ["decks"] });
       const previousDecksData = queryClient.getQueryData(["decks"]);
-      
       queryClient.setQueryData(["decks"], (oldData) => {
         const { data: decks } = oldData;
+        const copyDecks = [...decks];
 
-        if (!oldData || !decks) return oldData;
+        if (!oldData || !copyDecks) return oldData;
 
-        const deckIdx = decks.findIndex((deck) => deck.id === deckId);
+        const deckIdx = copyDecks.findIndex((deck) => deck.id === deckId);
 
         if (deckIdx >= 0) {
-          console.log(`editing deck ${deckIdx}`);
+          copyDecks[deckIdx] = { ...copyDecks[deckIdx], title, iconIdx, colorIdx }
         }
 
-        return { ...oldData, data: decks };
-      });
+        return { ...oldData, data: copyDecks };
+      }); 
 
       return { previousDecksData };
     },

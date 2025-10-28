@@ -34,7 +34,7 @@ const OptionsMenu = ({
               <button
                 key={idx} 
                 onClick={() => {
-                  onSelect && onSelect({icon, text, callback, ...rest});
+                  onSelect && onSelect({icon, text, callback, ...rest}, idx);
                   callback && callback();
                   value.setOpenOptionsMenuId(null);
                 }}

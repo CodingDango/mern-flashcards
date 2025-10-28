@@ -30,7 +30,7 @@ body {
 }
 
 .button {
-  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-90 flex justify-center items-center font-medium transition-colors duration-300; 
+  @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-85 flex justify-center items-center font-medium transition-colors duration-300; 
 }
 
 .button--circle {
@@ -46,7 +46,11 @@ body {
 }
 
 .button--dark {
-  @apply text-white bg-black-lg border border-black-md
+  @apply text-white bg-black-lg border-black-md border 
+}
+
+.button--dark {
+  @apply text-white bg-black-lg border border-black-md 
 }
 
 .text-input {

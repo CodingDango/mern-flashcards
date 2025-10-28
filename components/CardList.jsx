@@ -3,14 +3,12 @@ import { HiOutlineSquare3Stack3D as StackIcon } from "react-icons/hi2";
 import { ClipLoader } from "react-spinners";
 
 import Notify from "./Notify";
-import DeckCard from "./DeckCard";
+import Flashcard from "./Flashcard";
 
-const DeckList = ({
-  allDecks,
-  filteredDecks,
+const CardList = ({
+  allCards,
+  filteredCards,
   isFetching,
-  onToggleFavorite,
-  onRemove,
 }) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
@@ -19,16 +17,19 @@ const DeckList = ({
   `;
 
   const decksToDisplay =
-    filteredDecks &&
-    filteredDecks.map((deck) => (
-      <DeckCard 
-        key={deck.id} 
-        onToggleFavorite={onToggleFavorite}
-        onRemove={onRemove}
-        {...deck} />
+    filteredCards &&
+    filteredCards.map((card) => (
+      <Flashcard 
+        key={card.id} 
+        question={card.question}
+        answer={card.answer}
+        id={card.id}
+        isFavorite={card.isFavorite}
+        deck={card.deck}
+      />
     ));
 
-  const status = getStatus(allDecks, filteredDecks, isFetching);
+  const status = getStatus(allCards, filteredCards, isFetching);
 
   return (
     <div className={parentClass}>
@@ -41,23 +42,23 @@ const DeckList = ({
   );
 };
 
-const getStatus = (allDecks, filteredDecks, isFetching) => {
+const getStatus = (allCards, filteredCards, isFetching) => {
   let notification = null;
 
   if (isFetching) {
     notification = <ClipLoader color="#ffffff" size={50} />;
-  } else if (!allDecks.length) {
+  } else if (!allCards.length) {
     notification = (
       <Notify
-        title={"Add a Deck"}
-        body="Decks appear here after you add them with the Add Deck button"
+        title={"Add a Card"}
+        body="Cards appear inside your deck after you add them with the Add Card button"
         Icon={MdAddCard}
       />
     );
-  } else if (!filteredDecks.length) {
+  } else if (!filteredCards.length) {
     notification = (
       <Notify
-        title={"No Deck Found"}
+        title={"No Card Found"}
         body="Try adjusting your search terms or filters"
         Icon={StackIcon}
       />
@@ -67,4 +68,4 @@ const getStatus = (allDecks, filteredDecks, isFetching) => {
   return notification;
 };
 
-export default DeckList;
+export default CardList;

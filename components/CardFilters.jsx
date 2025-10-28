@@ -5,12 +5,12 @@ import { BsFilter } from "react-icons/bs";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
 
-const DeckFilters = ({
-  allDecks = [],
-  filters,
-  onFilterChange,
-  onReset,
-  onAddDeck,
+const CardFilters = ({
+  allCards = [],
+  filters = null,
+  onFilterChange = null,
+  onReset = null,
+  onAddCard = null,
 }) => {
   return (
     <section>
@@ -21,7 +21,7 @@ const DeckFilters = ({
               name={"category"}
               value={"all"}
               label={"All"}
-              count={allDecks?.length || 0}
+              count={allCards?.length || 0}
               isActive={filters.category === "all"}
               onFilterChange={onFilterChange}
             />
@@ -31,7 +31,7 @@ const DeckFilters = ({
               name={"category"}
               value={"favorites"}
               label={"Favorites"}
-              count={allDecks?.filter((deck) => deck.isFavorite).length || 0} 
+              count={allCards?.filter((card) => card?.isFavorite).length || 0} 
               isActive={filters.category === "favorites"}
               onFilterChange={onFilterChange}
             />
@@ -45,7 +45,7 @@ const DeckFilters = ({
             </div>
 
             <input
-              placeholder="Search for a deck by topic"
+              placeholder="Search for a card by question"
               className="pl-4 flex-1 bg-transparent outline-none"
               value={filters.searchQuery}
               onChange={(e) => onFilterChange("searchQuery", e.target.value)}
@@ -60,9 +60,8 @@ const DeckFilters = ({
               handleFilterChange={onFilterChange}
               options={[
                 { text: "All", value: "all" },
-                { text: "Unfinished", value: "unfinished" },
-                { text: "Not Started", value: "notStarted" },
-                { text: "Finished", value: "finished" },
+                { text: "Unanswered", value: "unanswered" },
+                { text: "Answered", value: "answered" },
               ]}
               icon={FaSliders}
             />
@@ -75,8 +74,6 @@ const DeckFilters = ({
               options={[
                 { text: "Newest Created", value: "newestCreated" },
                 { text: "Oldest Created", value: "oldestCreated" },
-                { text: "Newest Studied", value: "newestStudied" },
-                { text: "Oldest Studied", value: "oldestStudied" },
               ]}
               icon={BsFilter}
             />
@@ -86,12 +83,12 @@ const DeckFilters = ({
             </button>
 
             <button
-              onClick={onAddDeck}
+              onClick={onAddCard}
               className="flex-1 2xs:w-auto button button--white"
             >
               <span className="flex gap-my-xs items-center">
                 <FaPlusCircle />
-                Add Deck
+                Add Card
               </span>
             </button>
           </div>
@@ -101,4 +98,4 @@ const DeckFilters = ({
   );
 };
 
-export default DeckFilters;
+export default CardFilters;

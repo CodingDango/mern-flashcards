@@ -1,27 +1,38 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react"
-import FilterButton from "./FilterButton"
-import OptionsMenu from "./OptionsMenu"
+import { useMemo, useState } from "react";
+import FilterButton from "./FilterButton";
+import OptionsMenu from "./OptionsMenu";
 
-const FilterDropdown = ({id, name, handleFilterChange, icon : Icon, options}) => {
-  const [chosenOption, setChosenOption] = useState(options[0]);
+const FilterDropdown = ({
+  id,
+  name,
+  handleFilterChange,
+  icon: Icon,
+  options,
+  chosenOptionValue
+}) => {
+  const [chosenOptionIdx, setChosenOptionIdx] = useState(0);
 
-    useEffect(() => {
-      handleFilterChange(name, chosenOption.value)
-    }, [chosenOption])
+  useMemo(() => {
+    const idx = options.findIndex((option) => option.value === chosenOptionValue);
+    setChosenOptionIdx(idx);
+  }, [chosenOptionValue]);
 
   return (
     <div className="flex-1">
       <OptionsMenu
-        mode={'dropdown'}
-        button={<FilterButton text={chosenOption.text} icon={Icon}/>}
-        onSelect={(option) => setChosenOption(option)}
         id={id}
+        mode={"dropdown"}
         options={options}
+        button={<FilterButton text={options[chosenOptionIdx].text} icon={Icon} />}
+        onSelect={(option, idx) => {
+          handleFilterChange(name, option.value);
+          setChosenOptionIdx(idx);
+        }}
       />
     </div>
   );
-}
+};
 
 export default FilterDropdown;

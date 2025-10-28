@@ -164,10 +164,6 @@ const Dashboard = () => {
               </div>
 
             </div>
-
-            {/* <DeckCard title={'idk lol'} color={'#C90078'} Icon={FaBook} options={false}/>
-            <DeckCard title={'idk lol'} color={'#C90078'} Icon={FaBook} options={false}/>
-            <DeckCard title={'idk lol'} color={'#C90078'} Icon={FaBook} options={false}/> */}
           </div>
         </div>
 

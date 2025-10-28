@@ -3,6 +3,7 @@
 import axios from "axios";
 
 const DECK_ENDPOINT = "http://localhost:3000/api/decks";
+const FLASHCARDS_ENDPOINT = "http://localhost:3000/api/cards"
 
 // deck is {title, colorIdx, iconKey}
 export async function createDeck(deck) {
@@ -44,4 +45,9 @@ export async function editDeck({ deckId, data }) {
   );
 
   return res.status;
+}
+
+export async function getAllCards() {
+  const res = await axios.get(FLASHCARDS_ENDPOINT);
+  return res.data;
 }
