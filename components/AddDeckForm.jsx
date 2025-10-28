@@ -2,8 +2,11 @@
 
 import { deckThemeColors, deckIcons } from "@/libs/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createDeck } from "@/libs/actions";
 import { z } from "zod";
+import { useState } from "react";
 
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
@@ -51,51 +54,40 @@ const deckFields = [
 const AddDeckForm = ({ closeModal }) => {
   const queryClient = useQueryClient();
 
- const createDeckMutation = useMutation({
+  const formMethods = useForm({
+    resolver: zodResolver(deckSchema),
+    mode: "onBlur",
+  });
+
+  const { setError, trigger } = formMethods;
+
+  const createDeckMutation = useMutation({
     mutationFn: createDeck,
-
-    onMutate: async (newDeckData) => {
-      await queryClient.cancelQueries({ queryKey: ["decks"] });
-      const previousDecksData = queryClient.getQueryData(["decks"]);
-      const optimisticDeck = {
-        id: `deck-temp-${Date.now()}`, 
-        ...newDeckData, 
-        dateCreated: new Date().toISOString(), 
-        cards: [], 
-      };
-
-      queryClient.setQueryData(["decks"], (oldData) => ({
-        ...oldData,
-        data: [...oldData.data, optimisticDeck],
-      }));
-      
-      return { previousDecksData };
-    },
-
-    onError: (err, variables, context) => {
-      if (context?.previousDecksData) {
-        queryClient.setQueryData(["decks"], context.previousDecksData);
-      }
-    },
-
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["decks"] });
     },
-});
 
+    onSuccess: () => {
+      closeModal();
+    },
+  });
 
-  const handleAddDeck = async ({ title, colorIdx, iconIdx }) => {
-    try {
-      const { data } = await createDeckMutation.mutateAsync({
-        title,
-        colorIdx,
-        iconIdx,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  const handleAddDeck = (formData) => {
+    createDeckMutation.mutate(formData, {
+      
+      onSuccess: () => {
+        closeModal();
+      },
+      
+      onError: (err, variables, context) => {
+        debugger
 
-    closeModal();
+        setError('title', {
+          type: 'server',
+          message: 'This deck title is already taken. Please choose another.'
+        });
+      },
+    });
   };
 
   return (
@@ -108,7 +100,7 @@ const AddDeckForm = ({ closeModal }) => {
         onFormClose={closeModal}
         isPending={createDeckMutation.isPending}
         pendingText={"Adding..."}
-        error={createDeckMutation.error}
+        formMethods={formMethods}
       />
     </>
   );

@@ -1,88 +1,103 @@
+"use client";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { addCard } from "@/libs/actions";
 import { z } from "zod";
-import { FaPlusCircle } from "react-icons/fa";
-import FormField from "./FormField";
 
-const cardSchema = z.object({
-  topic: z
+import GenericForm from "./GenericForm";
+
+const cardFields = [
+  {
+    name: "deckId",
+    label: "Deck Topic",
+    component: "input",
+    type: "text",
+    placeholder: "Enter deck id...",
+    className: "text-input border border-black-md",
+  },
+  {
+    name: "question",
+    label: "Question",
+    component: 'textarea',
+    placeholder: "Enter question...",
+    className: "text-input border border-black-md resize-none",
+  },
+  {
+    name: "answer",
+    label: "Answer",
+    component: 'input',
+    placeholder: "Enter answer...",
+    className: "text-input border border-black-md",
+  },
+];
+
+const deckSchema = z.object({
+  title: z
     .string()
     .trim()
-    .min(3, { message: "Topic is too short. (minimum 3 characters)." })
-    .max(20, { message: "Topic is too long. (maximum 20 character)." })
-    .regex(/^[a-zA-Z0-9 ]*$/, {
-      message: "Topic can only contain letters, numbers, and spaces.",
-    }),
-
-  question: z
-    .string()
-    .trim()
-    .min(5, { message: "Question is too short. (minimum of 3 characters)." }),
-
-  answer: z.string().trim().nonempty({ message: "Answer cannot be empty." }),
+    .min(3, { message: "Deck title is too short." })
+    .max(20),
+  question: z.string().trim().nonempty(),
+  answer: z.string().trim().nonempty(),
 });
 
-const AddCardForm = ({ addFlashcard }) => {
-  const {
-    register,
-    reset,
-    handleSubmit, 
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(cardSchema) });
+const AddCardForm = ({ closeModal }) => {
+  const queryClient = useQueryClient();
 
-  const onSubmit = ({topic, question, answer}) => {
-    addFlashcard(topic, question, answer);
-    reset();
+  const addCardMutation = useMutation({
+    mutationFn: addCard,
+
+    onMutate: async (newDeckData) => {
+      await queryClient.cancelQueries({ queryKey: ["cards"] });
+      const previousDecksData = queryClient.getQueryData(["cards"]);
+      const optimisticDeck = {
+        id: `card-temp-${Date.now()}`, 
+        ...newDeckData, 
+        dateCreated: new Date().toISOString(), 
+      };
+
+      queryClient.setQueryData(["cards"], (oldData) => ({
+        ...oldData,
+        data: [...oldData.data, optimisticDeck],
+      }));
+      
+      return { previousDecksData };
+    },
+    
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cards"] });
+    },
+  });
+
+
+  const handleAddCard = async ({ title, question, answer }) => {
+    try {
+      // const { data } = await createDeckMutation.mutateAsync({
+      //   title,
+      //   colorIdx,
+      //   iconIdx,
+      // });
+    } catch (err) {
+      console.log(err);
+    }
+
+    closeModal();
   };
 
   return (
-    <form 
-      className="flex flex-col gap-my-md" 
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <FormField
-        labelText={"topic"}
-        errorMsg={errors.topic?.message}
-        input={"input"}
-        inputAttributes={{
-          ...register("topic"),
-          placeholder: "Enter a topic...",
-          className: "text-input",
-        }}
+    <>
+      <GenericForm
+        schema={deckSchema}
+        fields={cardFields}
+        onSubmit={handleAddCard}
+        submitText="Add New Flashcard"
+        onFormClose={closeModal}
+        isPending={addCardMutation.isPending}
+        pendingText={"Adding card..."}
+        error={addCardMutation.error}
       />
-
-      <FormField
-        labelText={"question"}
-        errorMsg={errors.question?.message}
-        input={"textarea"}
-        inputAttributes={{
-          ...register("question"),
-          placeholder: "Enter a question...",
-          className: "text-input resize-none",
-          rows:'3'
-        }}
-      />
-
-      <FormField
-        labelText={"answer"}
-        errorMsg={errors.answer?.message}
-        input={"input"}
-        inputAttributes={{
-          ...register("answer"),
-          placeholder: "Enter an answer...",
-          className: "text-input",
-          
-        }}
-      />
-
-      <button
-        type="submit"
-        className="w-full button button--primary items-center gap-my-xs"
-      >
-        Add new Deck
-        <FaPlusCircle/>
-      </button>
-    </form>
+    </>
   );
 };
 

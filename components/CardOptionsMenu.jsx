@@ -27,7 +27,7 @@ const CardOptionsMenu = ({
       callback: () =>
         openModal(
           "Edit Card",
-          <h1>Lol</h1>
+          <h1>Editing</h1>
         ),
     },
     {

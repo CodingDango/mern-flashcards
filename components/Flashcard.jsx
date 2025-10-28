@@ -52,7 +52,7 @@ const Flashcard = ({
         {/* === FRONT FACE === */}
         <div
           inert={isFlipped ? true : undefined}
-          className="max-h-[280px] h-full [backface-visibility:hidden]"
+          className="max-h-[240px] h-full [backface-visibility:hidden]"
         >
           <div className="h-full justify-start flex flex-col gap-my-sm p-my-sm rounded-lg border bg-transparent border-black-md">
             <div className="flex justify-between gap-x-my-sm">
@@ -75,7 +75,7 @@ const Flashcard = ({
             </div>
 
             <p
-              className="line-clamp-3"
+              className="flex-1 overflow-y-auto"
               tabIndex="0"
               onWheel={(e) => {
                 e.stopPropagation();
@@ -83,9 +83,10 @@ const Flashcard = ({
               }}
             >
               {question}
+              asdwdjlwdjwlkdjwlkdj asjdlasjdlwjdlwkdjwldkwj asdlkwjdlkwjdwlkdwjdlwkdjwldkwjdwlkj
             </p>
 
-            <div className="flex-1 flex items-end">
+            <div className="flex items-end">
               <div className="w-full flex justify-between items-center">
                 <p className="text-black-light">Oct 7, 2023</p>
                 <button
@@ -100,8 +101,6 @@ const Flashcard = ({
           </div>
         </div>
 
-        
-
         {/* === BACK FACE === */}
         <div className="h-full absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div
@@ -111,7 +110,7 @@ const Flashcard = ({
             {/* You might want a header on the back too */}
             <div className="flex justify-between gap-x-my-md">
               <div className="flex items-center gap-my-sm">
-                <span className="text-black-light line-clamp-2">{startCase(question)}</span>
+                <span className="text-black-light line-clamp-1">{startCase(question)}</span>
               </div>
               <div className="ml-auto">
                 <CardOptionsMenu
@@ -124,10 +123,8 @@ const Flashcard = ({
               </div>
             </div>
 
-              
-
             <div className="flex-1">
-              <p className="font-medium text-lg line-clamp-2">{answer}</p>
+              <p className="font-medium text-lg line-clamp-3">{answer}</p>
             </div>
             <div className="flex items-end">
              <div className="w-full flex items-center justify-end">

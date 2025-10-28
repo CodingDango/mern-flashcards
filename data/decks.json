@@ -1,6 +1,6 @@
 [
   {
-    "title": "Computer Science Alr",
+    "title": "Computer Science Alr 123",
     "colorIdx": "1",
     "iconIdx": "1",
     "id": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5",
@@ -10,7 +10,7 @@
     "isFavorite": false
   },
   {
-    "title": "My Way!",
+    "title": "My Way",
     "colorIdx": "0",
     "iconIdx": "0",
     "id": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
@@ -25,6 +25,46 @@
     "iconIdx": "9",
     "id": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
     "dateCreated": "2025-10-27T14:56:33.802Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "my way",
+    "colorIdx": "0",
+    "iconIdx": "0",
+    "id": "deck-c4774103-32c7-489d-9ec7-03293b907ca4",
+    "dateCreated": "2025-10-28T11:45:56.098Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "!!123232",
+    "colorIdx": "0",
+    "iconIdx": "0",
+    "id": "deck-f9221c58-eb7b-4d58-90d4-2fb8d12832f4",
+    "dateCreated": "2025-10-28T11:47:45.260Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "hello world 123",
+    "colorIdx": "0",
+    "iconIdx": "0",
+    "id": "deck-15dc68d5-0a51-4b13-bbe1-0b7ee83d4d45",
+    "dateCreated": "2025-10-28T16:18:23.696Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false
+  },
+  {
+    "title": "okay okay !!!",
+    "colorIdx": "9",
+    "iconIdx": "1",
+    "id": "deck-0ebb1486-4ace-4247-b02d-8681d47453a5",
+    "dateCreated": "2025-10-28T16:18:33.778Z",
     "progress": 0,
     "totalCards": 0,
     "isFavorite": false

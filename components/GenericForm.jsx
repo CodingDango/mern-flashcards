@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaPlusCircle } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
+import { ErrorMessage } from '@hookform/error-message';
 
 const GenericForm = ({
   schema,
@@ -10,19 +12,26 @@ const GenericForm = ({
   submitText,
   isPending,
   pendingText,
-  error,
+  formMethods,
+  error = null,
   defaultValues = {}
 }) => {
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ 
-    resolver: zodResolver(schema), 
+
+  const internalFormMethods = useForm({
+    resolver: zodResolver(schema),
     mode: "onBlur",
     defaultValues
   });
+
+  const { register,  handleSubmit, formState: { errors } } = formMethods || internalFormMethods;
+
+  useEffect(() => {
+    // This will fire AFTER setError has successfully updated the state.
+    console.log('%cForm errors have been updated:', 'color: red; font-weight: bold;', errors);
+  }, [errors]);
+  // ^^^ ADD THIS
+
+  
 
   return (
     <form
@@ -53,8 +62,9 @@ const GenericForm = ({
             )}
 
             <FieldComponent id={name} {...register(name)} {...restOfProps} />
-
-            {error && <p className="text-red-400 text-sm">{error.message}</p>}
+            <span className="text-red-400 text-sm">
+              <ErrorMessage errors={errors} name={name}/>
+            </span>
           </fieldset>
         );
       })}

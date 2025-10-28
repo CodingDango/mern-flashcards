@@ -122,7 +122,7 @@ const Dashboard = () => {
             <h3 className='text-xl font-medium'>Needs Review</h3>
           </div>
 
-          <div className='mt-auto grid grid-cols-1 *:p-my-sm border-t border-black-md'>
+          <div className='cursor-pointer mt-auto grid grid-cols-1 *:p-my-sm border-t border-black-md'>
 
             <div className='flex justify-between items-center hover:bg-black-lg border-b border-black-md'>
               <div className='flex gap-my-sm items-center'>
@@ -138,7 +138,7 @@ const Dashboard = () => {
 
             </div>
 
-            <div className='py-my-sm flex justify-between items-center border-b border-black-md hover:bg-black-lg '>
+            <div className=' py-my-sm flex justify-between items-center border-b border-black-md hover:bg-black-lg '>
               <div className='flex gap-my-sm items-center'>
                 <span className='p-3 rounded-full flex justify-center items-center' style={{background: '#C90078'}}>
                   <FaBook size={20}/>

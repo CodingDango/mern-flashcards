@@ -62,10 +62,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: theme('color.neutral.900');
+  background: transparent
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: theme('color.neutral.700')  ;
   border-radius: 6px;
+}
+
+.modal-overlay {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0); /* For older Safari/Chrome browsers */
 }

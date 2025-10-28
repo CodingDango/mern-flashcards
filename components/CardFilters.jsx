@@ -7,9 +7,9 @@ import FilterTab from "./FilterTab";
 
 const CardFilters = ({
   allCards = [],
-  filters = null,
-  onFilterChange = null,
-  onReset = null,
+  filters,
+  onFilterChange,
+  onReset,
   onAddCard = null,
 }) => {
   return (

@@ -51,3 +51,8 @@ export async function getAllCards() {
   const res = await axios.get(FLASHCARDS_ENDPOINT);
   return res.data;
 }
+
+export async function addCard({deckId, question, answer}) {
+  // const res = await axios.get(FLASHCARDS_ENDPOINT);
+  // return res.data;
+}
