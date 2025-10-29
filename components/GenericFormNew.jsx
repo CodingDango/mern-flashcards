@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FaPlusCircle } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 
-const GenericFormAdd = ({
+const GenericFormNew = ({
   schema,
   onSubmit,
   fields,
@@ -12,16 +12,21 @@ const GenericFormAdd = ({
   pendingText,
   formMethods,
   error = null,
-  defaultValues = {}
+  defaultValues = {},
 }) => {
-
   const internalFormMethods = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
-    defaultValues
+    defaultValues,
   });
 
-  const { register,  handleSubmit, formState: { errors }, control } = formMethods || internalFormMethods;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    clearErrors
+  } = formMethods || internalFormMethods;
 
   return (
     <form
@@ -31,10 +36,15 @@ const GenericFormAdd = ({
       onSubmit={handleSubmit((data) => onSubmit(data))}
     >
       {fields.map((fieldConfig) => {
-        const { name, label, component: FieldComponent, ...restOfProps } = fieldConfig;
+        const {
+          name,
+          label,
+          component: FieldComponent,
+          ...restOfProps
+        } = fieldConfig;
 
         // Check if the component is one of our custom ones (not a string like 'input')
-        const isCustomComponent = typeof FieldComponent !== 'string';
+        const isCustomComponent = typeof FieldComponent !== "string";
 
         return (
           <fieldset key={name} className="flex flex-col gap-my-xs">
@@ -53,7 +63,11 @@ const GenericFormAdd = ({
             )}
 
             {/* Error Message */}
-            {errors[name] && <span className="text-red-400 text-sm">{errors[name].message}</span>}
+            {errors[name] && (
+              <span className="text-red-400 text-sm">
+                {errors[name].message}
+              </span>
+            )}
           </fieldset>
         );
       })}
@@ -78,4 +92,4 @@ const GenericFormAdd = ({
   );
 };
 
-export default GenericFormAdd;
+export default GenericFormNew;

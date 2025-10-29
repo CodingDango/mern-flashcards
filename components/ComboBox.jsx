@@ -1,26 +1,27 @@
 import { useState } from 'react';
 
-const ComboBox = ({ options, onChange, onBlur, value, name, ...rest }) => {
+const ComboBox = ({ options, onChange, onBlur, value, name,...rest }) => {
   const [inputValue, setInputValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 
   const filteredOptions = options.filter((option) =>
-    option.filterVal.toLowerCase().includes(inputValue.toLowerCase())
+    option.optionValue.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const handleOptionClick = (option) => {
-    setInputValue(option.filterVal); // Visually update the input
-    onChange(option.deckId);         // Tell the bridge the REAL value
+    debugger
+    onChange(option.optionValue);         // Tell the bridge the REAL value
+    setInputValue(option.optionValue); // Visually update the input
     setShowOptions(false);
   };
 
   const handleBlur = () => {
-    setTimeout(() => setShowOptions(false), 150);
+    setTimeout(() => setShowOptions(false), 300);
     onBlur();
   };
 
   return (
-    <div className="relative">
+    <div className="relative text-white">
       <input
         {...rest}
         name={name}
@@ -33,14 +34,14 @@ const ComboBox = ({ options, onChange, onBlur, value, name, ...rest }) => {
       />
 
       {showOptions && filteredOptions.length > 0 && (
-      <ul className="mt-1 absolute z-10 w-full bg-black-lg border border-black-md shadow-xl rounded-md">
+      <ul className="mt-2 absolute z-10 w-full bg-black-xl border border-black-md shadow-xl rounded-md flex flex-col h-[147px] overflow-y-auto">
           {filteredOptions.map((option) => (
             <li
               key={option.deckId}
               onClick={() => handleOptionClick(option)}
-              className="px-4 py-2 cursor-pointer text-black"
+              className="px-4 py-3 cursor-pointer hover:bg-black-lg rounded-md"
             >
-              {option.filterVal}
+              {option.optionValue}
             </li>
           ))}
         </ul>

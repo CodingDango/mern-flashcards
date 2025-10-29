@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { addCard } from "@/libs/actions";
 import { z } from "zod";
 
-import GenericFormAdd from "./GenericFormAdd";
+import GenericFormNew from "./GenericFormNew";
 import ComboBox from "./ComboBox";
 
 const cardFields = [
@@ -16,11 +16,29 @@ const cardFields = [
     component: ComboBox,
     options: [
       {
-        filterVal: 'Precalculus'
+        optionValue: 'Precal'
       },
       {
-        filterVal: 'Earth Science'
-      }
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
+      {
+        optionValue: 'Earth Science'
+      },
     ]
   },
   {
@@ -70,7 +88,7 @@ const AddCardForm = ({ closeModal }) => {
 
   return (
     <>
-      <GenericFormAdd
+      <GenericFormNew
         schema={cardSchema}
         fields={cardFields}
         onSubmit={handleAddCard}

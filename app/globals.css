@@ -54,7 +54,7 @@ body {
 }
 
 .text-input {
-  @apply px-3 py-2 bg-neutral-950 rounded-md;
+  @apply px-3 py-2 bg-black border border-black-md rounded-md;
 }
 
 ::-webkit-scrollbar {
