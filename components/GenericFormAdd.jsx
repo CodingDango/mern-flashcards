@@ -1,11 +1,9 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaPlusCircle } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
-import { ErrorMessage } from '@hookform/error-message';
 
-const GenericForm = ({
+const GenericFormAdd = ({
   schema,
   onSubmit,
   fields,
@@ -23,7 +21,7 @@ const GenericForm = ({
     defaultValues
   });
 
-  const { register,  handleSubmit, formState: { errors } } = formMethods || internalFormMethods;
+  const { register,  handleSubmit, formState: { errors }, control } = formMethods || internalFormMethods;
 
   return (
     <form
@@ -32,32 +30,30 @@ const GenericForm = ({
       }`}
       onSubmit={handleSubmit((data) => onSubmit(data))}
     >
-      
       {fields.map((fieldConfig) => {
-        const {
-          name,
-          label,
-          component: FieldComponent,
-          ...restOfProps
-        } = fieldConfig;
-        const error = errors[name];
+        const { name, label, component: FieldComponent, ...restOfProps } = fieldConfig;
+
+        // Check if the component is one of our custom ones (not a string like 'input')
+        const isCustomComponent = typeof FieldComponent !== 'string';
 
         return (
-          <fieldset
-            disabled={isPending}
-            key={name}
-            className="flex flex-col gap-my-xs"
-          >
-            {label && (
-              <label htmlFor={name} className="font-medium">
-                {label}
-              </label>
+          <fieldset key={name} className="flex flex-col gap-my-xs">
+            {label && <label>{label}</label>}
+
+            {isCustomComponent ? (
+              <Controller
+                name={name}
+                control={control}
+                render={({ field }) => (
+                  <FieldComponent {...restOfProps} {...field} />
+                )}
+              />
+            ) : (
+              <FieldComponent {...register(name)} {...restOfProps} />
             )}
 
-            <FieldComponent id={name} {...register(name)} {...restOfProps} />
-            <span className="text-red-400 text-sm">
-              <ErrorMessage errors={errors} name={name}/>
-            </span>
+            {/* Error Message */}
+            {errors[name] && <span className="text-red-400 text-sm">{errors[name].message}</span>}
           </fieldset>
         );
       })}
@@ -82,4 +78,4 @@ const GenericForm = ({
   );
 };
 
-export default GenericForm;
+export default GenericFormAdd;

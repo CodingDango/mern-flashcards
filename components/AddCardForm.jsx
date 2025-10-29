@@ -5,16 +5,23 @@ import { useForm } from "react-hook-form";
 import { addCard } from "@/libs/actions";
 import { z } from "zod";
 
-import GenericForm from "./GenericForm";
+import GenericFormAdd from "./GenericFormAdd";
+import ComboBox from "./ComboBox";
 
 const cardFields = [
   {
     name: "deckId",
     label: "Deck Topic",
-    component: "input",
-    type: "text",
-    placeholder: "Enter deck id...",
-    className: "text-input border border-black-md",
+    placeholder: 'Choose deck topic',
+    component: ComboBox,
+    options: [
+      {
+        filterVal: 'Precalculus'
+      },
+      {
+        filterVal: 'Earth Science'
+      }
+    ]
   },
   {
     name: "question",
@@ -32,12 +39,11 @@ const cardFields = [
   },
 ];
 
-const deckSchema = z.object({
-  title: z
+const cardSchema = z.object({
+  deckId: z
     .string()
     .trim()
-    .min(3, { message: "Deck title is too short." })
-    .max(20),
+    .nonempty(),
   question: z.string().trim().nonempty(),
   answer: z.string().trim().nonempty(),
 });
@@ -46,49 +52,26 @@ const AddCardForm = ({ closeModal }) => {
   const queryClient = useQueryClient();
 
   const addCardMutation = useMutation({
-    mutationFn: addCard,
-
-    onMutate: async (newDeckData) => {
-      await queryClient.cancelQueries({ queryKey: ["cards"] });
-      const previousDecksData = queryClient.getQueryData(["cards"]);
-      const optimisticDeck = {
-        id: `card-temp-${Date.now()}`, 
-        ...newDeckData, 
-        dateCreated: new Date().toISOString(), 
-      };
-
-      queryClient.setQueryData(["cards"], (oldData) => ({
-        ...oldData,
-        data: [...oldData.data, optimisticDeck],
-      }));
-      
-      return { previousDecksData };
+    mutationFn: addCard,    
+    onSuccess: () => {
+      closeModal();
     },
-    
+
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["cards"] });
     },
   });
 
-
-  const handleAddCard = async ({ title, question, answer }) => {
-    try {
-      // const { data } = await createDeckMutation.mutateAsync({
-      //   title,
-      //   colorIdx,
-      //   iconIdx,
-      // });
-    } catch (err) {
-      console.log(err);
-    }
-
-    closeModal();
+  const handleAddCard = async ({ deckId, question, answer }) => {
+    const { data } = addCardMutation.mutateAsync({
+      deckId, question, answer
+    })
   };
 
   return (
     <>
-      <GenericForm
-        schema={deckSchema}
+      <GenericFormAdd
+        schema={cardSchema}
         fields={cardFields}
         onSubmit={handleAddCard}
         submitText="Add New Flashcard"

@@ -53,6 +53,10 @@ export async function getAllCards() {
 }
 
 export async function addCard({deckId, question, answer}) {
-  // const res = await axios.get(FLASHCARDS_ENDPOINT);
-  // return res.data;
+  const res = await axios.post(
+    FLASHCARDS_ENDPOINT,
+    JSON.stringify({deckId, question, answer})
+  );
+
+  return res.data;
 }

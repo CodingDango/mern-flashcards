@@ -75,18 +75,16 @@ const Flashcard = ({
             </div>
 
             <p
-              className="flex-1 overflow-y-auto"
-              tabIndex="0"
-              onWheel={(e) => {
-                e.stopPropagation();
-                e.currentTarget.scrollTop += e.deltaY * 0.25;
-              }}
+              className="line-clamp-3 overflow-hidden"
+              // onWheel={(e) => {
+              //   e.stopPropagation();
+              //   e.currentTarget.scrollTop += e.deltaY * 0.25;
+              // }}
             >
               {question}
-              asdwdjlwdjwlkdjwlkdj asjdlasjdlwjdlwkdjwldkwj asdlkwjdlkwjdwlkdwjdlwkdjwldkwjdwlkj
             </p>
 
-            <div className="flex items-end">
+            <div className="flex-1 flex items-end">
               <div className="w-full flex justify-between items-center">
                 <p className="text-black-light">Oct 7, 2023</p>
                 <button

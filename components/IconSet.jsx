@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import { deckIcons } from '@/libs/config';
 
 const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
   return (
