@@ -18,12 +18,12 @@ const CardOptionsMenu = ({
   const options = [
     {
       icon: isFavorite ? <FaStar size={16} /> : <FaRegStar size={16} />,
-      text: isFavorite ? "unfavorite" : "favorite",
-      callback: () => onToggleFavorite(cardId),
+      text: isFavorite ? "Unfavorite" : "Favorite",
+      callback: () => onToggleFavorite({ cardId }),
     },
     {
       icon: <FaRegEdit size={16} />,
-      text: "edit",
+      text: "Edit",
       callback: () =>
         openModal(
           "Edit Card",
@@ -32,7 +32,7 @@ const CardOptionsMenu = ({
     },
     {
       icon: <IoCloseOutline size={16} className="scale-125" />,
-      text: "remove",
+      text: "Remove",
       callback: () => onRemove(cardId),
     },
   ];

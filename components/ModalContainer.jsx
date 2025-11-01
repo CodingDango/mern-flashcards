@@ -33,27 +33,30 @@ export default function ModalContainer({
 
   if (isOpen)
     return (
-      <div
-        className="
-        
-        fixed inset-0 bg-black/50 w-screen 
-        h-screen z-100 flex justify-center 
-        items-center p-4 "
-      >
+      <>
+        <div className="bg-black/60 backdrop-blur-sm fixed inset-0 w-screen h-screen z-50"></div>
         <div
-          ref={modalRef}
-          className="px-my-sm py-my-md rounded-lg bg-black-lg border border-black-md text-white max-w-xl overflow-y-auto w-full"
+          className="
+          fixed inset-0 w-screen 
+          h-screen z-100 "
         >
-          <div className="flex flex-col">
-            <div className="pb-my-sm w-full flex justify-between items-center">
-              <h2 className="text-xl font-medium">{headerText}</h2>
-              <button className="cursor-pointer" onClick={closeModal}>
-                <IoClose size={36} />
-              </button>
+          <div className="flex items-center justify-center w-screen h-screen p-4">
+            <div
+              ref={modalRef}
+              className="px-my-sm py-my-md rounded-lg bg-black-xl border border-black-md text-white max-w-xl overflow-y-auto w-full"
+            >
+              <div className="flex flex-col">
+                <div className="pb-my-sm w-full flex justify-between items-center">
+                  <h2 className="text-xl font-medium">{headerText}</h2>
+                  <button className="cursor-pointer" onClick={closeModal}>
+                    <IoClose size={36} />
+                  </button>
+                </div>
+                <div className="pt-my-sm">{elements}</div>
+              </div>
             </div>
-            <div className="pt-my-sm">{elements}</div>
           </div>
         </div>
-      </div>
-    );
+      </>
+  );
 }

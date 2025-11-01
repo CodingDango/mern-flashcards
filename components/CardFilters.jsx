@@ -4,9 +4,11 @@ import { FaSliders } from "react-icons/fa6";
 import { BsFilter } from "react-icons/bs";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
+import { useMemo } from "react";
 
 const CardFilters = ({
   allCards = [],
+  decksAsOptions = [],
   filters,
   onFilterChange,
   onReset,
@@ -55,13 +57,12 @@ const CardFilters = ({
           <div className="flex gap-my-md z-10">
             <FilterDropdown
               id={"filters-options"}
-              name={"status"}
-              chosenOptionValue={filters['status']}
+              name={"deckId"}
+              chosenOptionValue={filters['deckId']}
               handleFilterChange={onFilterChange}
               options={[
-                { text: "All", value: "all" },
-                { text: "Unanswered", value: "unanswered" },
-                { text: "Answered", value: "answered" },
+                { text: "All Decks", value: null },
+                ...decksAsOptions
               ]}
               icon={FaSliders}
             />

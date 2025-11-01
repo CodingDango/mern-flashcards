@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
   return (
-    <div className="grid grid-cols-8 p-my-sm gap-y-my-sm border border-black-md bg-black-xl rounded-lg">
+    <div className="grid grid-cols-8 p-my-sm gap-y-my-sm border border-black-md bg-black rounded-lg">
       {colors.map((colorHex, idx) => (
         <label
           key={idx}

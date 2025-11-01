@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const DECK_ENDPOINT = "http://localhost:3000/api/decks";
-const FLASHCARDS_ENDPOINT = "http://localhost:3000/api/cards"
+const CARDS_ENDPOINT = "http://localhost:3000/api/cards"
 
 // deck is {title, colorIdx, iconKey}
 export async function createDeck(deck) {
@@ -47,15 +47,27 @@ export async function editDeck({ deckId, data }) {
   return res.status;
 }
 
-export async function getAllCards() {
-  const res = await axios.get(FLASHCARDS_ENDPOINT);
+export async function getAllCardsWithDeck() {
+  const res = await axios.get(CARDS_ENDPOINT);
   return res.data;
 }
 
 export async function addCard({deckId, question, answer}) {
   const res = await axios.post(
-    FLASHCARDS_ENDPOINT,
+    CARDS_ENDPOINT,
     JSON.stringify({deckId, question, answer})
+  );
+
+  return res.data;
+}
+
+
+export async function toggleCardFavorite({ cardId }) {
+  console.log('Okay, toggling favorites on card');
+
+  const res = await axios.put(
+    CARDS_ENDPOINT,
+    JSON.stringify({ action: "favorite", cardId })
   );
 
   return res.data;

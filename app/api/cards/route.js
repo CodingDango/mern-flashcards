@@ -7,10 +7,8 @@ const CARDS_PATH = path.join(process.cwd(), "data/cards.json");
 const DECKS_PATH = path.join(process.cwd(), "data/decks.json");
 
 export async function GET(request) {
-  const cards = await getCardsWithDeck();
-
-  console.log(cards);
-  return NextResponse.json({ data: cards });
+  const [cards, decks] = await getCardsWithDeck();
+  return NextResponse.json({ data: {cards, decks} });
 }
 
 export async function POST(request) {
@@ -39,13 +37,14 @@ async function getCardsWithDeck() {
 
   const cardsWithDeckData = allCards.map((card) => {
     const parentDeck = decksMap.get(card.deckId);
+
     return {
       ...card,
       deck: parentDeck || null, // Attach the full deck object
     };
   });
 
-  return cardsWithDeckData;
+  return [cardsWithDeckData, allDecks];
 }
 
 async function getCards() {
@@ -54,3 +53,44 @@ async function getCards() {
 
   return allCards;
 }
+
+export async function PUT(request) {
+  const { action, cardId, data: newCard = null } = await request.json();
+
+  const status = {
+    statusCode: 400,
+    errorText: null,
+  };
+
+  try {
+    switch (action) {
+      case "favorite":
+        editCard(cardId, (card) => ({ ...card, isFavorite: !card.isFavorite }));
+        break;
+
+      case "edit":
+        editCard(cardId, (card) => ({ ...card, ...newCard, id: cardId }));
+
+      default:
+        break;
+    }
+  } catch (err) {
+    status.code = 200;
+    status.errorText = err;
+}
+ 
+  return NextResponse.json({ status });
+}
+
+async function editCard(id, newDataFunc) {
+  const cards = await getCards();
+  const cardIdx = cards.findIndex((card) => card.id === id);
+
+  if (cardIdx !== -1) {
+    cards[cardIdx] = newDataFunc(cards[cardIdx]);
+    await fs.writeFile(CARDS_PATH, JSON.stringify(cards, null, 2));
+  } else {
+    console.log("edited failed!");
+  }
+}
+

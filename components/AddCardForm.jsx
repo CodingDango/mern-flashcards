@@ -2,71 +2,55 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 import { addCard } from "@/libs/actions";
 import { z } from "zod";
 
 import GenericFormNew from "./GenericFormNew";
 import ComboBox from "./ComboBox";
 
-const cardFields = [
-  {
-    name: "deckId",
-    label: "Deck Topic",
-    placeholder: 'Choose deck topic',
-    component: ComboBox,
-    options: [
-      {
-        optionValue: 'Precal'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-      {
-        optionValue: 'Earth Science'
-      },
-    ]
-  },
-  {
-    name: "question",
-    label: "Question",
-    component: 'textarea',
-    placeholder: "Enter question...",
-    className: "text-input border border-black-md resize-none",
-  },
-  {
-    name: "answer",
-    label: "Answer",
-    component: 'input',
-    placeholder: "Enter answer...",
-    className: "text-input border border-black-md",
-  },
-];
-
 const cardSchema = z.object({
   deckId: z
-    .string()
+    .string({
+      message: 'Please select a deck'
+    })
     .trim()
     .nonempty(),
-  question: z.string().trim().nonempty(),
-  answer: z.string().trim().nonempty(),
+  question: z.string().trim().nonempty({
+    message: 'Question cannot be empty'
+  }),
+  answer: z.string().trim().nonempty({
+    message: 'Answer cannot be empty'
+  }),
 });
 
-const AddCardForm = ({ closeModal }) => {
+const AddCardForm = ({ closeModal, decksAsOptions = []}) => {
+  console.log(decksAsOptions);
+
+  const cardFields = [
+    {
+      name: "deckId",
+      label: "Deck Topic",
+      placeholder: 'Choose deck topic',
+      component: ComboBox,
+      options: decksAsOptions
+    },
+    {
+      name: "question",
+      label: "Question",
+      component: 'textarea',
+      placeholder: "Enter question...",
+      className: "text-input border border-black-md resize-none",
+    },
+    {
+      name: "answer",
+      label: "Answer",
+      component: 'input',
+      placeholder: "Enter answer...",
+      className: "text-input border border-black-md",
+    },
+  ];
+
   const queryClient = useQueryClient();
 
   const addCardMutation = useMutation({

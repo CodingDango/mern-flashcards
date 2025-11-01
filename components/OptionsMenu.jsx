@@ -17,14 +17,14 @@ const OptionsMenu = ({
   options, 
   id,
 }) => {
-  const value = useOptionsMenuManagerContext();
-  const isOpen = value.openOptionsMenuId === id;
+  const {openOptionsMenuId, setOpenOptionsMenuId } = useOptionsMenuManagerContext();
+  const isOpen = openOptionsMenuId === id;
 
   return (
-    <div className={`w-full h-full z-5 relative ${identifierClass}`}>
+    <div className={`w-full h-full max-h-[330px] z-5 relative ${identifierClass}`}>
       <div
         className="w-full h-full"
-        onClick={() => value.setOpenOptionsMenuId(isOpen ? null : id)}
+        onClick={() => setOpenOptionsMenuId(isOpen ? null : id)}
       >{button}</div>
 
       {isOpen && (
@@ -36,16 +36,24 @@ const OptionsMenu = ({
                 onClick={() => {
                   onSelect && onSelect({icon, text, callback, ...rest}, idx);
                   callback && callback();
-                  value.setOpenOptionsMenuId(null);
+                  setOpenOptionsMenuId(null);
                 }}
                 className='
                   bg-transparent p-my-xs
-                  hover:bg-black-md rounded-lg cursor-pointer'
+                  hover:bg-black-md rounded-lg cursor-pointer
+                '
               >
-                <span className="flex items-center gap-my-xs">
-                  {icon}
-                  {_.startCase(text)}
-                </span> 
+                {mode === 'skewer' ? (
+                  <span className="flex items-center justify-start gap-my-sm overflow-x-hidden">
+                    {icon}
+                    <span className="flex-1 line-clamp-1 text-start">{text}</span>
+                  </span> 
+                ) : (
+                  <span className="flex items-center justify-start gap-my-md overflow-x-hidden">
+                    <span className="flex-1 line-clamp-1 text-start">{text}</span>
+                    {icon}
+                  </span> 
+                )}
               </button>
             ))}
           </div>

@@ -2,7 +2,6 @@
 
 import { DateTime } from "luxon";
 import { FaBookOpen } from "react-icons/fa6";
-import { startCase } from "lodash";
 import { deckIcons, deckThemeColors } from "@/libs/config";
 import { PiCards as CardsIcon } from "react-icons/pi";
 import { FaCheck } from "react-icons/fa";
@@ -60,7 +59,7 @@ const DeckCard = ({
             <span style={{ background: color }} className="p-2 rounded-full">
               <Icon size={22} />
             </span>
-            <span className="text-xl font-medium">{startCase(title)}</span>
+            <span className="text-xl font-medium">{title}</span>
           </div>
           {options && (
             <div onClick={(e) => e.stopPropagation()}>

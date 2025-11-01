@@ -4,7 +4,8 @@ import { DateTime } from "luxon";
 import fs from "fs/promises";
 import path from "path";
 
-const dbPath = path.join(process.cwd(), "data/decks.json");
+const CARDS_PATH = path.join(process.cwd(), "data/cards.json");
+const DECKS_PATH = path.join(process.cwd(), "data/decks.json");
 
 export async function GET() {
   const decks = await getAllDecks();
@@ -39,7 +40,7 @@ export async function POST(request) {
   }
 
   decks.push(newDeckData);
-  await fs.writeFile(dbPath, JSON.stringify(decks, null, 2));
+  await fs.writeFile(DECKS_PATH, JSON.stringify(decks, null, 2));
 
   // return NextResponse.json({ data: newDeckData, status: "success" });
   return NextResponse.json(
@@ -82,8 +83,13 @@ export async function DELETE(request) {
 
   try {
     const allDecks = await getAllDecks();
+    const allCards = await getCards();
+
     const filteredDecks = allDecks.filter((deck) => deck.id !== deckId);
-    fs.writeFile(dbPath, JSON.stringify(filteredDecks, null, 2));
+    const filteredCards = allCards.filter((card) => card.deckId !== deckId);
+
+    fs.writeFile(DECKS_PATH, JSON.stringify(filteredDecks, null, 2));
+    fs.writeFile(CARDS_PATH, JSON.stringify(filteredCards, null, 2));
 
     return NextResponse.json({ status: "success" });
   } catch (err) {
@@ -92,7 +98,13 @@ export async function DELETE(request) {
 }
 
 async function getAllDecks() {
-  const fileData = await fs.readFile(dbPath);
+  const fileData = await fs.readFile(DECKS_PATH);
+  const db = JSON.parse(fileData);
+  return db;
+}
+
+async function getCards() {
+  const fileData = await fs.readFile(CARDS_PATH);
   const db = JSON.parse(fileData);
   return db;
 }
@@ -103,8 +115,9 @@ async function editDeck(id, newDataFunc) {
 
   if (deckIdx !== -1) {
     decks[deckIdx] = newDataFunc(decks[deckIdx]);
-    await fs.writeFile(dbPath, JSON.stringify(decks, null, 2));
+    await fs.writeFile(DECKS_PATH, JSON.stringify(decks, null, 2));
   } else {
     console.log("edited failed!");
   }
 }
+

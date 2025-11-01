@@ -17,7 +17,7 @@
     "id": "card-84fe1f47-fd59-4b0b-b78f-5f72112a1da2",
     "question": "Dude what the fuck",
     "answer": "Is this the answer?",
-    "isFavorite": false,
+    "isFavorite": true,
     "deckId": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5"
   }
 ]

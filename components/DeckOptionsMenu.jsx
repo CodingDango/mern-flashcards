@@ -19,12 +19,12 @@ const DeckOptionsMenu = ({
   const options = [
     {
       icon: isFavorite ? <FaStar size={16} /> : <FaRegStar size={16} />,
-      text: isFavorite ? "unfavorite" : "favorite",
+      text: isFavorite ? "Unfavorite" : "Favorite",
       callback: () => onToggleFavorite(deckId),
     },
     {
       icon: <FaRegEdit size={16} />,
-      text: "edit",
+      text: "Edit",
       callback: () =>
         openModal(
           "Edit Deck",
@@ -33,7 +33,7 @@ const DeckOptionsMenu = ({
     },
     {
       icon: <IoCloseOutline size={16} className="scale-125" />,
-      text: "remove",
+      text: "Remove",
       callback: () => onRemove(deckId),
     },
   ];

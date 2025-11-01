@@ -11,8 +11,10 @@ const Flashcard = ({
   id,
   isFavorite,
   deck,
+  toggleFavorite
 }) => {
-  // 1. State to control the flip
+  if (!deck) return;
+
   const { openOptionsMenuId } = useOptionsMenuManagerContext();
   const [ isFlipped, setIsFlipped ] = useState(false);
   const optionsMenuId = `${id}-options`
@@ -60,7 +62,7 @@ const Flashcard = ({
                 <span style={{ background: color }} className="p-2 rounded-full">
                   <Icon size={22} />
                 </span>
-                <span className="text-xl line-clamp-1">{startCase(deck.title)}</span>
+                <span className="text-xl line-clamp-1">{deck.title}</span>
               </div>
 
               <div>
@@ -68,7 +70,7 @@ const Flashcard = ({
                   cardId={id}
                   card={{question, answer}}
                   isFavorite={isFavorite}
-                  onToggleFavorite={() => null}
+                  onToggleFavorite={toggleFavorite}
                   onRemove={() => null}
                 />
               </div>
