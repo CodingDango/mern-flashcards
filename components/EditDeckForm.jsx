@@ -3,6 +3,7 @@
 import { deckThemeColors, deckIcons } from "@/libs/config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editDeck } from "@/libs/actions";
+import { useEditMutation } from "@/hooks/useEditMutation";
 import { z } from "zod";
 
 import GenericForm from "./GenericForm";
@@ -49,46 +50,17 @@ const deckFields = [
 ];
 
 const EditDeckForm = ({ deck, closeModal }) => {
-  const queryClient = useQueryClient();
-
-  const editDeckMutation = useMutation({
-    mutationFn: editDeck,
-    // data is title, icon, and color
-    onMutate: async ({ deckId, data: { title, iconIdx, colorIdx } }) => {
-      await queryClient.cancelQueries({ queryKey: ["decks"] });
-      const previousDecksData = queryClient.getQueryData(["decks"]);
-      queryClient.setQueryData(["decks"], (oldData) => {
-        const { data: decks } = oldData;
-        const copyDecks = [...decks];
-
-        if (!oldData || !copyDecks) return oldData;
-
-        const deckIdx = copyDecks.findIndex((deck) => deck.id === deckId);
-
-        if (deckIdx >= 0) {
-          copyDecks[deckIdx] = { ...copyDecks[deckIdx], title, iconIdx, colorIdx }
-        }
-
-        return { ...oldData, data: copyDecks };
-      }); 
-
-      return { previousDecksData };
-    },
-    onError: (err, id, context) => {
-      queryClient.setQueryData(["decks"], context.previousDecks);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["decks"] });
-    },
-  });
+  const {
+    mutateAsync: editMutateAsync,
+    isPending,
+    error,
+  } = useEditMutation(["decks"], editDeck, "decks");
 
   const handleEditDeck = async ({ title, colorIdx, iconIdx }) => {
     try {
-      debugger
-      const { } = await editDeckMutation.mutateAsync({
-        deckId: deck.id,
-        data: { title, colorIdx, iconIdx },
+      await editMutateAsync({
+        itemId: deck.id,
+        newItemData: { title, colorIdx, iconIdx },
       });
     } catch (err) {
       console.log(err);
@@ -96,8 +68,6 @@ const EditDeckForm = ({ deck, closeModal }) => {
 
     closeModal();
   };
-
-  debugger
 
   return (
     <>
@@ -107,15 +77,14 @@ const EditDeckForm = ({ deck, closeModal }) => {
         onSubmit={handleEditDeck}
         submitText="Save Changes"
         onFormClose={closeModal}
-        isPending={editDeckMutation.isPending}
+        isPending={isPending}
         pendingText={"Saving changes..."}
-        error={editDeckMutation.error}
+        error={error}
         defaultValues={{
-          title: deck.title,
+          deckId: deck.title,
           iconIdx: deck.iconIdx,
-          colorIdx: deck.colorIdx
+          colorIdx: deck.colorIdx,
         }}
-        
       />
     </>
   );

@@ -35,9 +35,6 @@ const DeckCard = ({
   const date = DateTime.fromISO(dateCreated);
   const localDate = date.toLocaleString(DateTime.DATE_MED);
 
-  debugger
-  
-
   return (
     <div className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm border-t-transparent">
       <a

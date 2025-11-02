@@ -1,15 +1,17 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { getAllCardsWithDeck, toggleCardFavorite } from "@/libs/actions";
 import { useModalContext } from "@/context/ModalContext";
+import { useToggleFavoriteMutation } from "@/hooks/useToggleFavoriteMutation";
 
 import Main from "./Main";
 import CardFilters from "./CardFilters";
 import CardList from "./CardList";
 import AddCardForm from "./AddCardForm";
 import { deckThemeColors, deckIcons } from "@/libs/config";
+import EditCardForm from "./EditCardForm";
 
 const filterStateDefault = {
   category: "all",
@@ -56,52 +58,17 @@ export default function FlashcardsMain() {
     [allDecks]
   );
 
-  const { mutate: toggleFavorite } = useMutation({
-    mutationFn: toggleCardFavorite,
-    onMutate: async ({ cardId }) => {
-      debugger;
-
-      await queryClient.cancelQueries({ queryKey: ["cards"] });
-      const previousCardsWithDecks = queryClient.getQueryData(["cards"]);
-
-      queryClient.setQueryData(["cards"], (oldData) => {
-        if (!oldData || !oldData.data) return oldData;
-
-        const previousDecks = oldData?.data?.decks;
-        const previousCards = oldData?.data?.cards;
-
-        const updatedCards = previousCards.map((card) => {
-          if (String(card.id) === String(cardId)) {
-            return { ...card, isFavorite: !card.isFavorite };
-          }
-          return card;
-        });
-
-        return {
-          ...oldData,
-          data: {
-            cards: updatedCards,
-            decks: previousDecks,
-          },
-        };
-      });
-
-      return { previousCardsWithDecks };
-    },
-
-    onError: (err, cardId, context) => {
-      queryClient.setQueryData(["cards"], context.previousDecks);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["cards"] });
-    },
-  });
-
   const handleAddCard = () => {
     openModal(
       "Add Card",
       <AddCardForm closeModal={closeModal} decksAsOptions={decksAsOptions} />
+    );
+  };
+
+  const handleEditCard = (card) => {
+    openModal(
+      "Add Card",
+      <EditCardForm closeModal={closeModal} decksAsOptions={decksAsOptions} card={card}/>
     );
   };
 
@@ -120,13 +87,14 @@ export default function FlashcardsMain() {
         onReset={() => setFilters({ ...filterStateDefault })}
         onAddCard={handleAddCard}
         decksAsOptions={decksAsOptions}
+        allCards={allCards}
       />
 
-      <CardList
+    <CardList
         allCards={allCards}
         filteredCards={allCards}
         isFetching={isLoading}
-        toggleFavorite={toggleFavorite}
+        handleEditCard={handleEditCard}
       />
     </Main>
   );

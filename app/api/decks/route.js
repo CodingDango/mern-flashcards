@@ -10,7 +10,7 @@ const DECKS_PATH = path.join(process.cwd(), "data/decks.json");
 export async function GET() {
   const decks = await getAllDecks();
 
-  return NextResponse.json({ data: decks });
+  return NextResponse.json({ data: { decks } });
 }
 
 export async function POST(request) {
@@ -34,7 +34,7 @@ export async function POST(request) {
     ) >= 0
   ) {
     return NextResponse.json(
-      { reason: 'deck title already exists' },
+      { reason: "deck title already exists" },
       { status: 409 }
     );
   }
@@ -43,14 +43,11 @@ export async function POST(request) {
   await fs.writeFile(DECKS_PATH, JSON.stringify(decks, null, 2));
 
   // return NextResponse.json({ data: newDeckData, status: "success" });
-  return NextResponse.json(
-    { data: newDeckData },
-    { status: 200 }
-  );
+  return NextResponse.json({ data: newDeckData }, { status: 200 });
 }
 
 export async function PUT(request) {
-  const { action, deckId, data: newDeck = null } = await request.json();
+  const { action, itemId, newItemData: newDeck = null } = await request.json();
 
   const status = {
     statusCode: 400,
@@ -60,12 +57,12 @@ export async function PUT(request) {
   try {
     switch (action) {
       case "favorite":
-        editDeck(deckId, (deck) => ({ ...deck, isFavorite: !deck.isFavorite }));
+        editDeck(itemId, (deck) => ({ ...deck, isFavorite: !deck.isFavorite }));
         break;
 
       case "edit":
-        editDeck(deckId, (deck) => ({ ...deck, ...newDeck, id: deckId }));
-        console.log("Editing the deck!");
+        const { title, colorIdx, iconIdx } = newDeck;
+        editDeck(itemId, (deck) => ({ ...deck, title, colorIdx, iconIdx }));
 
       default:
         break;
@@ -79,7 +76,7 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-  const { deckId } = await request.json();
+  const { itemId: deckId } = await request.json();
 
   try {
     const allDecks = await getAllDecks();
@@ -109,15 +106,14 @@ async function getCards() {
   return db;
 }
 
-async function editDeck(id, newDataFunc) {
+async function editDeck(itemId, newItemFn) {
   const decks = await getAllDecks();
-  const deckIdx = decks.findIndex((deck) => deck.id === id);
+  const deckIdx = decks.findIndex((deck) => deck.id === itemId);
 
   if (deckIdx !== -1) {
-    decks[deckIdx] = newDataFunc(decks[deckIdx]);
+    decks[deckIdx] = newItemFn(decks[deckIdx]);
     await fs.writeFile(DECKS_PATH, JSON.stringify(decks, null, 2));
   } else {
     console.log("edited failed!");
   }
 }
-

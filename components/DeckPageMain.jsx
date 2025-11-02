@@ -1,12 +1,8 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getDecks, removeDeck } from "@/libs/actions";
-import { useMemo, useState } from "react";
 import { useModalContext } from "@/context/ModalContext";
-import { toggleDeckFavorite } from "@/libs/actions";
 import { useDecks } from "@/hooks/useDecks";
-
+  
 import DeckList from "./DeckList";
 import DeckFilters from "./DeckFilters";
 import AddDeckForm from "./AddDeckForm";

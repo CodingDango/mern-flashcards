@@ -9,7 +9,7 @@ const CardList = ({
   allCards,
   filteredCards,
   isFetching,
-  toggleFavorite
+  handleEditCard
 }) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
@@ -27,7 +27,7 @@ const CardList = ({
         id={card.id}
         isFavorite={card.isFavorite}
         deck={card.deck}
-        toggleFavorite={toggleFavorite}
+        handleEditCard={handleEditCard}
       />
     ));
 

@@ -12,7 +12,7 @@ const FilterButton = ({text, icon : Icon, onSelect = () => null, ...rest}) => (
         <span className="pr-my-sm border-r border-r-black-xs text-black-light">
           <Icon size={20}/>
         </span>
-        <span className="pl-my-sm">{startCase(text)}</span>
+        <span className="pl-my-sm">{text}</span>
       </div>
       <FaChevronDown />
     </div>

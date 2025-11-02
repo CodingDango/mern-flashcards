@@ -34,7 +34,7 @@ export default function ModalContainer({
   if (isOpen)
     return (
       <>
-        <div className="bg-black/60 backdrop-blur-sm fixed inset-0 w-screen h-screen z-50"></div>
+        <div className="bg-black/25 backdrop-blur-xs fixed inset-0 w-screen h-screen z-50"></div>
         <div
           className="
           fixed inset-0 w-screen 

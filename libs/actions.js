@@ -2,13 +2,13 @@
 
 import axios from "axios";
 
-const DECK_ENDPOINT = "http://localhost:3000/api/decks";
+const DECKS_ENDPOINT = "http://localhost:3000/api/decks";
 const CARDS_ENDPOINT = "http://localhost:3000/api/cards"
 
 // deck is {title, colorIdx, iconKey}
 export async function createDeck(deck) {
   const res = await axios.post(
-    DECK_ENDPOINT,
+    DECKS_ENDPOINT,
     JSON.stringify(deck)
   );
 
@@ -16,32 +16,43 @@ export async function createDeck(deck) {
 }
 
 export async function getDecks() {
-  const res = await axios.get(DECK_ENDPOINT);
+  const res = await axios.get(DECKS_ENDPOINT);
   return res.data;
 }
 
-export async function toggleDeckFavorite({ deckId }) {
+export async function toggleDeckFavorite({ itemId }) {
   const res = await axios.put(
-    DECK_ENDPOINT,
-    JSON.stringify({ action: "favorite", deckId })
+    DECKS_ENDPOINT,
+    JSON.stringify({ action: "favorite", itemId})
   );
 
   return res.data;
 }
 
-export async function removeDeck({ deckId }) {
+export async function removeDeck({ itemId }) {
   const res = await axios.delete(
-    DECK_ENDPOINT,
-    { data: JSON.stringify({ deckId })}
+    DECKS_ENDPOINT,
+    {data: JSON.stringify({ itemId })}
   );
 
   return res.data;
 }
 
-export async function editDeck({ deckId, data }) {
+export async function editDeck({ itemId, newItemData }) {
   const res = await axios.put(
-    DECK_ENDPOINT,
-    JSON.stringify({ action: "edit", deckId, data})
+  DECKS_ENDPOINT,
+    JSON.stringify({ action: "edit", itemId, newItemData})
+  );
+
+  return res.status;
+}
+
+export async function editCard({ itemId, newItemData }) {
+  console.log('Lets go! editing card Lmao');
+  
+  const res = await axios.put(
+    CARDS_ENDPOINT,
+    JSON.stringify({ action: "edit", itemId, newItemData})
   );
 
   return res.status;
@@ -62,12 +73,21 @@ export async function addCard({deckId, question, answer}) {
 }
 
 
-export async function toggleCardFavorite({ cardId }) {
+export async function toggleCardFavorite({ itemId }) {
   console.log('Okay, toggling favorites on card');
 
   const res = await axios.put(
     CARDS_ENDPOINT,
-    JSON.stringify({ action: "favorite", cardId })
+    JSON.stringify({ action: "favorite", itemId })
+  );
+
+  return res.data;
+}
+
+export async function removeCard({ itemId }) {
+  const res = await axios.delete(
+    CARDS_ENDPOINT,
+    {data: JSON.stringify({ itemId })}
   );
 
   return res.data;

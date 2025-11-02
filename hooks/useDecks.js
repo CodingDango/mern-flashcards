@@ -1,5 +1,7 @@
-import { useState, useMemo, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useToggleFavoriteMutation } from "./useToggleFavoriteMutation";
+import { useRemoveMutation } from "./useRemoveMutation";
 import {
   getDecks,
   toggleDeckFavorite,
@@ -16,8 +18,6 @@ const filterStateDefault = {
 
 // A custom hook is just a function that starts with "use" and calls other hooks.
 export function useDecks() {
-  const queryClient = useQueryClient();
-
   const {
     data: responseData,
     isLoading,
@@ -29,70 +29,24 @@ export function useDecks() {
   });
 
   // MUTATIONS (I've collapsed them for brevity, but it's your exact code)
-  const toggleFavoriteMutation = useMutation({
-    mutationFn: toggleDeckFavorite,
+  const { mutate: toggleFavoriteMutate } = useToggleFavoriteMutation(
+    ["decks"],
+    toggleDeckFavorite,
+    "decks"
+  );
 
-    onMutate: async ({ deckId }) => {
-      await queryClient.cancelQueries({ queryKey: ["decks"] });
-      const previousDecksData = queryClient.getQueryData(["decks"]);
-
-      queryClient.setQueryData(["decks"], (oldData) => {
-        if (!oldData || !oldData.data) return oldData;
-
-        const updatedDecks = oldData.data.map((deck) => {
-          if (String(deck.id) === String(deckId)) {
-            return { ...deck, isFavorite: !deck.isFavorite };
-          }
-          return deck;
-        });
-
-        return { ...oldData, data: updatedDecks };
-      });
-
-      return { previousDecksData };
-    },
-
-    onError: (err, deckId, context) => {
-      queryClient.setQueryData(["decks"], context.previousDecks);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["decks"] });
-    },
-  });
-
-  const removeDeckMutation = useMutation({
-    mutationFn: removeDeck,
-    onMutate: async ({ deckId }) => {
-      await queryClient.cancelQueries({ queryKey: ["decks"] });
-      const previousDecksData = queryClient.getQueryData(["decks"]);
-
-      queryClient.setQueryData(["decks"], (oldData) => {
-        const { data: decks } = oldData;
-
-        if (!oldData || !decks) return oldData;
-
-        const filteredDecks = decks.filter((deck) => deck.id !== deckId);
-        return { ...oldData, data: filteredDecks };
-      });
-
-      return { previousDecksData };
-    },
-    onError: (err, deckId, context) => {
-      queryClient.setQueryData(["decks"], context.previousDecks);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["decks"] });
-    },
-  });
+  const { mutate: removeDeckMutate } = useRemoveMutation(
+    ['decks'],
+    removeDeck,
+    'decks'
+  );
 
   // HANDLERS
   const handleToggleFavorite = (deckId) =>
-    toggleFavoriteMutation.mutate({ deckId });
+    toggleFavoriteMutate({ itemId: deckId });
 
   const handleRemoveDeck = (deckId) => 
-    removeDeckMutation.mutate({ deckId });
+    removeDeckMutate({ itemId: deckId });
 
   // FILTER STATE
   const [filters, setFilters] = useState({...filterStateDefault});
@@ -101,7 +55,7 @@ export function useDecks() {
   const resetFilters = () =>
     setFilters({...filterStateDefault})
 
-  const allDecks = useMemo(() => responseData?.data || [], [responseData]);
+  const allDecks = useMemo(() => responseData?.data.decks || [], [responseData]);
 
   const filteredDecks = useMemo(() => {
     const { searchQuery, category } = filters;

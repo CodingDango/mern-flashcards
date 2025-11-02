@@ -55,21 +55,25 @@ async function getCards() {
 }
 
 export async function PUT(request) {
-  const { action, cardId, data: newCard = null } = await request.json();
+  const { action, itemId, newItemData: newCard = null } = await request.json();
 
   const status = {
     statusCode: 400,
     errorText: null,
   };
 
+  console.log(`Item id ${itemId}`);
+  console.log(`New item data ${JSON.stringify(newCard)}`);
+
   try {
     switch (action) {
       case "favorite":
-        editCard(cardId, (card) => ({ ...card, isFavorite: !card.isFavorite }));
+        editCard(itemId, (card) => ({ ...card, isFavorite: !card.isFavorite }));
         break;
 
       case "edit":
-        editCard(cardId, (card) => ({ ...card, ...newCard, id: cardId }));
+        const { question, answer, deckId } = newCard;
+        editCard(itemId, (card) => ({ ...card, question, answer, deckId }));
 
       default:
         break;
@@ -82,12 +86,28 @@ export async function PUT(request) {
   return NextResponse.json({ status });
 }
 
-async function editCard(id, newDataFunc) {
+export async function DELETE(request) {
+  const { itemId } = await request.json();
+  
+
+  try {
+    const allCards = await getCards();
+    const filteredCards = allCards.filter((card) => card.id !== itemId);
+
+    fs.writeFile(CARDS_PATH, JSON.stringify(filteredCards, null, 2));
+
+    return NextResponse.json({ status: "success" });
+  } catch (err) {
+    return NextResponse.json({ status: "failed" });
+  }
+}
+
+async function editCard(itemId, newItemFn) {
   const cards = await getCards();
-  const cardIdx = cards.findIndex((card) => card.id === id);
+  const cardIdx = cards.findIndex((card) => card.id === itemId);
 
   if (cardIdx !== -1) {
-    cards[cardIdx] = newDataFunc(cards[cardIdx]);
+    cards[cardIdx] = newItemFn(cards[cardIdx]);
     await fs.writeFile(CARDS_PATH, JSON.stringify(cards, null, 2));
   } else {
     console.log("edited failed!");

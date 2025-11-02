@@ -1,23 +1,16 @@
 [
   {
-    "id": "flashcard-1",
-    "question": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum neque ex quaerat, sequi sit cumque quibusdam expedita, ea eum officia ducimus perspiciatis eaque vel dolore a atque ipsum accusantium voluptatibus?",
-    "answer": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum, dolores.",
-    "isFavorite": false,
-    "deckId": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5"
-  },
-  {
-    "id": "card-9af7e918-a11d-4fd9-a910-a1285cb8eee4",
-    "question": "Alright",
-    "answer": "Sge",
-    "isFavorite": false,
-    "deckId": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5"
-  },
-  {
-    "id": "card-84fe1f47-fd59-4b0b-b78f-5f72112a1da2",
-    "question": "Dude what the fuck",
-    "answer": "Is this the answer?",
+    "id": "card-6a01d3fa-54e3-4a20-8554-7674b2f820d0",
+    "question": "My way lol sadwdw",
+    "answer": "Cool answer",
     "isFavorite": true,
-    "deckId": "deck-5f4f3f7a-c01f-4485-9bb4-61a4f50819d5"
+    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0"
+  },
+  {
+    "id": "card-e8c09253-040e-4388-a420-2a9331a7795d",
+    "question": "Sge lmao",
+    "answer": "Whats the answer? nothing is the answer!",
+    "isFavorite": false,
+    "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38"
   }
 ]

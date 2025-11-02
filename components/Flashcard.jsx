@@ -11,7 +11,8 @@ const Flashcard = ({
   id,
   isFavorite,
   deck,
-  toggleFavorite
+  toggleFavorite,
+  handleEditCard
 }) => {
   if (!deck) return;
 
@@ -24,10 +25,6 @@ const Flashcard = ({
 
   const showAnswerBtn = useRef(null);
   const hideAnswerBtn = useRef(null);
-
-  const handleOptionsClick = (e) => {
-    e.stopPropagation();
-  };
 
   useEffect(() => {
     if (isFlipped) {
@@ -68,10 +65,10 @@ const Flashcard = ({
               <div>
                 <CardOptionsMenu
                   cardId={id}
-                  card={{question, answer}}
+                  card={{deckId: deck.id, question, answer}}
                   isFavorite={isFavorite}
                   onToggleFavorite={toggleFavorite}
-                  onRemove={() => null}
+                  handleEditCard={handleEditCard}
                 />
               </div>
             </div>

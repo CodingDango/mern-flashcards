@@ -1,8 +1,6 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
 import { addCard } from "@/libs/actions";
 import { z } from "zod";
 
