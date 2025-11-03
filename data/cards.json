@@ -1,16 +1,10 @@
 [
   {
-    "id": "card-6a01d3fa-54e3-4a20-8554-7674b2f820d0",
-    "question": "My way lol sadwdw",
-    "answer": "Cool answer",
-    "isFavorite": true,
-    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0"
-  },
-  {
-    "id": "card-e8c09253-040e-4388-a420-2a9331a7795d",
-    "question": "Sge lmao",
-    "answer": "Whats the answer? nothing is the answer!",
+    "id": "card-934cc8b7-816d-4632-ac7e-025bd0bfbed7",
+    "question": "What 1 + 1?",
+    "answer": "2",
     "isFavorite": false,
-    "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38"
+    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
+    "dateCreated": "2025-11-03T10:27:56.237Z"
   }
 ]

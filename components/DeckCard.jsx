@@ -26,14 +26,24 @@ const DeckCard = ({
   cardCount = 0,
   progress = "0",
   options = true,
+  lastStudied,
 }) => {
   if (!title) return;
 
   const color = deckThemeColors[colorIdx];
   const Icon = deckIcons[iconIdx];
 
-  const date = DateTime.fromISO(dateCreated);
-  const localDate = date.toLocaleString(DateTime.DATE_MED);
+  const localDate = DateTime.fromISO(dateCreated).toLocaleString(
+    DateTime.DATE_MED
+  );
+
+  let lastStudiedDate = null;
+
+  if (lastStudied) {
+    lastStudiedDate = DateTime.fromISO(lastStudied).toLocaleString(
+      DateTime.DATE_MED
+    );
+  }
 
   return (
     <div className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm border-t-transparent">
@@ -78,7 +88,7 @@ const DeckCard = ({
           </p>
           <p className="grid grid-cols-[110px_auto]">
             <span>Last Studied: </span>
-            <span>{localDate}</span>
+            <span>{lastStudiedDate || "Not studied"}</span>
           </p>
         </div>
 
@@ -93,13 +103,12 @@ const DeckCard = ({
                 <FaCheck size={16} />3
               </p>
             </div>
-            <a href={`/decks/play/${id}`} className="z-1 button button--dark">
+            <a href={`/play/${id}`} className="z-1 button button--dark">
               <div className="flex items-center gap-my-xs">
                 <FaBookOpen />
                 Study Now
               </div>
             </a>
-
           </div>
         </div>
       </div>

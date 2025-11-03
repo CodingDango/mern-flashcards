@@ -28,6 +28,7 @@ const CardList = ({
         isFavorite={card.isFavorite}
         deck={card.deck}
         handleEditCard={handleEditCard}
+        dateCreated={card.dateCreated}
       />
     ));
 

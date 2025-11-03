@@ -13,7 +13,6 @@ const CardFilters = ({
   onFilterChange,
   onReset,
   onAddCard = null,
-  handleEditCard
 }) => {
   return (
     <section>

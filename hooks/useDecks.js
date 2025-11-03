@@ -7,14 +7,15 @@ import {
   toggleDeckFavorite,
   removeDeck,
   editDeck,
-} from "../libs/actions"; 
+} from "../libs/actions";
+import { DateTime } from "luxon";
 
 const filterStateDefault = {
   category: "all",
   searchQuery: "",
   status: "all",
   sortBy: "newestCreated",
-}
+};
 
 // A custom hook is just a function that starts with "use" and calls other hooks.
 export function useDecks() {
@@ -36,33 +37,42 @@ export function useDecks() {
   );
 
   const { mutate: removeDeckMutate } = useRemoveMutation(
-    ['decks'],
+    ["decks"],
     removeDeck,
-    'decks'
+    "decks"
   );
 
   // HANDLERS
   const handleToggleFavorite = (deckId) =>
     toggleFavoriteMutate({ itemId: deckId });
 
-  const handleRemoveDeck = (deckId) => 
-    removeDeckMutate({ itemId: deckId });
+  const handleRemoveDeck = (deckId) => removeDeckMutate({ itemId: deckId });
 
   // FILTER STATE
-  const [filters, setFilters] = useState({...filterStateDefault});
+  const [filters, setFilters] = useState({ ...filterStateDefault });
   const handleFilterChange = (name, value) =>
     setFilters((prev) => ({ ...prev, [name]: value }));
-  const resetFilters = () =>
-    setFilters({...filterStateDefault})
+  const resetFilters = () => setFilters({ ...filterStateDefault });
 
-  const allDecks = useMemo(() => responseData?.data.decks || [], [responseData]);
+  const allDecks = useMemo(
+    () => responseData?.data.decks || [],
+    [responseData]
+  );
 
   const filteredDecks = useMemo(() => {
-    const { searchQuery, category } = filters;
+    const { searchQuery, category, sortBy } = filters;
 
-    return allDecks
-      .filter((deck) => deck.title.toLowerCase().includes(searchQuery.toLowerCase()))
-      .filter((deck) => category === 'favorites' ? deck.isFavorite : true);
+    let filtered = [...allDecks].filter((deck) =>
+      deck.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    filtered = filtered.filter((deck) =>
+      category === "favorites" ? deck.isFavorite : true
+    );
+
+    const sortedAndFiltered = filterBySort(filtered, sortBy);
+
+    return sortedAndFiltered;
   }, [allDecks, filters]);
 
   // The hook returns an object with everything the UI component needs.
@@ -77,4 +87,47 @@ export function useDecks() {
     handleToggleFavorite,
     handleRemoveDeck,
   };
+}
+
+function filterBySort(decks, sortBy) {
+  // sortBy can be newestCreated or oldestCreated. which uses the dateCreated property of the card. its uh, its a string, or utc iso string.
+  // sortBy can also be newestStudied and oldestStudied. which uses the lastStudied property. its also a utc iso string.
+
+  let sortedDecks = [...decks];
+
+  switch (sortBy) {
+    case "newestCreated":
+      sortedDecks.sort(
+        (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+      );
+      break;
+
+    case "oldestCreated":
+      sortedDecks.sort(
+        (a, b) => new Date(a.dateCreated) - new Date(b.dateCreated)
+      );
+      break;
+
+    case "newestStudied":
+      sortedDecks.sort((a, b) => {
+        if (a.lastStudied === null && b.lastStudied === null) return 0;
+        if (a.lastStudied === null) return 1;
+        if (b.lastStudied === null) return -1;
+
+        return new Date(b.lastStudied) - new Date(a.lastStudied);
+      });
+      break;
+
+    case "oldestStudied":
+      sortedDecks.sort((a, b) => {
+        if (a.lastStudied === null && b.lastStudied === null) return 0;
+        if (a.lastStudied === null) return -1;
+        if (b.lastStudied === null) return 1;
+
+        return new Date(a.lastStudied) - new Date(b.lastStudied);
+      });
+      break;
+  }
+
+  return sortedDecks;
 }

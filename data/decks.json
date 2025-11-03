@@ -7,7 +7,8 @@
     "dateCreated": "2025-10-27T14:56:22.586Z",
     "progress": 0,
     "totalCards": 0,
-    "isFavorite": true
+    "isFavorite": true,
+    "lastStudied": "2025-11-03T09:02:21.607Z"
   },
   {
     "title": "asdwdw",
@@ -17,7 +18,8 @@
     "dateCreated": "2025-10-27T14:56:33.802Z",
     "progress": 0,
     "totalCards": 0,
-    "isFavorite": false
+    "isFavorite": false,
+    "lastStudied": "2025-11-03T09:02:44.924Z"
   },
   {
     "title": "my way",
@@ -27,7 +29,8 @@
     "dateCreated": "2025-10-28T11:45:56.098Z",
     "progress": 0,
     "totalCards": 0,
-    "isFavorite": false
+    "isFavorite": false,
+    "lastStudied": null
   },
   {
     "title": "!!123232",
@@ -37,7 +40,8 @@
     "dateCreated": "2025-10-28T11:47:45.260Z",
     "progress": 0,
     "totalCards": 0,
-    "isFavorite": false
+    "isFavorite": false,
+    "lastStudied": null
   },
   {
     "title": "okay okay !!!",
@@ -47,6 +51,7 @@
     "dateCreated": "2025-10-28T16:18:33.778Z",
     "progress": 0,
     "totalCards": 0,
-    "isFavorite": false
+    "isFavorite": false,
+    "lastStudied": null
   }
 ]

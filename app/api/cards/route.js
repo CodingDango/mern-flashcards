@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
+import { DateTime } from "luxon";
 import fs from "fs/promises";
 import path from "path";
 
@@ -20,6 +21,7 @@ export async function POST(request) {
     answer,
     isFavorite: false,
     deckId,
+    dateCreated: DateTime.utc().toISO()
   });
 
   fs.writeFile(CARDS_PATH, JSON.stringify(cards, null, 2));
