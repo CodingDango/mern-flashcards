@@ -23,7 +23,7 @@ export async function POST(request) {
     progress: 0,
     totalCards: 0,
     isFavorite: false,
-    lastStudied: null
+    lastReviewed: null
   };
 
   const decks = await getAllDecks();
@@ -65,8 +65,8 @@ export async function PUT(request) {
         const { title, colorIdx, iconIdx } = newDeck;
         editDeck(itemId, (deck) => ({ ...deck, title, colorIdx, iconIdx }));
 
-      case 'study':
-        editDeck(itemId, (deck) => ({ ...deck, lastStudied: DateTime.utc().toISO()}));
+      case 'review':
+        editDeck(itemId, (deck) => ({ ...deck, lastReviewed: DateTime.utc().toISO()}));
 
       default:
         break;

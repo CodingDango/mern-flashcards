@@ -15,8 +15,7 @@ const Sidebar = ({activeRoute = ''}) => {
   ];
 
   return (
-    <nav className='top-0 left-0 max-h-screen sticky w-3xs bg-black-xl py-8 px-my-md border-r border-black-md'>
-
+    <nav className='top-0 left-0 max-h-screen sticky w-5xs bg-black-xl py-8 px-my-sm border-r border-black-md h-full'>
       <div className="flex flex-col gap-my-md h-full">
         <div className='flex gap-my-sm items-center'>
           <BrandIcon size={32} className='text-my-primary'/>

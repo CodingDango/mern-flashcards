@@ -93,10 +93,19 @@ export async function removeCard({ itemId }) {
   return res.data;
 }
 
-export async function updateLastStudiedDeck({ itemId }) {
+export async function updateLastReviewedDeck({ itemId }) {
   const res = await axios.put(
     DECKS_ENDPOINT,
-    JSON.stringify({action: 'study', itemId})
+    JSON.stringify({action: 'review', itemId})
+  );
+
+  return res.data;
+}
+
+export async function getCardsByDeck({ deckId }) {
+  const res = await axios.get(
+    CARDS_ENDPOINT,
+    { params: {deckId} }
   );
 
   return res.data;

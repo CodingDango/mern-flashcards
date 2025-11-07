@@ -6,5 +6,21 @@
     "isFavorite": false,
     "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
     "dateCreated": "2025-11-03T10:27:56.237Z"
+  },
+  {
+    "id": "card-f400cfe6-8d33-4b42-8db8-76f3da9615b7",
+    "question": "What is 2 + 2?",
+    "answer": "69 69 69 69",
+    "isFavorite": false,
+    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
+    "dateCreated": "2025-11-05T15:06:32.939Z"
+  },
+  {
+    "id": "card-92117e37-981c-49e7-9c3f-0817471f8107",
+    "question": "Can you even keep up?",
+    "answer": "No I cannot;",
+    "isFavorite": false,
+    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
+    "dateCreated": "2025-11-05T15:06:46.288Z"
   }
 ]

@@ -1,10 +1,15 @@
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import UIProviders from "@/context/UIProviders";
 import QueryProvider from "@/context/QueryProvider";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const jetbrains_mono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -17,13 +22,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${inter.variable} ${jetbrains_mono.variable} antialiased`}
       >
         <QueryProvider>
-          <UIProviders>
-            {children}
-          </UIProviders>
-        </QueryProvider>            
+          <UIProviders>{children}</UIProviders>
+        </QueryProvider>
       </body>
     </html>
   );

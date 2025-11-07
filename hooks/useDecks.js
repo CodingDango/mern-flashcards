@@ -108,23 +108,23 @@ function filterBySort(decks, sortBy) {
       );
       break;
 
-    case "newestStudied":
+    case "newestReviewed":
       sortedDecks.sort((a, b) => {
-        if (a.lastStudied === null && b.lastStudied === null) return 0;
-        if (a.lastStudied === null) return 1;
-        if (b.lastStudied === null) return -1;
+        if (a.lastReviewed === null && b.lastReviewed === null) return 0;
+        if (a.lastReviewed === null) return 1;
+        if (b.lastReviewed === null) return -1;
 
-        return new Date(b.lastStudied) - new Date(a.lastStudied);
+        return new Date(b.lastReviewed) - new Date(a.lastReviewed);
       });
       break;
 
-    case "oldestStudied":
+    case "oldestReviewed":
       sortedDecks.sort((a, b) => {
-        if (a.lastStudied === null && b.lastStudied === null) return 0;
-        if (a.lastStudied === null) return -1;
-        if (b.lastStudied === null) return 1;
+        if (a.lastReviewed === null && b.lastReviewed === null) return 0;
+        if (a.lastReviewed === null) return -1;
+        if (b.lastReviewed === null) return 1;
 
-        return new Date(a.lastStudied) - new Date(b.lastStudied);
+        return new Date(a.lastReviewed) - new Date(b.lastReviewed);
       });
       break;
   }

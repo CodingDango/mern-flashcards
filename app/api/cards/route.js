@@ -8,7 +8,15 @@ const CARDS_PATH = path.join(process.cwd(), "data/cards.json");
 const DECKS_PATH = path.join(process.cwd(), "data/decks.json");
 
 export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const deckId = searchParams.get('deckId');
   const [cards, decks] = await getCardsWithDeck();
+
+  if (deckId) {
+    const cardsByDeckId = cards.filter((card) => card.deckId === deckId);
+    return NextResponse.json({ data: { cards: cardsByDeckId } });
+  }
+
   return NextResponse.json({ data: {cards, decks} });
 }
 

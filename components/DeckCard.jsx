@@ -26,7 +26,7 @@ const DeckCard = ({
   cardCount = 0,
   progress = "0",
   options = true,
-  lastStudied,
+  lastReviewed,
 }) => {
   if (!title) return;
 
@@ -37,10 +37,10 @@ const DeckCard = ({
     DateTime.DATE_MED
   );
 
-  let lastStudiedDate = null;
+  let lastReviewedDate = null;
 
-  if (lastStudied) {
-    lastStudiedDate = DateTime.fromISO(lastStudied).toLocaleString(
+  if (lastReviewed) {
+    lastReviewedDate = DateTime.fromISO(lastReviewed).toLocaleString(
       DateTime.DATE_MED
     );
   }
@@ -82,13 +82,13 @@ const DeckCard = ({
         </div>
 
         <div className="flex flex-col gap-1 text-black-light">
-          <p className="grid grid-cols-[110px_auto]">
-            <span>Created On: </span>
+          <p className="grid grid-cols-[90px_auto]">
+            <span>Created: </span>
             <span>{localDate}</span>
           </p>
-          <p className="grid grid-cols-[110px_auto]">
-            <span>Last Studied: </span>
-            <span>{lastStudiedDate || "Not studied"}</span>
+          <p className="grid grid-cols-[90px_auto]">
+            <span>Reviewed: </span>
+            <span>{lastReviewedDate || "Not reviewed"}</span>
           </p>
         </div>
 
@@ -103,10 +103,10 @@ const DeckCard = ({
                 <FaCheck size={16} />3
               </p>
             </div>
-            <a href={`/play/${id}`} className="z-1 button button--dark">
+            <a href={`/review/${id}`} className="z-1 button button--dark">
               <div className="flex items-center gap-my-xs">
                 <FaBookOpen />
-                Study Now
+                Review
               </div>
             </a>
           </div>

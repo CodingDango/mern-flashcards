@@ -75,8 +75,8 @@ const DeckFilters = ({
               options={[
                 { text: "Newest Created", value: "newestCreated" },
                 { text: "Oldest Created", value: "oldestCreated" },
-                { text: "Newest Studied", value: "newestStudied" },
-                { text: "Oldest Studied", value: "oldestStudied" },
+                { text: "Newest Reviewed", value: "newestReviewed" },
+                { text: "Oldest Reviewed", value: "oldestReviewed" },
               ]}
               icon={BsFilter}
             />

@@ -29,6 +29,10 @@ body {
   font-family: var(--font-inter), 'Helvetica', sans-serif;
 }
 
+.font-my-mono {
+  font-family: var(--font-jetbrains-mono);
+}
+
 .button {
   @apply cursor-pointer px-4 py-2 rounded-md hover:brightness-85 flex justify-center items-center font-medium transition-colors duration-300; 
 }
@@ -51,6 +55,10 @@ body {
 
 .button--dark {
   @apply text-white bg-black-lg border border-black-md 
+}
+
+.button--ghost {
+  @apply text-white bg-transparent border border-white
 }
 
 .text-input {
