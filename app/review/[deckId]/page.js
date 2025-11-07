@@ -6,23 +6,39 @@ import { motion, AnimatePresence } from "framer-motion";
 import { shuffle } from "lodash";
 
 import { ClipLoader } from "react-spinners";
-import { use, useEffect, useMemo, useState } from "react";
-import { getCardsByDeck, updateLastReviewedDeck } from "@/libs/actions";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  getCardsByDeck,
+  updateDeckProgress,
+  updateLastReviewedDeck,
+} from "@/libs/actions";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { MdAddCard } from "react-icons/md";
 
 import ReviewCard from "@/components/ReviewCard";
 import InfoPanel from "@/components/InfoPanel";
 import ReviewResults from "@/components/ReviewResults";
+import Notify from "@/components/Notify";
 
 const StudyPage = ({ params }) => {
   const unwrappedParams = use(params);
   const { deckId } = unwrappedParams;
 
-  const { mutate } = useMutation({
+  const { mutate: updateStudiedMutation } = useMutation({
     mutationFn: updateLastReviewedDeck,
   });
 
-  const { data } = useQuery({
+  const { mutate: updateDeckProgressMutation } = useMutation({
+    mutationFn: updateDeckProgress,
+  });
+
+  const updateProgressHandler = useCallback(
+    (newProgress) =>
+      updateDeckProgressMutation({ itemId: deckId, newProgress }),
+    [updateDeckProgressMutation, deckId]
+  );
+
+  const { data, isLoading } = useQuery({
     enabled: !!deckId,
     queryKey: ["cards", deckId],
     queryFn: ({ queryKey }) => {
@@ -32,18 +48,20 @@ const StudyPage = ({ params }) => {
   });
 
   useEffect(() => {
-    mutate({ itemId: deckId });
-  }, [mutate, deckId]);
+    updateStudiedMutation({ itemId: deckId });
+  }, [updateStudiedMutation, deckId]);
 
-  const originalCards = useMemo(() => data?.data?.cards || [], [data]);
   const [cardIdx, setCardIdx] = useState(0);
   const [cardsInSession, setCardsInSession] = useState([]);
+  const [highestDeckPercentage, setHighestDeckPercentage] = useState(0);
+
+  const originalCards = useMemo(() => data?.data?.cards || [], [data]);
+  const deckData = useMemo(() => data?.data?.deck || {}, [data]);
+  const isReviewDone = cardIdx >= cardsInSession.length;
 
   useEffect(() => {
     if (cardsInSession.length === 0 && originalCards.length !== 0) {
       const shuffledCards = shuffle(originalCards);
-
-      debugger;
 
       setCardsInSession(
         shuffledCards.map((card) => ({ ...card, status: null }))
@@ -51,17 +69,40 @@ const StudyPage = ({ params }) => {
     }
   }, [cardsInSession.length, originalCards]);
 
+  useEffect(() => {
+    if (isReviewDone) {
+      const corrects = cardsInSession.filter(
+        (card) => card.status === "correct"
+      ).length;
+
+      const mistakes = cardsInSession.filter(
+        (card) => card.status === "incorrect"
+      ).length;
+
+      const totalAnswered = corrects + mistakes;
+      let progressPercentage = 0;
+
+      if (totalAnswered > 0) {
+        progressPercentage = Math.floor((corrects / totalAnswered) * 100);
+      }
+
+      const highestPercentage = Math.max(progressPercentage, deckData.progress);
+      setHighestDeckPercentage(highestPercentage);
+      updateProgressHandler(highestPercentage);
+    }
+  }, [isReviewDone, cardsInSession, updateProgressHandler, deckData]);
+
   return (
     <AppLayout>
       <Sidebar />
-      {originalCards.length > 0 ? (
-        <div className="h-full w-full flex justify-center items-center">
-          <div className="max-w-5xl w-full h-full grid grid-rows-[360px] items-start gap-my-md pt-16 pb-8 px-10 mr-50">
+      <div className="h-full w-full flex justify-center items-center">
+        <div className="relative max-w-5xl w-full h-full grid grid-rows-[360px] items-start gap-my-md pt-16 pb-8 px-10 mr-50">
+          {originalCards.length > 0 && (
             <AnimatePresence mode="wait">
-              {cardIdx < cardsInSession.length ? (
+              {!isReviewDone ? (
                 <motion.div
                   className="h-full"
-                  key={'quiz'}
+                  key={"quiz"}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -101,46 +142,59 @@ const StudyPage = ({ params }) => {
                     <InfoPanel cardsStatuses={cardsInSession} />
                   </div>
                 </motion.div>
-                  
-                ) : (
-                  <motion.div
-                    className="h-full"
-                    key={'results'}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <ReviewResults
-                      corrects={
-                        cardsInSession.filter((card) => card.status === "correct")
-                          .length
-                      }
-                      mistakes={
-                        cardsInSession.filter(
-                          (card) => card.status === "incorrect"
-                        ).length
-                      }
-                      deckProgressPercent={50}
-                      onReviewAgain={() => {
-                        const shuffledCards = shuffle(cardsInSession);
+              ) : (
+                <motion.div
+                  className="h-full"
+                  key={"results"}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <ReviewResults
+                    corrects={
+                      cardsInSession.filter((card) => card.status === "correct")
+                        .length
+                    }
+                    mistakes={
+                      cardsInSession.filter(
+                        (card) => card.status === "incorrect"
+                      ).length
+                    }
+                    deckProgressPercent={highestDeckPercentage}
+                    onReviewAgain={() => {
+                      const shuffledCards = shuffle(cardsInSession);
 
-                        setCardsInSession(
-                          shuffledCards.map((card) => ({ ...card, status: null }))
-                        );
+                      setCardsInSession(
+                        shuffledCards.map((card) => ({ ...card, status: null }))
+                      );
 
-                        setCardIdx(0);
-                      }}
-                    />
-                  </motion.div>
-                )}
-              
+                      setCardIdx(0);
+                    }}
+                  />
+                </motion.div>
+              )}
             </AnimatePresence>
-          </div>
+          )}
+
+          {!isLoading && originalCards.length === 0 && (
+            <div className="w-full h-full flex justify-center items-center">
+              <Notify
+                title={"Add a Card"}
+                body="Add cards to this deck in the `Cards` route in order to start reviewing."
+                Icon={MdAddCard}
+              />
+            </div>
+          )}
+
+          {/* Okay.. not working. */}
+          {isLoading && (
+            <div className="w-full h-full flex justify-center items-center">
+              <ClipLoader color="#ffffff" size={50}/>
+            </div>
+          )}
         </div>
-      ) : (
-        <ClipLoader />
-      )}
+      </div>
     </AppLayout>
   );
 };

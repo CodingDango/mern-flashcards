@@ -23,8 +23,8 @@ const DeckCard = ({
   isFavorite,
   onToggleFavorite,
   onRemove,
-  cardCount = 0,
-  progress = "0",
+  cardCount,
+  progress = 0,
   options = true,
   lastReviewed,
 }) => {
@@ -53,10 +53,10 @@ const DeckCard = ({
         href={`/decks/${id}`}
       ></a>
 
-      <div className="absolute h-[8px] w-full bg-black-lg left-0 top-0 rounded-tr-lg rounded-tl-lg">
+      <div className="absolute h-[8px] w-full bg-black-lg left-0 top-0 rounded-tr-lg rounded-tl-lg rounded-bl-none">
         <div
           style={{ background: color, width: `${progress}%` }}
-          className="absolute h-[8px] left-0 top-0 rounded-tr-lg rounded-br-lg rounded-tl-lg"
+          className="absolute h-[8px] left-0 top-0 rounded-tr-lg  rounded-tl-lg"
         ></div>
       </div>
 
@@ -94,15 +94,9 @@ const DeckCard = ({
 
         <div className="flex-1 flex items-end">
           <div className="w-full flex justify-between items-center">
-            <div className="flex items-center gap-my-sm text-neutral-400">
-              <p className="flex gap-my-xs items-center">
-                <CardsIcon size={20} />
-                12
-              </p>
-              <p className="flex gap-my-xs items-center">
-                <FaCheck size={16} />3
-              </p>
-            </div>
+            <p className="flex gap-my-xs items-center text-neutral-400">
+              <CardsIcon size={20} /> {cardCount}
+            </p>
             <a href={`/review/${id}`} className="z-1 button button--dark">
               <div className="flex items-center gap-my-xs">
                 <FaBookOpen />

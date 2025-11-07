@@ -23,7 +23,7 @@ export async function POST(request) {
     progress: 0,
     totalCards: 0,
     isFavorite: false,
-    lastReviewed: null
+    lastReviewed: null,
   };
 
   const decks = await getAllDecks();
@@ -48,7 +48,7 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-  const { action, itemId, newItemData: newDeck = null } = await request.json();
+  const { action, itemId, newItemData: newDeck = null, newProgress = null } = await request.json();
 
   const status = {
     statusCode: 400,
@@ -65,9 +65,17 @@ export async function PUT(request) {
         const { title, colorIdx, iconIdx } = newDeck;
         editDeck(itemId, (deck) => ({ ...deck, title, colorIdx, iconIdx }));
 
-      case 'review':
-        editDeck(itemId, (deck) => ({ ...deck, lastReviewed: DateTime.utc().toISO()}));
+      case "review":
+        editDeck(itemId, (deck) => ({
+          ...deck,
+          lastReviewed: DateTime.utc().toISO(),
+        }));
 
+      case 'progress':
+        editDeck(itemId, (deck) => ({
+          ...deck,
+          progress: newProgress
+        }));
       default:
         break;
     }

@@ -14,6 +14,7 @@ const DeckPageMain = () => {
   const {
     isLoading,
     allDecks,
+    allCards,
     filteredDecks,
     filters,
     resetFilters,
@@ -46,6 +47,7 @@ const DeckPageMain = () => {
       <DeckList
         allDecks={allDecks}
         filteredDecks={filteredDecks}
+        allCards={allCards}
         isFetching={isLoading}
         onToggleFavorite={handleToggleFavorite}
         onRemove={handleRemoveDeck}

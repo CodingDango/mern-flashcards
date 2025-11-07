@@ -1,12 +1,15 @@
 import { MdAddCard } from "react-icons/md";
 import { HiOutlineSquare3Stack3D as StackIcon } from "react-icons/hi2";
 import { ClipLoader } from "react-spinners";
+import { groupBy } from "lodash";
 
 import Notify from "./Notify";
 import DeckCard from "./DeckCard";
+import { useMemo } from "react";
 
 const DeckList = ({
   allDecks,
+  allCards,
   filteredDecks,
   isFetching,
   onToggleFavorite,
@@ -18,6 +21,12 @@ const DeckList = ({
     gap-x-my-md gap-y-8
   `;
 
+  const cardsGroupedByDeck = useMemo(() => (
+    groupBy(allCards, 'deckId')
+  ), [allCards]);
+
+  console.log(cardsGroupedByDeck);
+
   const decksToDisplay =
     filteredDecks &&
     filteredDecks.map((deck) => (
@@ -25,7 +34,9 @@ const DeckList = ({
         key={deck.id} 
         onToggleFavorite={onToggleFavorite}
         onRemove={onRemove}
-        {...deck} />
+        cardCount={cardsGroupedByDeck[deck.id]?.length || 0}
+        {...deck}
+      />
     ));
 
   const status = getStatus(allDecks, filteredDecks, isFetching);

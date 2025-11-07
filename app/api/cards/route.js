@@ -14,7 +14,9 @@ export async function GET(request) {
 
   if (deckId) {
     const cardsByDeckId = cards.filter((card) => card.deckId === deckId);
-    return NextResponse.json({ data: { cards: cardsByDeckId } });
+    const deck = decks.find((deck) => deck.id === deckId);
+
+    return NextResponse.json({ data: { cards: cardsByDeckId, deck} });
   }
 
   return NextResponse.json({ data: {cards, decks} });

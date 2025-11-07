@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToggleFavoriteMutation } from "./useToggleFavoriteMutation";
 import { useRemoveMutation } from "./useRemoveMutation";
 import {
-  getDecks,
+  getAllCardsWithDeck,
   toggleDeckFavorite,
   removeDeck,
   editDeck,
@@ -25,7 +25,7 @@ export function useDecks() {
     error,
   } = useQuery({
     queryKey: ["decks"],
-    queryFn: getDecks,
+    queryFn: getAllCardsWithDeck,
     refetchOnWindowFocus: false,
   });
 
@@ -59,6 +59,11 @@ export function useDecks() {
     [responseData]
   );
 
+  const allCards = useMemo(
+    () => responseData?.data.cards || [],
+    [responseData]
+  )
+
   const filteredDecks = useMemo(() => {
     const { searchQuery, category, sortBy } = filters;
 
@@ -80,6 +85,7 @@ export function useDecks() {
     isLoading,
     error,
     allDecks,
+    allCards,
     filteredDecks,
     filters,
     handleFilterChange,

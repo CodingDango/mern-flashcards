@@ -22,5 +22,21 @@
     "isFavorite": false,
     "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
     "dateCreated": "2025-11-05T15:06:46.288Z"
+  },
+  {
+    "id": "card-fdd38cbf-ddfe-4571-a46f-7b108ac848a1",
+    "question": "Cool Deck LMAO",
+    "answer": "Sge",
+    "isFavorite": false,
+    "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
+    "dateCreated": "2025-11-07T12:57:21.796Z"
+  },
+  {
+    "id": "card-4b69da3a-96dc-492d-a830-4b5139d222e2",
+    "question": "Im not sure anymore...",
+    "answer": "Im tired dude.",
+    "isFavorite": false,
+    "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
+    "dateCreated": "2025-11-07T12:57:36.615Z"
   }
 ]

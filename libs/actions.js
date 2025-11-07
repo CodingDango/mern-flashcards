@@ -110,3 +110,12 @@ export async function getCardsByDeck({ deckId }) {
 
   return res.data;
 }
+
+export async function updateDeckProgress({ itemId, newProgress }) {
+  const res = await axios.put(
+    DECKS_ENDPOINT,
+    JSON.stringify({action: 'progress', itemId, newProgress })
+  );
+
+  return res.data;
+}

@@ -5,10 +5,10 @@
     "iconIdx": "1",
     "id": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
     "dateCreated": "2025-10-27T14:56:22.586Z",
-    "progress": 0,
+    "progress": 100,
     "totalCards": 0,
     "isFavorite": true,
-    "lastReviewed": "2025-11-07T10:07:48.016Z"
+    "lastReviewed": "2025-11-07T12:40:00.515Z"
   },
   {
     "title": "asdwdw",
@@ -16,7 +16,7 @@
     "iconIdx": "9",
     "id": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
     "dateCreated": "2025-10-27T14:56:33.802Z",
-    "progress": 0,
+    "progress": 100,
     "totalCards": 0,
     "isFavorite": false,
     "lastReviewed": "2025-11-03T09:02:44.924Z"
@@ -49,9 +49,9 @@
     "iconIdx": "1",
     "id": "deck-0ebb1486-4ace-4247-b02d-8681d47453a5",
     "dateCreated": "2025-10-28T16:18:33.778Z",
-    "progress": 0,
+    "progress": null,
     "totalCards": 0,
     "isFavorite": false,
-    "lastReviewed": "2025-11-05T15:05:33.268Z"
+    "lastReviewed": "2025-11-07T13:13:20.953Z"
   }
 ]
