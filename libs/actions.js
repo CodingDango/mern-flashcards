@@ -74,8 +74,6 @@ export async function addCard({deckId, question, answer}) {
 
 
 export async function toggleCardFavorite({ itemId }) {
-  console.log('Okay, toggling favorites on card');
-
   const res = await axios.put(
     CARDS_ENDPOINT,
     JSON.stringify({ action: "favorite", itemId })
@@ -111,10 +109,12 @@ export async function getCardsByDeck({ deckId }) {
   return res.data;
 }
 
-export async function updateDeckProgress({ itemId, newProgress }) {
+export async function updateAnswerCard({ itemId }) {
+  console.log('updating card with id ', itemId );
+
   const res = await axios.put(
-    DECKS_ENDPOINT,
-    JSON.stringify({action: 'progress', itemId, newProgress })
+    CARDS_ENDPOINT,
+    JSON.stringify({ action: "answer", itemId })
   );
 
   return res.data;

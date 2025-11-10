@@ -31,7 +31,8 @@ export async function POST(request) {
     answer,
     isFavorite: false,
     deckId,
-    dateCreated: DateTime.utc().toISO()
+    dateCreated: DateTime.utc().toISO(),
+    answered: false
   });
 
   fs.writeFile(CARDS_PATH, JSON.stringify(cards, null, 2));
@@ -74,9 +75,6 @@ export async function PUT(request) {
     errorText: null,
   };
 
-  console.log(`Item id ${itemId}`);
-  console.log(`New item data ${JSON.stringify(newCard)}`);
-
   try {
     switch (action) {
       case "favorite":
@@ -86,6 +84,9 @@ export async function PUT(request) {
       case "edit":
         const { question, answer, deckId } = newCard;
         editCard(itemId, (card) => ({ ...card, question, answer, deckId }));
+
+      case "answer":
+        editCard(itemId, (card) => ({ ...card, answered: true }));
 
       default:
         break;

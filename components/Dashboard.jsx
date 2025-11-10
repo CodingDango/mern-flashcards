@@ -7,11 +7,46 @@ import { RiProgress2Fill as ProgressIcon } from "react-icons/ri";
 import { FaBook } from 'react-icons/fa';
 import { TbActivityHeartbeat as HeartBeat } from 'react-icons/tb';
 import { FaRegEye as Eye} from 'react-icons/fa';
-import DeckCard from './DeckCard';
+import { useQuery } from '@tanstack/react-query';
+import { getAllCardsWithDeck } from '@/libs/actions';
 import Main from "./Main";
 import Link from 'next/link';
+import { useMemo } from 'react';
+import { groupBy } from 'lodash';
+
+const calculateTotalProgress = (decks, cards) => {
+  if (decks.length === 0 || cards.length === 0) return;
+
+  const cardsGroupedByDeck = Object.entries(groupBy(cards, 'deckId'));
+  const decksMap = new Map(decks.map((deck) => [deck.id, deck]));
+  let totalCompletedCards = 0;
+
+  for (const [deckId, cardList] of cardsGroupedByDeck) {
+    const deckProgress = decksMap.get(deckId)?.progress; 
+
+    if (deckProgress) {
+      const completedInThisDeck = (deckProgress / 100) * cardList.length;
+      totalCompletedCards += completedInThisDeck;
+    }
+  }
+
+  debugger
+
+  const overallProgress = (totalCompletedCards / cards.length) * 100;
+  return overallProgress.toFixed(1);
+}
 
 const Dashboard = () => {
+  const { data } = useQuery({
+    queryFn: getAllCardsWithDeck,
+    queryKey: ['decks', 'cards']
+  });
+
+  const decks = data?.data?.decks || [];
+  const cards = data?.data?.cards || [];
+
+  const totalDeckProgress = useMemo(() => calculateTotalProgress(decks, cards), [decks, cards]);
+
   return (
     <Main>
       <h2 className="text-3xl font-medium">Dashboard</h2>
@@ -31,7 +66,7 @@ const Dashboard = () => {
                 <ArrowRight size={12}/>
               </Link>
             </div>
-            <span className='text-xl font-medium'>14</span>
+            <span className='text-xl font-medium'>{decks.length}</span>
           </div>
 
           <div className="flex flex-col gap-my-xs border border-black-md p-my-md rounded-xl ">
@@ -46,7 +81,7 @@ const Dashboard = () => {
                 <ArrowRight size={12}/>
               </Link>
             </div>
-            <span className='text-xl font-medium'>42</span>
+            <span className='text-xl font-medium'>{cards.length}</span>
           </div>
 
           <div className="flex flex-col gap-my-xs bg-my-primary/75 p-my-md rounded-xl justify-center">
@@ -56,7 +91,7 @@ const Dashboard = () => {
                 <span className='text-lg'>Progress</span>  
               </div>
             </div>
-            <span className='text-xl font-medium'>32%</span>
+            <span className='text-xl font-medium'>{totalDeckProgress}%</span>
           </div>
         </div>
 

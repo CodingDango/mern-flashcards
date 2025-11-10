@@ -5,8 +5,7 @@
     "iconIdx": "1",
     "id": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
     "dateCreated": "2025-10-27T14:56:22.586Z",
-    "progress": 100,
-    "totalCards": 0,
+    "progress": null,
     "isFavorite": true,
     "lastReviewed": "2025-11-07T12:40:00.515Z"
   },
@@ -17,7 +16,6 @@
     "id": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
     "dateCreated": "2025-10-27T14:56:33.802Z",
     "progress": 100,
-    "totalCards": 0,
     "isFavorite": false,
     "lastReviewed": "2025-11-03T09:02:44.924Z"
   },
@@ -28,7 +26,6 @@
     "id": "deck-c4774103-32c7-489d-9ec7-03293b907ca4",
     "dateCreated": "2025-10-28T11:45:56.098Z",
     "progress": 0,
-    "totalCards": 0,
     "isFavorite": false,
     "lastReviewed": null
   },
@@ -39,7 +36,6 @@
     "id": "deck-f9221c58-eb7b-4d58-90d4-2fb8d12832f4",
     "dateCreated": "2025-10-28T11:47:45.260Z",
     "progress": 0,
-    "totalCards": 0,
     "isFavorite": false,
     "lastReviewed": null
   },
@@ -50,9 +46,8 @@
     "id": "deck-0ebb1486-4ace-4247-b02d-8681d47453a5",
     "dateCreated": "2025-10-28T16:18:33.778Z",
     "progress": 0,
-    "totalCards": 0,
     "isFavorite": false,
-    "lastReviewed": "2025-11-07T13:13:20.953Z"
+    "lastReviewed": "2025-11-10T15:29:41.021Z"
   },
   {
     "title": "TEST DECK",
@@ -61,9 +56,8 @@
     "id": "deck-f312634f-f3da-4a33-8f4b-76d5a99948da",
     "dateCreated": "2025-11-10T09:29:47.042Z",
     "progress": 0,
-    "totalCards": 0,
     "isFavorite": false,
-    "lastReviewed": null
+    "lastReviewed": "2025-11-10T15:33:59.837Z"
   },
   {
     "title": "alright fine.",
@@ -72,8 +66,7 @@
     "id": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
     "dateCreated": "2025-11-10T09:30:24.650Z",
     "progress": 0,
-    "totalCards": 0,
     "isFavorite": false,
-    "lastReviewed": null
+    "lastReviewed": "2025-11-10T15:28:51.301Z"
   }
 ]

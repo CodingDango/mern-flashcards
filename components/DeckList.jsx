@@ -25,8 +25,6 @@ const DeckList = ({
     groupBy(allCards, 'deckId')
   ), [allCards]);
 
-  console.log(cardsGroupedByDeck);
-
   const decksToDisplay =
     filteredDecks &&
     filteredDecks.map((deck) => (
@@ -35,6 +33,7 @@ const DeckList = ({
         onToggleFavorite={onToggleFavorite}
         onRemove={onRemove}
         cardCount={cardsGroupedByDeck[deck.id]?.length || 0}
+        cards={cardsGroupedByDeck[deck.id]}
         {...deck}
       />
     ));

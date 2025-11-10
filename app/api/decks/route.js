@@ -21,7 +21,6 @@ export async function POST(request) {
     id: `deck-${randomUUID()}`,
     dateCreated: DateTime.utc().toISO(),
     progress: 0,
-    totalCards: 0,
     isFavorite: false,
     lastReviewed: null,
   };
@@ -71,11 +70,6 @@ export async function PUT(request) {
           lastReviewed: DateTime.utc().toISO(),
         }));
 
-      case 'progress':
-        editDeck(itemId, (deck) => ({
-          ...deck,
-          progress: newProgress
-        }));
       default:
         break;
     }

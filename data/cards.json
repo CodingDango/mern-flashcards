@@ -5,7 +5,8 @@
     "answer": "2",
     "isFavorite": false,
     "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
-    "dateCreated": "2025-11-03T10:27:56.237Z"
+    "dateCreated": "2025-11-03T10:27:56.237Z",
+    "answered": true
   },
   {
     "id": "card-f400cfe6-8d33-4b42-8db8-76f3da9615b7",
@@ -13,7 +14,8 @@
     "answer": "69 69 69 69",
     "isFavorite": false,
     "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
-    "dateCreated": "2025-11-05T15:06:32.939Z"
+    "dateCreated": "2025-11-05T15:06:32.939Z",
+    "answered": true
   },
   {
     "id": "card-92117e37-981c-49e7-9c3f-0817471f8107",
@@ -21,7 +23,8 @@
     "answer": "No I cannot;",
     "isFavorite": false,
     "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
-    "dateCreated": "2025-11-05T15:06:46.288Z"
+    "dateCreated": "2025-11-05T15:06:46.288Z",
+    "answered": true
   },
   {
     "id": "card-fdd38cbf-ddfe-4571-a46f-7b108ac848a1",
@@ -29,7 +32,8 @@
     "answer": "Sge",
     "isFavorite": false,
     "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
-    "dateCreated": "2025-11-07T12:57:21.796Z"
+    "dateCreated": "2025-11-07T12:57:21.796Z",
+    "answered": false
   },
   {
     "id": "card-4b69da3a-96dc-492d-a830-4b5139d222e2",
@@ -37,6 +41,88 @@
     "answer": "Im tired dude.",
     "isFavorite": false,
     "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
-    "dateCreated": "2025-11-07T12:57:36.615Z"
+    "dateCreated": "2025-11-07T12:57:36.615Z",
+    "answered": false
+  },
+  {
+    "id": "card-864453f3-05a0-4254-8b29-284dbf9e4fd9",
+    "question": "Test question",
+    "answer": "Whats the answer?",
+    "isFavorite": false,
+    "deckId": "deck-f1c861f1-46ec-4bad-8b83-e021dcf4a5a0",
+    "dateCreated": "2025-11-10T14:34:26.488Z",
+    "answered": true
+  },
+  {
+    "id": "card-d52ce20d-d08c-4960-b7ff-1acec5116813",
+    "question": "Im tired",
+    "answer": "dude",
+    "isFavorite": false,
+    "deckId": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T15:09:59.286Z",
+    "answered": true
+  },
+  {
+    "id": "card-4d4efa12-a24d-40f9-bc24-3697e1c5dee5",
+    "question": "another card",
+    "answer": "alright",
+    "isFavorite": false,
+    "deckId": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T15:10:07.516Z",
+    "answered": true
+  },
+  {
+    "id": "card-679750ed-a950-4ad9-80de-bc7896eaf3bb",
+    "question": "one last",
+    "answer": "alrighty then",
+    "isFavorite": false,
+    "deckId": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T15:10:15.511Z",
+    "answered": true
+  },
+  {
+    "id": "card-81fc9ef2-01cd-4b4a-8f2e-61b8b8a21b4c",
+    "question": "alrighty",
+    "answer": "alrighty lol!",
+    "isFavorite": false,
+    "deckId": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T15:22:51.711Z",
+    "answered": true
+  },
+  {
+    "id": "card-214b1207-a635-4043-99be-8946425b1499",
+    "question": "Alright dude.. im tired",
+    "answer": "Fine. lets wrap this up",
+    "isFavorite": false,
+    "deckId": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T15:28:08.227Z",
+    "answered": true
+  },
+  {
+    "id": "card-26ae6de2-3666-4d05-b58b-dad06c23d6a0",
+    "question": "test card",
+    "answer": "lolll",
+    "isFavorite": false,
+    "deckId": "deck-0ebb1486-4ace-4247-b02d-8681d47453a5",
+    "dateCreated": "2025-11-10T15:29:30.752Z",
+    "answered": true
+  },
+  {
+    "id": "card-1e53cc01-9574-4517-adbe-bf92dcfe502d",
+    "question": "question 1",
+    "answer": "answer",
+    "isFavorite": false,
+    "deckId": "deck-f312634f-f3da-4a33-8f4b-76d5a99948da",
+    "dateCreated": "2025-11-10T15:33:39.481Z",
+    "answered": true
+  },
+  {
+    "id": "card-97566448-0ba1-4fb6-9597-0b3bb59c5bd6",
+    "question": "question 2",
+    "answer": "answer",
+    "isFavorite": false,
+    "deckId": "deck-f312634f-f3da-4a33-8f4b-76d5a99948da",
+    "dateCreated": "2025-11-10T15:33:48.169Z",
+    "answered": true
   }
 ]

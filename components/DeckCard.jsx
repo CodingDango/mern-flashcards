@@ -8,6 +8,7 @@ import { FaCheck } from "react-icons/fa";
 
 import { redirect } from "next/navigation";
 import DeckOptionsMenu from "./DeckOptionsMenu";
+import { useMemo } from "react";
 
 const handleStudyNow = (e) => {
   e.stopPropagation();
@@ -24,7 +25,7 @@ const DeckCard = ({
   onToggleFavorite,
   onRemove,
   cardCount,
-  progress = 0,
+  cards,
   options = true,
   lastReviewed,
 }) => {
@@ -45,6 +46,13 @@ const DeckCard = ({
     );
   }
 
+  const deckProgress = useMemo(() => {
+    if (!cards || cards?.length === 0) return;
+
+    const corrects = cards.filter((card) => card?.answered).length;
+    return Math.floor(((corrects / cards.length) * 100));
+  }, [cards]);
+
   return (
     <div className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm border-t-transparent">
       <a
@@ -55,7 +63,7 @@ const DeckCard = ({
 
       <div className="absolute h-[8px] w-full bg-black-lg left-0 top-0 rounded-tr-lg rounded-tl-lg rounded-bl-none">
         <div
-          style={{ background: color, width: `${progress}%` }}
+          style={{ background: color, width: `${deckProgress}%` }}
           className="absolute h-[8px] left-0 top-0 rounded-tr-lg  rounded-tl-lg"
         ></div>
       </div>

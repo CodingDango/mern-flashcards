@@ -9,10 +9,10 @@ import { ClipLoader } from "react-spinners";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import {
   getCardsByDeck,
-  updateDeckProgress,
   updateLastReviewedDeck,
+  updateAnswerCard,
 } from "@/libs/actions";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdAddCard } from "react-icons/md";
 
 import ReviewCard from "@/components/ReviewCard";
@@ -23,26 +23,71 @@ import Notify from "@/components/Notify";
 const StudyPage = ({ params }) => {
   const unwrappedParams = use(params);
   const { deckId } = unwrappedParams;
+  const queryClient = useQueryClient();
 
   const { mutate: updateStudiedMutation } = useMutation({
     mutationFn: updateLastReviewedDeck,
   });
 
-  const { mutate: updateDeckProgressMutation } = useMutation({
-    mutationFn: updateDeckProgress,
+  const { mutate: answerCardMutation } = useMutation({
+    mutationFn: updateAnswerCard,
+    onMutate: async ({ itemId }) => {
+      await queryClient.cancelQueries({ queryKey: [deckId, "cards"] });
+
+      const previousCardsData = queryClient.getQueryData([deckId, "cards"]);
+
+      queryClient.setQueryData([deckId, "cards"], (oldData) => {
+        if (!oldData) {
+          return oldData;
+        }
+
+        return {
+          ...oldData, 
+          data: {
+            ...oldData.data, 
+            cards: oldData.data.cards.map(
+              (card) =>
+                card.id === itemId
+                  ? { ...card, answered: true }
+                  : card
+            ),
+          },
+        };
+      });
+
+      return { previousCardsData };
+    },
+
+    onError: (err, variables, context) => {
+      if (context.previousCardsData) {
+        queryClient.setQueryData([deckId, "cards"], context.previousCardsData);
+      }
+    },
   });
 
-  const updateProgressHandler = useCallback(
-    (newProgress) =>
-      updateDeckProgressMutation({ itemId: deckId, newProgress }),
-    [updateDeckProgressMutation, deckId]
-  );
+  const onCorrectHandler = () => {
+    const copy = [...cardsInSession];
+    copy[cardIdx].status = "correct";
+    const cardId = copy[cardIdx].id;
+
+    answerCardMutation({ itemId: cardId });
+    setCardsInSession(copy);
+    setCardIdx((prev) => prev + 1);
+  };
+
+  const onIncorrectHandler = () => {
+    const copy = [...cardsInSession];
+    copy[cardIdx].status = "incorrect";
+
+    setCardsInSession(copy);
+    setCardIdx((prev) => prev + 1);
+  };
 
   const { data, isLoading } = useQuery({
     enabled: !!deckId,
-    queryKey: ["cards", deckId],
+    queryKey: [deckId, "cards"],
     queryFn: ({ queryKey }) => {
-      const [keyName, deckId] = queryKey;
+      const [deckId, keyName] = queryKey;
       return getCardsByDeck({ deckId });
     },
   });
@@ -53,11 +98,15 @@ const StudyPage = ({ params }) => {
 
   const [cardIdx, setCardIdx] = useState(0);
   const [cardsInSession, setCardsInSession] = useState([]);
-  const [highestDeckPercentage, setHighestDeckPercentage] = useState(0);
 
   const originalCards = useMemo(() => data?.data?.cards || [], [data]);
-  const deckData = useMemo(() => data?.data?.deck || {}, [data]);
   const isReviewDone = cardIdx >= cardsInSession.length;
+
+  const deckProgress = useMemo(() => {
+    const corrects =
+      originalCards.filter((card) => card?.answered)?.length || 0;
+    return ((corrects / originalCards.length) * 100).toFixed(1);
+  }, [originalCards]);
 
   useEffect(() => {
     if (cardsInSession.length === 0 && originalCards.length !== 0) {
@@ -68,29 +117,6 @@ const StudyPage = ({ params }) => {
       );
     }
   }, [cardsInSession.length, originalCards]);
-
-  useEffect(() => {
-    if (isReviewDone) {
-      const corrects = cardsInSession.filter(
-        (card) => card.status === "correct"
-      ).length;
-
-      const mistakes = cardsInSession.filter(
-        (card) => card.status === "incorrect"
-      ).length;
-
-      const totalAnswered = corrects + mistakes;
-      let progressPercentage = 0;
-
-      if (totalAnswered > 0) {
-        progressPercentage = Math.floor((corrects / totalAnswered) * 100);
-      }
-
-      const highestPercentage = Math.max(progressPercentage, deckData.progress);
-      setHighestDeckPercentage(highestPercentage);
-      updateProgressHandler(highestPercentage);
-    }
-  }, [isReviewDone, cardsInSession, updateProgressHandler, deckData]);
 
   return (
     <AppLayout>
@@ -120,20 +146,8 @@ const StudyPage = ({ params }) => {
                           title={`Question #${cardIdx + 1}`}
                           question={cardsInSession[cardIdx]?.question}
                           answer={cardsInSession[cardIdx]?.answer}
-                          onCorrect={() => {
-                            const copy = [...cardsInSession];
-                            copy[cardIdx].status = "correct";
-
-                            setCardsInSession(copy);
-                            setCardIdx((prev) => prev + 1);
-                          }}
-                          onIncorrect={() => {
-                            const copy = [...cardsInSession];
-                            copy[cardIdx].status = "incorrect";
-
-                            setCardsInSession(copy);
-                            setCardIdx((prev) => prev + 1);
-                          }}
+                          onCorrect={onCorrectHandler}
+                          onIncorrect={onIncorrectHandler}
                         />
                       </motion.div>
                     </AnimatePresence>
@@ -160,7 +174,7 @@ const StudyPage = ({ params }) => {
                         (card) => card.status === "incorrect"
                       ).length
                     }
-                    deckProgressPercent={highestDeckPercentage}
+                    deckProgressPercent={deckProgress}
                     onReviewAgain={() => {
                       const shuffledCards = shuffle(cardsInSession);
 
@@ -189,7 +203,7 @@ const StudyPage = ({ params }) => {
           {/* Okay.. not working. */}
           {isLoading && (
             <div className="w-full h-full flex justify-center items-center">
-              <ClipLoader color="#ffffff" size={50}/>
+              <ClipLoader color="#ffffff" size={50} />
             </div>
           )}
         </div>

@@ -39,6 +39,7 @@ const AddCardForm = ({ closeModal, decksAsOptions = []}) => {
       component: 'textarea',
       placeholder: "Enter question...",
       className: "text-input border border-black-md resize-none",
+      autocomplete: 'off'
     },
     {
       name: "answer",
@@ -46,6 +47,7 @@ const AddCardForm = ({ closeModal, decksAsOptions = []}) => {
       component: 'input',
       placeholder: "Enter answer...",
       className: "text-input border border-black-md",
+      autocomplete: 'off'
     },
   ];
 
