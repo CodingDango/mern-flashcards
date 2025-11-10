@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
   return (
-    <div className="grid grid-cols-8 p-my-sm gap-y-my-sm border border-black-md bg-black rounded-lg">
+    <div className="grid grid-cols-5 2xs:grid-cols-6 sm:grid-cols-8 p-my-xs sm:p-my-sm gap-my-sm border border-black-md bg-black rounded-lg">
       {icons.map((Icon, idx) => {
         return (
           <label

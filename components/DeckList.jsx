@@ -17,7 +17,7 @@ const DeckList = ({
 }) => {
   const parentClass = `
     grid grid-cols-1 md:grid-cols-2 
-    lg:grid-cols-3 auto-rows-[minmax(240px,_auto)] 
+    xl:grid-cols-3 auto-rows-[minmax(240px,_auto)] 
     gap-x-my-md gap-y-8
   `;
 

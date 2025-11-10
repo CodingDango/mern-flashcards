@@ -21,15 +21,15 @@ const OptionsMenu = ({
   const isOpen = openOptionsMenuId === id;
 
   return (
-    <div className={`w-full h-full max-h-[330px] z-5 relative ${identifierClass}`}>
+    <div className={`w-full relative ${identifierClass}`}>
       <div
         className="w-full h-full"
         onClick={() => setOpenOptionsMenuId(isOpen ? null : id)}
       >{button}</div>
 
       {isOpen && (
-        <div className={`absolute ${ mode === 'skewer' ? 'right-0' : 'right-0 left-0 top-[110%]'}`}>
-          <div className={`border border-black-md shadow-lg shadow-black-xl ${mode === 'skewer' ? 'w-[200px]' : 'w-full'} flex flex-col bg-black-lg rounded-lg p-my-xs`}>
+        <div className={`absolute z-49 ${ mode === 'skewer' ? 'right-0' : 'right-0 left-0 top-[110%]'}`}>
+          <div className={`max-h-[300px] overflow-y-auto border border-black-md shadow-lg shadow-black-xl ${mode === 'skewer' ? 'w-[200px]' : 'w-full'} flex flex-col bg-black-lg rounded-lg p-my-xs`}>
             {options.map(({icon, text, callback, ...rest}, idx) => (
               <button
                 key={idx} 

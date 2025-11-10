@@ -29,9 +29,9 @@ const DeckPageMain = () => {
 
   return (
     <Main>
-      <div className="flex flex-col 2xs:flex-row 2xs:justify-between items-end gap-my-sm">
+      <div className="flex flex-col flex-row 2xs:justify-between items-end gap-my-sm">
         <div className="flex gap-my-md items-end">
-          <h1 className="2xs:flex-1 text-3xl font-medium">My Decks</h1>
+          <h1 className=" text-3xl font-medium">My Decks</h1>
           <p className="text-black-light">{allDecks.length} decks</p>
         </div>
       </div>

@@ -70,7 +70,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent
+  background-color: theme('color.neutral.800')  ;
 }
 
 ::-webkit-scrollbar-thumb {

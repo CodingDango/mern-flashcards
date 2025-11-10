@@ -6,8 +6,7 @@ import { HiOutlineSquare3Stack3D as StackIcon } from "react-icons/hi2";
 import { PiCards as CardsIcon } from "react-icons/pi";
 import { FiSettings as SettingsIcon } from "react-icons/fi";
 import { BiLogOut as LogOutIcon } from "react-icons/bi";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { useState } from "react";
+import { useRef, useEffect } from "react";
 
 import Hamburger from "hamburger-react";
 import SidebarItem from "./SidebarItem";
@@ -55,8 +54,35 @@ const DesktopSidebar = ({ sidebarLinks, activeRoute }) => (
 const MobileSidebar = ({
   sidebarLinks,
   activeRoute,
+  isSidebarOpen,
+  setIsSidebarOpen
 }) => {
-  const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
+  const hamburgerRef = useRef(null);
+  const sidebarRef = useRef(null);
+
+ useEffect(() => {
+    if (!isSidebarOpen) {
+      return;
+    }
+
+    const closeSidebarHandler = (e) => {
+      if (
+        sidebarRef.current &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(e.target) &&
+        !sidebarRef.current.contains(e.target)
+      ) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeSidebarHandler);
+
+    return () => {
+      document.removeEventListener("mousedown", closeSidebarHandler);
+    };
+    
+  }, [isSidebarOpen, setIsSidebarOpen]);
 
   return (
     <div>
@@ -65,21 +91,23 @@ const MobileSidebar = ({
 
         {/* Filter */}
         <div
-          className={`h-screen w-screen absolute inset-0 transition-colors duration-300 ${
+          className={`h-screen w-screen fixed inset-0 transition-colors duration-300 ${
             isSidebarOpen ? "bg-black/60 z-50" : "bg-transparent -z-1"
           }`}
         ></div>
 
         {/* Sidepanel */}
         <aside
+          ref={sidebarRef}
           className={`${
             isSidebarOpen ? "translate-x-0" : "-translate-x-64"
-          } absolute left-0 top-0 h-screen bg-black-xl border-r border-black-md w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
+          } fixed left-0 top-0 h-screen bg-black-xl border-r border-black-md w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
         >
-          <div className="px-4 py-5 flex flex-col gap-my-mdgit add .">
+          <div className="px-4 py-5 flex flex-col gap-my-md">
             <div className="flex justify-between items-center w-full">
               <BrandIcon size={32} className="text-my-primary" />
-              <div className="w-[32px] h-[32px]">
+
+              <div ref={hamburgerRef} className="w-[32px] h-[32px]">
                 <div className="-mt-2 -ml-2">
                   <Hamburger
                     toggled={isSidebarOpen}
@@ -148,20 +176,18 @@ const MobileHeader = ({ isSidebarOpen, setIsSidebarOpen }) => (
   </nav>
 );
 
-const Sidebar = ({ activeRoute = "" }) => {
+const Sidebar = ({ activeRoute = "", isSidebarOpen, setIsSidebarOpen, isLargeScreen }) => {
   const sidebarLinks = [
     { text: "dashboard", Icon: HomeIcon, href: "/" },
     { text: "decks", Icon: StackIcon, href: "/decks" },
     { text: "cards", Icon: CardsIcon, href: "/cards" },
   ];
 
-  const isLargeScreen = useMediaQuery("only screen and (min-width: 64rem)");
-
   return isLargeScreen ? (
     <DesktopSidebar {...{ activeRoute, sidebarLinks }} />
   ) : (
     <MobileSidebar
-      {...{ activeRoute, sidebarLinks }}
+      {...{ activeRoute, sidebarLinks, isSidebarOpen, setIsSidebarOpen }}
     />
   );
 };

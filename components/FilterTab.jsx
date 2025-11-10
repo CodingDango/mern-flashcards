@@ -2,7 +2,7 @@ import { startCase } from "lodash"
 
 const FilterTab = ({name, value, label, count, isActive, onFilterChange}) => {
   const parentClass = `
-    button w-[150px]
+    button 
     ${isActive ? 'button--white' : 'button--dark'}
   `;                   
 

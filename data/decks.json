@@ -49,9 +49,31 @@
     "iconIdx": "1",
     "id": "deck-0ebb1486-4ace-4247-b02d-8681d47453a5",
     "dateCreated": "2025-10-28T16:18:33.778Z",
-    "progress": null,
+    "progress": 0,
     "totalCards": 0,
     "isFavorite": false,
     "lastReviewed": "2025-11-07T13:13:20.953Z"
+  },
+  {
+    "title": "TEST DECK",
+    "colorIdx": "0",
+    "iconIdx": "0",
+    "id": "deck-f312634f-f3da-4a33-8f4b-76d5a99948da",
+    "dateCreated": "2025-11-10T09:29:47.042Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false,
+    "lastReviewed": null
+  },
+  {
+    "title": "alright fine.",
+    "colorIdx": "0",
+    "iconIdx": "0",
+    "id": "deck-57acc8e1-2777-4d8a-a91c-11796989fe2b",
+    "dateCreated": "2025-11-10T09:30:24.650Z",
+    "progress": 0,
+    "totalCards": 0,
+    "isFavorite": false,
+    "lastReviewed": null
   }
 ]

@@ -1,10 +1,8 @@
 import AppLayout from "@/components/AppLayout";
-import Sidebar from "@/components/Sidebar";
 import DeckPageMain from "@/components/DeckPageMain";
 
 const DeckPage = () => (
-  <AppLayout>
-    <Sidebar activeRoute="decks"/>
+  <AppLayout activeRoute="decks">
     <DeckPageMain/>
   </AppLayout>
 );

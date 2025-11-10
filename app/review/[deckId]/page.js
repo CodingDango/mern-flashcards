@@ -94,7 +94,6 @@ const StudyPage = ({ params }) => {
 
   return (
     <AppLayout>
-      <Sidebar />
       <div className="h-full w-full flex justify-center items-center">
         <div className="relative max-w-5xl w-full h-full grid grid-rows-[360px] items-start gap-my-md pt-16 pb-8 px-10 mr-50">
           {originalCards.length > 0 && (
