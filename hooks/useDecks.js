@@ -65,7 +65,7 @@ export function useDecks() {
   )
 
   const filteredDecks = useMemo(() => {
-    const { searchQuery, category, sortBy } = filters;
+    const { searchQuery, category, sortBy, status} = filters;
 
     let filtered = [...allDecks].filter((deck) =>
       deck.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -74,6 +74,13 @@ export function useDecks() {
     filtered = filtered.filter((deck) =>
       category === "favorites" ? deck.isFavorite : true
     );
+
+    // filtered = filtered.filter((deck) => {
+    //   switch (status) {
+    //     case 'all': return true;
+    //     case 'unfinished': return ()
+    //   }
+    // });
 
     const sortedAndFiltered = filterBySort(filtered, sortBy);
 

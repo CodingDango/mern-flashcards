@@ -14,24 +14,10 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import { groupBy } from 'lodash';
 
-const calculateTotalProgress = (decks, cards) => {
-  if (decks.length === 0 || cards.length === 0) return;
+const calculateTotalProgress = (cards) => {
+  if (!cards || cards.length === 0) return;
 
-  const cardsGroupedByDeck = Object.entries(groupBy(cards, 'deckId'));
-  const decksMap = new Map(decks.map((deck) => [deck.id, deck]));
-  let totalCompletedCards = 0;
-
-  for (const [deckId, cardList] of cardsGroupedByDeck) {
-    const deckProgress = decksMap.get(deckId)?.progress; 
-
-    if (deckProgress) {
-      const completedInThisDeck = (deckProgress / 100) * cardList.length;
-      totalCompletedCards += completedInThisDeck;
-    }
-  }
-
-  debugger
-
+  const totalCompletedCards = cards.filter((card) => card?.answered).length;
   const overallProgress = (totalCompletedCards / cards.length) * 100;
   return overallProgress.toFixed(1);
 }
@@ -45,7 +31,7 @@ const Dashboard = () => {
   const decks = data?.data?.decks || [];
   const cards = data?.data?.cards || [];
 
-  const totalDeckProgress = useMemo(() => calculateTotalProgress(decks, cards), [decks, cards]);
+  const totalDeckProgress = useMemo(() => calculateTotalProgress(cards), [cards]);
 
   return (
     <Main>

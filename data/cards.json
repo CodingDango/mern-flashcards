@@ -33,7 +33,7 @@
     "isFavorite": false,
     "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
     "dateCreated": "2025-11-07T12:57:21.796Z",
-    "answered": false
+    "answered": true
   },
   {
     "id": "card-4b69da3a-96dc-492d-a830-4b5139d222e2",
@@ -42,7 +42,7 @@
     "isFavorite": false,
     "deckId": "deck-7629ab9e-a142-4f53-a8a7-8884f383cc38",
     "dateCreated": "2025-11-07T12:57:36.615Z",
-    "answered": false
+    "answered": true
   },
   {
     "id": "card-864453f3-05a0-4254-8b29-284dbf9e4fd9",
