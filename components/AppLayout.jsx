@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLockBodyScroll  } from "@uidotdev/usehooks";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 
 import Sidebar from "./Sidebar";
+
 
 const AppLayout = ({ children, activeRoute }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(true);
-
+  
   useEffect(() => {
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth >= 1024); // 64rem = 1024px
@@ -18,7 +19,7 @@ const AppLayout = ({ children, activeRoute }) => {
     window.addEventListener("resize", checkScreenSize);
 
     return () => window.removeEventListener("resize", checkScreenSize);
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (isLargeScreen) {
@@ -38,10 +39,7 @@ const AppLayout = ({ children, activeRoute }) => {
         {...{ activeRoute, isSidebarOpen, setIsSidebarOpen, isLargeScreen }}
       />
 
-      <div
-        inert={true ? isSidebarOpen : null}
-        className={`overflow-hidden`}
-      >
+      <div inert={true ? isSidebarOpen : null} className={`overflow-hidden`}>
         {children}
       </div>
 

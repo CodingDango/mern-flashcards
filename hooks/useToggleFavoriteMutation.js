@@ -32,7 +32,6 @@ export const useToggleFavoriteMutation = (
           return item;
         });
         
-        // This part is a bit tricky, we need to handle both data shapes
         let newDataPayload;
         if (dataKey === 'cards') {
             newDataPayload = { cards: updatedItems, decks: oldData.data.decks };

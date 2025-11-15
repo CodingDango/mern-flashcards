@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { randomUUID } from "crypto";
 import { DateTime } from "luxon";
+import { createClient } from "@/libs/supabase/server";
 import fs from "fs/promises";
 import path from "path";
 
@@ -10,44 +10,78 @@ const DECKS_PATH = path.join(process.cwd(), "data/decks.json");
 export async function GET() {
   const decks = await getAllDecks();
 
+  console.log(`decks is ${decks}`);
+
   return NextResponse.json({ data: { decks } });
 }
 
 export async function POST(request) {
-  const receivedData = await request.json();
+  const supabase = await createClient();
 
-  const newDeckData = {
-    ...receivedData,
-    id: `deck-${randomUUID()}`,
-    dateCreated: DateTime.utc().toISO(),
-    progress: 0,
-    isFavorite: false,
-    lastReviewed: null,
-  };
+  const { data: { user } } = await supabase.auth.getUser();
 
-  const decks = await getAllDecks();
+  console.log(`user is ${user}`);
 
-  // check if newDeck's title is unique
-  if (
-    decks.findIndex(
-      (deck) => deck.title.toLowerCase() === newDeckData.title.toLowerCase()
-    ) >= 0
-  ) {
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { title, iconIdx, colorIdx } = await request.json();
+
+  if (!title) {
+    return NextResponse.json({ error: "Title is required" }, { status: 400 });
+  }
+
+  const { data: existingDeck, error: checkError } = await supabase
+    .from("decks")
+    .select("id")
+    .eq("user_id", user.user.id) // Check only for the current user
+    .ilike("title", title) // `ilike` is a case-insensitive match
+    .single(); // We only expect one or none.
+
+  if (checkError) {
+    console.error("Error checking for existing deck:", checkError);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+
+  if (existingDeck) {
     return NextResponse.json(
-      { reason: "deck title already exists" },
+      { error: "A deck with this title already exists" },
       { status: 409 }
     );
   }
 
-  decks.push(newDeckData);
-  await fs.writeFile(DECKS_PATH, JSON.stringify(decks, null, 2));
+  const newDeckData = {
+    title: title,
+    icon_idx: iconIdx,
+    color_idx: colorIdx,
+    user_id: user.user.id,
+  };
 
-  // return NextResponse.json({ data: newDeckData, status: "success" });
-  return NextResponse.json({ data: newDeckData }, { status: 200 });
+  const { data: createdDeck, error: insertError } = await supabase
+    .from("decks")
+    .insert(newDeckData)
+    .select()
+    .single();
+
+  if (insertError) {
+    console.error("Error inserting new deck:", insertError);
+    return NextResponse.json(
+      { error: "Could not create deck" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(createdDeck, { status: 201 });
 }
 
 export async function PUT(request) {
-  const { action, itemId, newItemData: newDeck = null, newProgress = null } = await request.json();
+  const {
+    action,
+    itemId,
+    newItemData: newDeck = null,
+    newProgress = null,
+  } = await request.json();
 
   const status = {
     statusCode: 400,

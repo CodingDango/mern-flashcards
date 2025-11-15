@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
+const IconSet = forwardRef(({ icons, name, defaultValue, ...rest }, ref) => {
   return (
     <div className="grid grid-cols-5 2xs:grid-cols-6 sm:grid-cols-8 p-my-xs sm:p-my-sm gap-my-sm border border-black-md bg-black rounded-lg">
       {icons.map((Icon, idx) => {
@@ -22,6 +22,7 @@ const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
             </div>
             <input
               {...rest} // Pass along onChange, onBlur etc.
+              id={`icon-${idx}`}
               type="radio"
               name={name} // Use the name prop for all radios
               value={idx}
@@ -29,6 +30,7 @@ const IconSet = forwardRef(({ icons, name, ...rest }, ref) => {
               // 2. Attach the forwarded ref to the FIRST input.
               //    RHF only needs the ref on one of the inputs in a radio group.
               ref={ref}
+              defaultChecked={defaultValue === idx ? true : null}
             />
           </label>
       )})}

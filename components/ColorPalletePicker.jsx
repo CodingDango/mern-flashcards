@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
+const ColorPalletePicker = forwardRef(({ colors, name, defaultValue, ...rest }, ref) => {
   return (
     <div className="grid grid-cols-5 2xs:grid-cols-6 sm:grid-cols-8 p-my-sm gap-my-sm border border-black-md bg-black rounded-lg">
       {colors.map((colorHex, idx) => (
@@ -25,6 +25,7 @@ const ColorPalletePicker = forwardRef(({ colors, name, ...rest }, ref) => {
             // 2. Attach the forwarded ref to the FIRST input.
             //    RHF only needs the ref on one of the inputs in a radio group.
             ref={ref}
+            defaultChecked={defaultValue === idx ? true : null}
           />
         </label>
       ))}

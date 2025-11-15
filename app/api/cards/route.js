@@ -12,6 +12,7 @@ export async function GET(request) {
   const deckId = searchParams.get('deckId');
   const [cards, decks] = await getCardsWithDeck();
 
+
   if (deckId) {
     const cardsByDeckId = cards.filter((card) => card.deckId === deckId);
     const deck = decks.find((deck) => deck.id === deckId);

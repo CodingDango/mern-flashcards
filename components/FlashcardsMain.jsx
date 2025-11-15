@@ -21,6 +21,7 @@ export default function FlashcardsMain() {
     error,
     filteredCards, // We only need the final, filtered list
     allCards, // For the total count
+    allDecks,
     filters,
     handleFilterChange,
     resetFilters,
@@ -66,6 +67,7 @@ export default function FlashcardsMain() {
       />
 
       <CardList
+        allDecks={allDecks} 
         allCards={allCards}
         filteredCards={filteredCards}
         isFetching={isLoading}

@@ -50,6 +50,8 @@ const deckFields = [
 ];
 
 const EditDeckForm = ({ deck, closeModal }) => {
+  console.log("Inside editcardform", deck);
+
   const {
     mutateAsync: editMutateAsync,
     isPending,
@@ -81,7 +83,7 @@ const EditDeckForm = ({ deck, closeModal }) => {
         pendingText={"Saving changes..."}
         error={error}
         defaultValues={{
-          deckId: deck.title,
+          title: deck.title,
           iconIdx: deck.iconIdx,
           colorIdx: deck.colorIdx,
         }}

@@ -28,7 +28,7 @@ export function useCards() {
 
   const resetFilters = () => setFilters({ ...filterStateDefault });
 
-  const allCards = useMemo(() => data?.data.cards || [], [data]);
+  const allCards = useMemo(() => data?.data?.cards || [], [data]);
   const allDecks = useMemo(() => data?.data?.decks || [], [data]);
 
   const filteredCards = useMemo(() => {
@@ -76,6 +76,7 @@ export function useCards() {
     isLoading,
     error,
     allCards,
+    allDecks,
     filteredCards,
     filters,
     handleFilterChange,

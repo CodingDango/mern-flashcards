@@ -1,3 +1,7 @@
+import {
+  getShortFeedbackMessage,
+  getReviewDetailsMessage,
+} from "@/utils/review";
 import { RiResetRightFill } from "react-icons/ri";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -29,11 +33,9 @@ const ReviewResults = ({
               <span className="text-5xl mb-1">/</span>
               <span className="text-4xl">{corrects + mistakes}</span>
             </div>
-            <p>Well done, you did great!</p>
+            <p>{getShortFeedbackMessage(corrects, corrects + mistakes)}</p>
             <p className="text-black-light">
-              Get this image on: Dreamstime | License details Copyright:
-              Khondokarshakilrana | Dreamstime.com Want to know where this
-              information comes from? Learn more
+              {getReviewDetailsMessage(corrects, corrects + mistakes)}
             </p>
             <div className="flex gap-my-md">
               <button

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaPlusCircle } from "react-icons/fa";
@@ -23,7 +22,9 @@ const GenericForm = ({
     defaultValues
   });
 
-  const { register,  handleSubmit, formState: { errors } } = formMethods || internalFormMethods;
+  const { register, handleSubmit, formState: { errors } } = internalFormMethods || formMethods;
+
+  console.log('defaultValues', defaultValues);
 
   return (
     <form
@@ -54,7 +55,7 @@ const GenericForm = ({
               </label>
             )}
 
-            <FieldComponent id={name} {...register(name)} {...restOfProps} />
+            <FieldComponent id={name} {...register(name)} {...restOfProps} defaultValue={defaultValues[name]} />
             <span className="text-red-400 text-sm">
               <ErrorMessage errors={errors} name={name}/>
             </span>

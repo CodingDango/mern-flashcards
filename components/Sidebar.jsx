@@ -11,9 +11,12 @@ import { useRef, useEffect } from "react";
 import Hamburger from "hamburger-react";
 import SidebarItem from "./SidebarItem";
 import UserDisplay from "./UserDisplay";
+import { useSessionContext } from "@/context/SessionContext";
+import { useModalContext } from "@/context/ModalContext";
+import SignOut from "./SignOut";
 
-const DesktopSidebar = ({ sidebarLinks, activeRoute }) => (
-  <nav className="top-0 left-0 max-h-screen sticky w-5xs bg-black-xl py-8 px-my-sm border-r border-black-md h-full">
+const DesktopSidebar = ({ sidebarLinks, activeRoute, session, handleSignOut }) => (
+  <nav className="top-0 left-0 max-h-screen sticky w-56 bg-black-xl py-8 px-my-sm border-r border-black-md h-full">
     <div className="flex flex-col gap-my-md h-full">
       <div className="flex gap-my-xs items-end">
         <BrandIcon size={32} className="text-my-primary" />
@@ -38,15 +41,16 @@ const DesktopSidebar = ({ sidebarLinks, activeRoute }) => (
         <h2 className="text-black-light px-my-xs pb-my-xs">Others</h2>
         <ul className="flex flex-col w-full">
           <li>
+
             <SidebarItem text="settings" Icon={SettingsIcon} href="#" />
           </li>
           <li>
-            <SidebarItem as="button" text="logout" Icon={LogOutIcon} href="#" />
+            <SidebarItem as="button" text="logout" Icon={LogOutIcon} onClick={handleSignOut}/>
           </li>
         </ul>
       </section>
 
-      <UserDisplay name={"jane doe"} email={"example@gmail.com"} />
+      <UserDisplay name={"jane doe"} email={session?.user?.email} />
     </div>
   </nav>
 );
@@ -55,7 +59,9 @@ const MobileSidebar = ({
   sidebarLinks,
   activeRoute,
   isSidebarOpen,
-  setIsSidebarOpen
+  setIsSidebarOpen,
+  session,
+  handleSignOut
 }) => {
   const hamburgerRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -105,8 +111,6 @@ const MobileSidebar = ({
         >
           <div className="px-4 py-5 flex flex-col gap-my-md">
             <div className="flex justify-between items-center w-full">
-              <BrandIcon size={32} className="text-my-primary" />
-
               <div ref={hamburgerRef} className="w-[32px] h-[32px]">
                 <div className="-mt-2 -ml-2">
                   <Hamburger
@@ -116,6 +120,8 @@ const MobileSidebar = ({
                   />
                 </div>
               </div>
+
+              <BrandIcon size={32} className="text-my-primary" />
             </div>
 
             <div className="flex flex-col gap-my-md h-full">
@@ -138,13 +144,13 @@ const MobileSidebar = ({
                       as="button"
                       text="logout"
                       Icon={LogOutIcon}
-                      href="#"
+                      onClick={handleSignOut}
                     />
                   </li>
                 </ul>
               </section>
 
-              <UserDisplay name={"jane doe"} email={"example@gmail.com"} />
+              <UserDisplay name={"jane doe"} email={session?.user?.email} />
             </div>
           </div>
         </aside>
@@ -177,6 +183,10 @@ const MobileHeader = ({ isSidebarOpen, setIsSidebarOpen }) => (
 );
 
 const Sidebar = ({ activeRoute = "", isSidebarOpen, setIsSidebarOpen, isLargeScreen }) => {
+  const session = useSessionContext();
+  const { openModal, closeModal } = useModalContext();
+  const handleSignOut = () => openModal('Sign Out', <SignOut {...{closeModal}}/>);
+
   const sidebarLinks = [
     { text: "dashboard", Icon: HomeIcon, href: "/" },
     { text: "decks", Icon: StackIcon, href: "/decks" },
@@ -184,10 +194,10 @@ const Sidebar = ({ activeRoute = "", isSidebarOpen, setIsSidebarOpen, isLargeScr
   ];
 
   return isLargeScreen ? (
-    <DesktopSidebar {...{ activeRoute, sidebarLinks }} />
+    <DesktopSidebar {...{ handleSignOut, activeRoute, sidebarLinks, session}} />
   ) : (
     <MobileSidebar
-      {...{ activeRoute, sidebarLinks, isSidebarOpen, setIsSidebarOpen }}
+      {...{ handleSignOut, activeRoute, sidebarLinks, isSidebarOpen, setIsSidebarOpen, session}}
     />
   );
 };

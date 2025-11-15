@@ -12,10 +12,9 @@ import { getAllCardsWithDeck } from '@/libs/actions';
 import Main from "./Main";
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { groupBy } from 'lodash';
 
 const calculateTotalProgress = (cards) => {
-  if (!cards || cards.length === 0) return;
+  if (!cards || cards.length === 0) return 0;
 
   const totalCompletedCards = cards.filter((card) => card?.answered).length;
   const overallProgress = (totalCompletedCards / cards.length) * 100;

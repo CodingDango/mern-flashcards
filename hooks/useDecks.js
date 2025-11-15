@@ -55,17 +55,17 @@ export function useDecks() {
   const resetFilters = () => setFilters({ ...filterStateDefault });
 
   const allDecks = useMemo(
-    () => responseData?.data.decks || [],
+    () => responseData?.data?.decks || [],
     [responseData]
   );
 
   const allCards = useMemo(
-    () => responseData?.data.cards || [],
+    () => responseData?.data?.cards || [],
     [responseData]
-  )
+  );
 
   const filteredDecks = useMemo(() => {
-    const { searchQuery, category, sortBy, status} = filters;
+    const { searchQuery, category, sortBy, status } = filters;
 
     let filtered = [...allDecks].filter((deck) =>
       deck.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -87,7 +87,6 @@ export function useDecks() {
     return sortedAndFiltered;
   }, [allDecks, filters]);
 
-  // The hook returns an object with everything the UI component needs.
   return {
     isLoading,
     error,

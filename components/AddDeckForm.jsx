@@ -11,6 +11,7 @@ import { useState } from "react";
 import GenericForm from "./GenericForm";
 import ColorPalletePicker from "./ColorPalletePicker";
 import IconSet from "./IconSet";
+import { useSessionContext } from "@/context/SessionContext";
 
 const getEnumFromIndices = (arr) => arr.map((val, idx) => idx.toString());
 
@@ -72,19 +73,16 @@ const AddDeckForm = ({ closeModal }) => {
     },
   });
 
-  const handleAddDeck = (formData) => {
-    createDeckMutation.mutate(formData, {
-      
+  const handleAddDeck = ({ title, colorIdx, iconIdx }) => {
+    createDeckMutation.mutate({ title, colorIdx, iconIdx }, {
       onSuccess: () => {
         closeModal();
       },
       
-      onError: (err, variables, context) => {
-        debugger
-
+      onError: async (err, variables, context) => {
         setError('title', {
           type: 'server',
-          message: 'This deck title is already taken. Please choose another.'
+          message: err?.message 
         });
       },
     });

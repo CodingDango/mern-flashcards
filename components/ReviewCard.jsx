@@ -18,7 +18,7 @@ const ReviewCard = ({ title, question, answer, onCorrect, onIncorrect }) => {
           className="max-h-[360px] h-full [backface-visibility:hidden]"
         >
           <div className="h-full max-w-2xl w-full p-9 rounded-lg bg-black border border-black-md">
-            <div className="h-full flex-1 flex flex-col gap-my-md overflow-y-scroll">
+            <div className="h-full flex-1 flex flex-col gap-my-md overflow-y-auto">
               <span className="text-xl text-black-light">{title}</span>
               <p className="flex-1">{question}</p>
               <div className="flex justify-end">
@@ -40,7 +40,7 @@ const ReviewCard = ({ title, question, answer, onCorrect, onIncorrect }) => {
             className="flex flex-col h-full gap-my-sm rounded-lg border bg-transparent border-black-md"
           >
             <div className="h-full max-w-2xl w-full rounded-lg bg-black p-9">
-              <div className="h-full flex flex-col gap-my-md overflow-y-scroll">
+              <div className="h-full flex flex-col gap-my-md overflow-y-auto">
                 <span className="text-xl text-black-light">Answer</span>
                 <p className="flex-1 text-2xl font-medium">{answer}</p>
                 <div className="flex-1 flex justify-end items-end gap-my-sm">

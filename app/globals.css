@@ -50,10 +50,6 @@ body {
 }
 
 .button--dark {
-  @apply text-white bg-black-lg border-black-md border 
-}
-
-.button--dark {
   @apply text-white bg-black-lg border border-black-md 
 }
 
@@ -62,7 +58,7 @@ body {
 }
 
 .text-input {
-  @apply px-3 py-2 bg-black border border-black-md rounded-md;
+  @apply px-3 py-2 bg-black-xl border border-black-md rounded-md;
 }
 
 ::-webkit-scrollbar {

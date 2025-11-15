@@ -16,6 +16,8 @@ const cardSchema = z.object({
 });
 
 const EditCardForm = ({ card, closeModal, decksAsOptions = [] }) => {
+  
+
   const cardFields = [
     {
       name: "deckId",
@@ -54,7 +56,7 @@ const EditCardForm = ({ card, closeModal, decksAsOptions = [] }) => {
         itemId: card.id,
         newItemData: { deckId, question, answer },
       });
-    } catch (err) {
+  } catch (err) {
       console.log(err);
     }
 

@@ -4,20 +4,24 @@ import { ClipLoader } from "react-spinners";
 
 import Notify from "./Notify";
 import Flashcard from "./Flashcard";
+import { useMemo } from "react";
 
 const CardList = ({
   allCards,
+  allDecks,
   filteredCards,
   isFetching,
   handleEditCard
 }) => {
-  const parentClass = `
-    grid grid-cols-1 md:grid-cols-2 
-    xl:grid-cols-3 auto-rows-[minmax(240px,_auto)] 
-    gap-x-my-md gap-y-8
-  `;
 
-  const decksToDisplay =
+  const decksMap = useMemo(() => {
+    if (!allDecks || allDecks.length == 0) return [];
+
+    const decksIterable = allDecks.map((deck) => [deck.id, deck]);
+    return new Map(decksIterable);
+  }, [allDecks]); 
+     
+  const cardsToDisplay =
     filteredCards &&
     filteredCards.map((card) => (
       <Flashcard 
@@ -26,12 +30,17 @@ const CardList = ({
         answer={card.answer}
         id={card.id}
         isFavorite={card.isFavorite}
-        deck={card.deck}
+        deck={decksMap.get(card.deckId)}
         handleEditCard={handleEditCard}
         dateCreated={card.dateCreated}
       />
     ));
 
+  const parentClass = `
+    grid grid-cols-1 md:grid-cols-2 
+    xl:grid-cols-3 auto-rows-[minmax(240px,_auto)] 
+    gap-x-my-md gap-y-8
+  `
   const status = getStatus(allCards, filteredCards, isFetching);
 
   return (
@@ -39,7 +48,7 @@ const CardList = ({
       {status ? (
         <div className="col-span-full grid place-items-center">{status}</div>
       ) : (
-        decksToDisplay
+        cardsToDisplay
       )}
     </div>
   );

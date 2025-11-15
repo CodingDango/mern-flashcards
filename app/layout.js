@@ -2,6 +2,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import UIProviders from "@/context/UIProviders";
 import QueryProvider from "@/context/QueryProvider";
 import "./globals.css";
+import SessionProvider from "@/context/SessionProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${jetbrains_mono.variable} antialiased`}
       >
         <QueryProvider>
-          <UIProviders>{children}</UIProviders>
+          <SessionProvider>
+            <UIProviders>{children}</UIProviders>
+          </SessionProvider>
         </QueryProvider>
       </body>
     </html>
