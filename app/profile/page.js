@@ -142,7 +142,7 @@ const AccountPage = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-11">
           <div className="flex gap-10">
-            <div className="flex flex-col gap-my-sm items-center bg-black rounded-xl p-my-sm border border-black-md">
+            <div className="flex flex-col gap-my-md items-center bg-black rounded-xl p-my-sm border border-black-md">
               {!profile.profile_url && !previewUrl ? (
                 <PlaceholderAvatar size={110} />
               ) : (
