@@ -62,7 +62,7 @@ const SignUpPage = () => {
         >
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-3 bg-black-xl border border-black-md rounded-md"
+            className="text-input-large"
             placeholder="Email Address"
             type="text"
             value={email}

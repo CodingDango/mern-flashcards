@@ -13,7 +13,6 @@ const SessionProvider = ({ children }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log('session change!', session);
       setSession(session); // Update our state with the new session
     });
 

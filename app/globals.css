@@ -58,15 +58,19 @@ body {
 }
 
 .text-input {
-  @apply px-3 py-2 bg-black-xl border border-black-md rounded-md;
+  @apply px-3 py-2 bg-black border border-black-md rounded-md;
 }
 
-.text-input--large {
-  @apply px-4 py-3 bg-black-xl border border-black-md rounded-md;
+.text-input-large {
+  @apply px-4 py-3 bg-black border border-black-md rounded-md;
 }
 
 .button-large {
   @apply cursor-pointer px-4 py-3 rounded-md hover:brightness-85 flex justify-center items-center font-medium transition-colors duration-300; 
+}
+
+.button-small {
+  @apply cursor-pointer px-2 py-1 rounded-md hover:brightness-85 flex justify-center items-center font-medium transition-colors duration-300; 
 }
 
 .button--disabled {

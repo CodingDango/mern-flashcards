@@ -3,19 +3,22 @@ import { NextResponse } from "next/server"; // <-- Use NextResponse for API rout
 
 export async function GET(request) {
   const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get('code');
-  const redirectUrl = `${request.nextUrl.origin}/error-auth`;
+  const code = requestUrl.searchParams.get("code");
 
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const errorUrl = `${request.nextUrl.origin}/error-auth`;
+  const successUrl = `${request.nextUrl.origin}/`;
 
-    if (error) {  
-      const redirectUrl = `${request.nextUrl.origin}/error-auth`;
-      return NextResponse.redirect(redirectUrl);
-    } else {
-      const successUrl = `${request.nextUrl.origin}/`;
-      return NextResponse.redirect(successUrl);
-    }
+  if (!code) {
+    NextResponse.redirect(errorUrl);
   }
+
+  const supabase = await createClient();
+
+  const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (exchangeError) {
+    return NextResponse.redirect(errorUrl);
+  }
+
+  return NextResponse.redirect(successUrl);
 }

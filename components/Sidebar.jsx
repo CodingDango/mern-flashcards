@@ -5,8 +5,9 @@ import { AiOutlineHome as HomeIcon } from "react-icons/ai";
 import { HiOutlineSquare3Stack3D as StackIcon } from "react-icons/hi2";
 import { PiCards as CardsIcon } from "react-icons/pi";
 import { FiSettings as SettingsIcon } from "react-icons/fi";
+import { FaRegUser as UserIcon } from "react-icons/fa6";
 import { BiLogOut as LogOutIcon } from "react-icons/bi";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import Hamburger from "hamburger-react";
 import SidebarItem from "./SidebarItem";
@@ -14,8 +15,15 @@ import UserDisplay from "./UserDisplay";
 import { useSessionContext } from "@/context/SessionContext";
 import { useModalContext } from "@/context/ModalContext";
 import SignOut from "./SignOut";
+import { createClient } from "@/libs/supabase/browser";
 
-const DesktopSidebar = ({ sidebarLinks, activeRoute, session, handleSignOut }) => (
+const DesktopSidebar = ({
+  sidebarLinks,
+  activeRoute,
+  user,
+  handleSignOut,
+  profile,
+}) => (
   <nav className="top-0 left-0 max-h-screen sticky w-56 bg-black-xl py-8 px-my-sm border-r border-black-md h-full">
     <div className="flex flex-col gap-my-md h-full">
       <div className="flex gap-my-xs items-end">
@@ -41,16 +49,25 @@ const DesktopSidebar = ({ sidebarLinks, activeRoute, session, handleSignOut }) =
         <h2 className="text-black-light px-my-xs pb-my-xs">Others</h2>
         <ul className="flex flex-col w-full">
           <li>
-
-            <SidebarItem text="settings" Icon={SettingsIcon} href="#" />
+            <SidebarItem
+              text="profile"
+              Icon={UserIcon}
+              href="/profile"
+              isActive={"profile" === activeRoute}
+            />
           </li>
           <li>
-            <SidebarItem as="button" text="logout" Icon={LogOutIcon} onClick={handleSignOut}/>
+            <SidebarItem
+              as="button"
+              text="logout"
+              Icon={LogOutIcon}
+              onClick={handleSignOut}
+            />
           </li>
         </ul>
       </section>
 
-      <UserDisplay name={"jane doe"} email={session?.user?.email} />
+      <UserDisplay profile={profile} email={user?.email} />
     </div>
   </nav>
 );
@@ -60,35 +77,12 @@ const MobileSidebar = ({
   activeRoute,
   isSidebarOpen,
   setIsSidebarOpen,
-  session,
-  handleSignOut
+  user,
+  handleSignOut,
+  profile,
 }) => {
   const hamburgerRef = useRef(null);
   const sidebarRef = useRef(null);
-
- useEffect(() => {
-    if (!isSidebarOpen) {
-      return;
-    }
-
-    const closeSidebarHandler = (e) => {
-      if (
-        sidebarRef.current &&
-        hamburgerRef.current &&
-        !hamburgerRef.current.contains(e.target) &&
-        !sidebarRef.current.contains(e.target)
-      ) {
-        setIsSidebarOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", closeSidebarHandler);
-
-    return () => {
-      document.removeEventListener("mousedown", closeSidebarHandler);
-    };
-    
-  }, [isSidebarOpen, setIsSidebarOpen]);
 
   return (
     <div>
@@ -96,11 +90,14 @@ const MobileSidebar = ({
         <MobileHeader {...{ isSidebarOpen, setIsSidebarOpen }} />
 
         {/* Filter */}
-        <div
-          className={`h-screen w-screen fixed inset-0 transition-colors duration-300 ${
-            isSidebarOpen ? "bg-black/60 z-50" : "bg-transparent -z-1"
-          }`}
-        ></div>
+        {isSidebarOpen && (
+          <div
+            onClick={() => setIsSidebarOpen(false)}
+            className={`h-screen w-screen fixed inset-0 transition-colors duration-300 ${
+              isSidebarOpen ? "bg-black/60 z-50" : "bg-transparent -z-1"
+            }`}
+          ></div>
+        )}
 
         {/* Sidepanel */}
         <aside
@@ -137,7 +134,12 @@ const MobileSidebar = ({
                   ))}
                   <div className="h-[1px] bg-black-md my-my-sm"></div>
                   <li>
-                    <SidebarItem text="settings" Icon={SettingsIcon} href="#" />
+                    <SidebarItem
+                      text="profile"
+                      Icon={UserIcon}
+                      href="/profile"
+                      isActive={"profile" === activeRoute}
+                    />
                   </li>
                   <li>
                     <SidebarItem
@@ -150,7 +152,7 @@ const MobileSidebar = ({
                 </ul>
               </section>
 
-              <UserDisplay name={"jane doe"} email={session?.user?.email} />
+              <UserDisplay profile={profile} email={user?.email} />
             </div>
           </div>
         </aside>
@@ -182,10 +184,57 @@ const MobileHeader = ({ isSidebarOpen, setIsSidebarOpen }) => (
   </nav>
 );
 
-const Sidebar = ({ activeRoute = "", isSidebarOpen, setIsSidebarOpen, isLargeScreen }) => {
-  const session = useSessionContext();
+const Sidebar = ({
+  activeRoute = "",
+  isSidebarOpen,
+  setIsSidebarOpen,
+  isLargeScreen,
+}) => {
+  const { user } = useSessionContext();
+  const supabase = createClient();
+
+  const [profile, setProfile] = useState({ is_loading: true });
   const { openModal, closeModal } = useModalContext();
-  const handleSignOut = () => openModal('Sign Out', <SignOut {...{closeModal}}/>);
+  const handleSignOut = () =>
+    openModal(null, <SignOut {...{ closeModal }} />, true);
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const getProfile = async () => {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+
+      if (profile) {
+        setProfile(profile);
+      }
+    };
+
+    getProfile();
+
+    const channel = supabase
+      .channel("realtime profiles")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "profiles",
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          setProfile(payload.new);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, supabase]);
 
   const sidebarLinks = [
     { text: "dashboard", Icon: HomeIcon, href: "/" },
@@ -194,10 +243,20 @@ const Sidebar = ({ activeRoute = "", isSidebarOpen, setIsSidebarOpen, isLargeScr
   ];
 
   return isLargeScreen ? (
-    <DesktopSidebar {...{ handleSignOut, activeRoute, sidebarLinks, session}} />
+    <DesktopSidebar
+      {...{ handleSignOut, activeRoute, sidebarLinks, user, profile }}
+    />
   ) : (
     <MobileSidebar
-      {...{ handleSignOut, activeRoute, sidebarLinks, isSidebarOpen, setIsSidebarOpen, session}}
+      {...{
+        handleSignOut,
+        activeRoute,
+        sidebarLinks,
+        isSidebarOpen,
+        setIsSidebarOpen,
+        user,
+        profile,
+      }}
     />
   );
 };

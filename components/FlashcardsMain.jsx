@@ -64,6 +64,7 @@ export default function FlashcardsMain() {
         onAddCard={handleAddCard}
         decksAsOptions={decksAsOptions}
         allCards={allCards}
+        isLoading={isLoading}
       />
 
       <CardList

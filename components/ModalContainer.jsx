@@ -7,6 +7,7 @@ export default function ModalContainer({
   elements,
   isOpen,
   closeModal,
+  overrideTemplate,
 }) {
   const modalRef = useRef(null);
 
@@ -33,39 +34,53 @@ export default function ModalContainer({
   }, [closeModal]);
 
   if (isOpen)
-    return (  
-      <Modal {...{headerText, closeModal, modalRef, elements}}/>
-  );
+    return (
+      <Modal
+        {...{ headerText, closeModal, modalRef, elements, overrideTemplate }}
+      />
+    );
 }
 
-const Modal = ({headerText, closeModal, modalRef, elements}) => {
+const Modal = ({
+  headerText,
+  closeModal,
+  modalRef,
+  elements,
+  overrideTemplate,
+}) => {
   useLockBodyScroll();
 
   return (
     <>
-      <div className="bg-black/25 backdrop-blur-xs fixed inset-0 w-screen h-screen z-50"></div>
+      <div className="bg-black/25 backdrop-blur-xs fixed inset-0 w-screen h-screen z-75"></div>
       <div
         className="
         fixed inset-0 w-screen 
         h-screen z-100 "
       >
         <div className="flex items-center justify-center w-screen h-screen p-4">
-          <div
-            ref={modalRef}
-            className="overflow-y-auto max-h-[700px]  px-my-sm py-my-md rounded-lg bg-black-xl border border-black-md text-white max-w-xl w-full"
-          >
-            <div className="flex flex-col">
-              <div className="pb-my-sm w-full flex justify-between items-center">
-                <h2 className="text-xl font-medium">{headerText}</h2>
-                <button className="cursor-pointer" onClick={closeModal}>
-                  <IoClose size={36} />
-                </button>
+          <div className="w-full flex justify-center">
+            {!overrideTemplate ? (
+              <div
+                ref={modalRef}
+                className="overflow-y-auto max-h-[700px] px-my-sm py-my-md rounded-xl bg-black-xl border border-black-md text-white max-w-xl w-full"
+              >
+                <div className="flex flex-col">
+                  <div className="pb-my-sm w-full flex justify-between items-center">
+                    <h2 className="text-xl font-medium">{headerText}</h2>
+                    <button className="cursor-pointer" onClick={closeModal}>
+                      <IoClose size={36} />
+                    </button>
+                  </div>
+                  <div className="pt-my-sm">{elements}</div>
+                </div>
               </div>
-              <div className="pt-my-sm">{elements}</div>
-            </div>
+            ) : (
+              <div ref={modalRef}>{elements}</div>
+            )}
           </div>
         </div>
       </div>
     </>
   );
-}
+};

@@ -7,9 +7,7 @@ import { toCamel } from "@/utils/converter";
 export async function createDeck({ title, colorIdx, iconIdx }) {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+mi
 
   if (!user) {
     return { error: "Unauthorized", status: 401 };

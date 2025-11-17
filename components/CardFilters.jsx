@@ -2,9 +2,10 @@ import { RiResetLeftFill } from "react-icons/ri";
 import { FaPlusCircle, FaSearch } from "react-icons/fa";
 import { FaSliders } from "react-icons/fa6";
 import { BsFilter } from "react-icons/bs";
+import { useMemo } from "react";
 import FilterDropdown from "./FilterDropdown";
 import FilterTab from "./FilterTab";
-import { useMemo } from "react";
+import Button from "./Button";
 
 const CardFilters = ({
   allCards = [],
@@ -13,6 +14,7 @@ const CardFilters = ({
   onFilterChange,
   onReset,
   onAddCard = null,
+  isLoading
 }) => {
   return (
     <section>
@@ -85,16 +87,14 @@ const CardFilters = ({
               <button className="button button--white" onClick={onReset}>
                 <RiResetLeftFill size={24} />
               </button>
-
-              <button
+              
+              <Button
                 onClick={onAddCard}
-                className="flex-1 2xs:w-auto button button--white"
-              >
-                <span className="flex gap-my-xs items-center">
-                  <FaPlusCircle />
-                  Add Card
-                </span>
-              </button>
+                classModifiers={'flex-1 2xs:w-auto button--white button--icon'}
+                text={'Add Card'}
+                isLoading={isLoading}
+                icon={<FaPlusCircle />}
+              />
             </div>
           </div>
         </div>
