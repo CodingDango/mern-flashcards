@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [isFormMode, setIsFormMode] = useState(true);
   const supabase = createClient();
 
-  const handleSignUp = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     if (isLoading) return;
@@ -29,7 +29,7 @@ const LoginPage = () => {
       email: email,
       options: {
         emailRedirectTo: `${getSiteUrl()}/auth/callback`,
-        shouldCreateUser: false
+        shouldCreateUser: false,
       },
     });
 
@@ -43,12 +43,27 @@ const LoginPage = () => {
     setIsFormMode(false);
   };
 
+  const handleGoogleLogin = async () => {
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github", // <-- THE ONLY CODE CHANGE!
+      options: {
+        redirectTo: `${getSiteUrl()}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setError(error);
+    }
+  };
+
   return (
     <div className="bg-black p-4 min-h-screen flex justify-center">
       <div className="flex gap-8 flex-col max-w-xs w-full items-center justify-center">
         {isFormMode ? (
           <form
-            onSubmit={handleSignUp}
+            onSubmit={handleLogin}
             className="flex flex-col gap-my-md  w-full text-center"
           >
             <div className="flex flex-col gap-my-md items-center mb-2">
@@ -56,7 +71,11 @@ const LoginPage = () => {
               <h1 className="text-3xl font-medium">Log In To Reactor</h1>
             </div>
 
-            {error && <div className="text-red-400 text-sm bg-red-950/75 p-my-xs rounded-lg">{error}</div>}
+            {error && (
+              <div className="text-red-400 text-sm bg-red-950/75 p-my-xs rounded-lg">
+                {error}
+              </div>
+            )}
 
             <div className="w-full flex gap-my-sm flex-col">
               <input
@@ -69,9 +88,9 @@ const LoginPage = () => {
               />
               <Button
                 isLoading={isLoading}
-                text={'Log In'}
+                text={"Log In"}
                 type="submit"
-                classModifiers={'button--white'}
+                classModifiers={"button--white"}
               />
             </div>
 
@@ -82,25 +101,33 @@ const LoginPage = () => {
             </div>
 
             <div className="flex gap-my-md">
-              <button className="w-full button button--dark flex gap-my-xs">
+              <button
+                onClick={handleGoogleLogin}
+                type="button"
+                className="w-full button button--dark flex gap-my-xs"
+              >
                 <Image
-                  src={"/google.svg"}
-                  height={16}
-                  width={16}
+                  src={"/github.svg"}
+                  height={24}
+                  width={24}
+                  className="invert-100"
                   alt="Icon of google"
                 />
-                Continue With Google
+                Continue With GitHub
               </button>
             </div>
           </form>
         ) : (
           <div className="flex flex-col gap-my-md text-center">
             <h1 className="text-3xl font-medium">Verification</h1>
-            <p className="text-black-light">If you have an account, we have sent a link to {email}.</p>
-            <button 
+            <p className="text-black-light">
+              If you have an account, we have sent a link to {email}.
+            </p>
+            <button
               onClick={() => setIsFormMode(true)}
-              className="text-blue-400 flex gap-my-xs items-center justify-center text-sm cursor-pointer">
-              <ArrowLeft size={14}/>
+              className="text-blue-400 flex gap-my-xs items-center justify-center text-sm cursor-pointer"
+            >
+              <ArrowLeft size={14} />
               Back
             </button>
             <div className="h-[1px] bg-black-md"></div>

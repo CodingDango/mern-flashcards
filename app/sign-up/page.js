@@ -6,6 +6,7 @@ import { FaLongArrowAltRight as ArrowRight } from "react-icons/fa";
 import { FaArrowLeftLong as ArrowLeft } from "react-icons/fa6";
 import { MdOutlineEmail as Email } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
+import { getSiteUrl } from "@/utils/url";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -45,10 +46,19 @@ const SignUpPage = () => {
     setIsSubmitMode(true);
   };
 
-  const handleSignInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
+  const handleSignInGitHub = async () => {
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github", // <-- THE ONLY CODE CHANGE!
+      options: {
+        redirectTo: `${getSiteUrl()}/auth/callback`,
+      },
     });
+
+    if (error) {
+      setError(error);
+    }
   };
 
   let componentToRender = null;
@@ -119,16 +129,18 @@ const SignUpPage = () => {
       <>
         <div className="flex gap-my-md">
           <button
-            onClick={handleSignInWithGoogle}
+            onClick={handleSignInGitHub}
+            type="button"
             className="w-full button button--dark flex gap-my-xs"
           >
             <Image
-              src={"/google.svg"}
-              height={16}
-              width={16}
+              src={"/github.svg"}
+              height={24}
+              width={24}
+              className="invert-100"
               alt="Icon of google"
             />
-            Google
+            Continue With GitHub
           </button>
         </div>
 
