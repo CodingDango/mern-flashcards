@@ -30,7 +30,7 @@ const SignUpPage = () => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        emailRedirectTo: `${getSiteUrl()}/auth/callback`,
         shouldCreateUser: true,
       },
     });

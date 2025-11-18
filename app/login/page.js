@@ -7,6 +7,7 @@ import { FaArrowLeftLong as ArrowLeft } from "react-icons/fa6";
 import { createClient } from "@/libs/supabase/browser";
 import Image from "next/image";
 import Link from "next/link";
+import { getSiteUrl } from "@/utils/url";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const LoginPage = () => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        emailRedirectTo: `${getSiteUrl()}/auth/callback`,
         shouldCreateUser: false
       },
     });
