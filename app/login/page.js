@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { GiReactor as BrandIcon } from "react-icons/gi";
 import { FaArrowLeftLong as ArrowLeft } from "react-icons/fa6";
 import { createClient } from "@/libs/supabase/browser";
@@ -9,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSiteUrl } from "@/utils/url";
 import Button from "@/components/Button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSessionContext } from "@/context/SessionContext";
 
 const LoginPage = () => {
@@ -21,12 +20,12 @@ const LoginPage = () => {
   const router = useRouter();
   const session = useSessionContext();
 
-  useEffect(() => {
-    if (session?.user !== null) {
-      router.push('/');
-    }
+  // useEffect(() => {
+  //   if (session?.user !== null) {
+  //     router.push('/');
+  //   }
     
-  }, [router, supabase, session]);
+  // }, [router, supabase, session]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
