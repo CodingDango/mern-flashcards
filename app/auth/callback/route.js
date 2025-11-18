@@ -2,20 +2,18 @@ import { createClient } from "@/libs/supabase/server";
 import { NextResponse } from "next/server"; // <-- Use NextResponse for API routes
 
 export async function GET(request) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/"; // Optional redirect path
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+  const origin = requestUrl.origin;
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      // Redirect to the intended path or fallback to homepage
-      return NextResponse.redirect(`${origin}${next}`);
+      return NextResponse.redirect(origin);
     }
   }
 
-  // If it fails, i dont know.
-  return NextResponse.redirect(`${origin}/`);
+  return NextResponse.redirect(origin);
 }
