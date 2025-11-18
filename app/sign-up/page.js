@@ -102,7 +102,7 @@ const SignUpPage = () => {
     componentToRender = (
       <>
         <p className="text-black-light">
-          If you don't have an account yet, we have sent a link to {email}.
+          If you don&apos;t have an account yet, we have sent a link to {email}.
         </p>
         <button
           type="button"
