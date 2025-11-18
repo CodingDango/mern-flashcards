@@ -26,6 +26,8 @@ const LoginPage = () => {
     setError(null);
     setIsLoading(true);
 
+    console.log(`site url is ${getSiteUrl()}/auth/callback`);
+
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
