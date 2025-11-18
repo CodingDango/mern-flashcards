@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSiteUrl } from "@/utils/url";
 import Button from "@/components/Button";
+import { redirect } from "next/navigation";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
