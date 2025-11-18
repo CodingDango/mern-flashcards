@@ -62,7 +62,6 @@ const DeckFilters = ({
                 options={[
                   { text: "All", value: "all" },
                   { text: "Unfinished", value: "unfinished" },
-                  { text: "Not Started", value: "notStarted" },
                   { text: "Finished", value: "finished" },
                 ]}
                 icon={FaSliders}

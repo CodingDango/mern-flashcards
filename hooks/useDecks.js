@@ -64,6 +64,16 @@ export function useDecks() {
     [responseData]
   );
 
+  const deckProgressMap = useMemo(() => {
+    return new Map(
+      allDecks.map((deck) => {
+        const cardsOfDeck = allCards.filter((card) => card.deckId === deck.id);
+        const deckProgress = getDeckProgress(cardsOfDeck);
+        return [deck.id, deckProgress];
+      })
+    );
+  }, [allCards, allDecks]);
+
   const filteredDecks = useMemo(() => {
     const { searchQuery, category, sortBy, status } = filters;
 
@@ -75,17 +85,12 @@ export function useDecks() {
       category === "favorites" ? deck.isFavorite : true
     );
 
-    // filtered = filtered.filter((deck) => {
-    //   switch (status) {
-    //     case 'all': return true;
-    //     case 'unfinished': return ()
-    //   }
-    // });
+    filtered = filterByProgress(filtered, deckProgressMap, status);
 
-    const sortedAndFiltered = filterBySort(filtered, sortBy);
+    const sortedAndFiltered = sortByDate(filtered, sortBy);
 
     return sortedAndFiltered;
-  }, [allDecks, filters]);
+  }, [allDecks, filters, deckProgressMap]);
 
   return {
     isLoading,
@@ -94,6 +99,7 @@ export function useDecks() {
     allCards,
     filteredDecks,
     filters,
+    deckProgressMap,
     handleFilterChange,
     resetFilters,
     handleToggleFavorite,
@@ -101,7 +107,21 @@ export function useDecks() {
   };
 }
 
-function filterBySort(decks, sortBy) {
+function filterByProgress(decks, deckProgressMap, filterBy) {
+  console.log(deckProgressMap);
+
+  switch (filterBy) {
+    case "unfinished":
+      return decks.filter((deck) => deckProgressMap.get(deck.id) < 100);
+
+    case "finished":
+      return decks.filter((deck) => deckProgressMap.get(deck.id) === 100);
+  }
+
+  return decks;
+}
+
+export function sortByDate(decks, sortBy) {
   // sortBy can be newestCreated or oldestCreated. which uses the dateCreated property of the card. its uh, its a string, or utc iso string.
   // sortBy can also be newestStudied and oldestStudied. which uses the lastStudied property. its also a utc iso string.
 
@@ -142,4 +162,11 @@ function filterBySort(decks, sortBy) {
   }
 
   return sortedDecks;
+}
+
+export function getDeckProgress(cards) {
+  if (!cards || cards?.length === 0) return 0;
+
+  const corrects = cards.filter((card) => card?.answered).length;
+  return Math.floor((corrects / cards.length) * 100);
 }

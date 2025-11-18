@@ -17,6 +17,7 @@ const DeckPageMain = () => {
     allCards,
     filteredDecks,
     filters,
+    deckProgressMap,
     resetFilters,
     handleFilterChange,
     handleToggleFavorite,
@@ -51,6 +52,7 @@ const DeckPageMain = () => {
         isFetching={isLoading}
         onToggleFavorite={handleToggleFavorite}
         onRemove={handleRemoveDeck}
+        deckProgressMap={deckProgressMap}
       />
     </Main>
   );

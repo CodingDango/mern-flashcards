@@ -7,10 +7,13 @@ import { toCamel } from "@/utils/converter";
 export async function createDeck({ title, colorIdx, iconIdx }) {
   const supabase = await createClient();
 
-mi
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  if (!user) {
-    return { error: "Unauthorized", status: 401 };
+  if (!user || userError ) {
+    throw new Error("Unauthorized to create deck");
   }
 
   if (!title) {
@@ -353,21 +356,23 @@ export async function updateLastReviewedDeck({ itemId }) {
 
   if (userError || !user) {
     throw new Error("Must be signed up to study a deck");
-  } 
+  }
 
-  // how do i let uh, supabase update it for me, the timestampz by the NOW() 
+  // how do i let uh, supabase update it for me, the timestampz by the NOW()
   // or do i have to manually do it?
   const { error: reviewError } = await supabase
     .from("decks")
-    .update({last_reviewed: 'now()'})
-    .eq('user_id', user.id)
-    .eq('id', itemId);
+    .update({ last_reviewed: "now()" })
+    .eq("user_id", user.id)
+    .eq("id", itemId);
 
   console.log(reviewError);
 
   if (reviewError) {
-    throw new Error("Could not update the deck's review time. Please try again.");
-  } 
+    throw new Error(
+      "Could not update the deck's review time. Please try again."
+    );
+  }
 }
 
 export async function getCardsByDeck({ deckId }) {

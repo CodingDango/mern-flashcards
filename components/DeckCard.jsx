@@ -25,11 +25,13 @@ const DeckCard = ({
   onToggleFavorite,
   onRemove,
   cardCount,
-  cards,
   options = true,
   lastReviewed,
+  deckProgress
 }) => {
   if (!title) return;
+
+  debugger
 
   const color = deckThemeColors[colorIdx];
   const Icon = deckIcons[iconIdx];
@@ -46,21 +48,8 @@ const DeckCard = ({
     );
   }
 
-  const deckProgress = useMemo(() => {
-    if (!cards || cards?.length === 0) return;
-
-    const corrects = cards.filter((card) => card?.answered).length;
-    return Math.floor(((corrects / cards.length) * 100));
-  }, [cards]);
-
   return (
     <div className="min-h-[240px] cursor-pointer relative rounded-xl border border-black-md p-my-sm border-t-transparent">
-      <a
-        onClick={(e) => e.stopPropagation()}
-        className="absolute inset-0 rounded-xl"
-        href={`/decks/${id}`}
-      ></a>
-
       <div className="absolute h-[8px] w-full bg-black-lg left-0 top-0 rounded-tr-lg rounded-tl-lg rounded-bl-none">
         <div
           style={{ background: color, width: `${deckProgress}%` }}

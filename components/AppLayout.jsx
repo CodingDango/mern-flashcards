@@ -5,7 +5,6 @@ import { useLockBodyScroll } from "@uidotdev/usehooks";
 
 import Sidebar from "./Sidebar";
 
-
 const AppLayout = ({ children, activeRoute }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(true);

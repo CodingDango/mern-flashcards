@@ -11,6 +11,7 @@ const DeckList = ({
   allDecks,
   allCards,
   filteredDecks,
+  deckProgressMap,
   isFetching,
   onToggleFavorite,
   onRemove,
@@ -25,6 +26,8 @@ const DeckList = ({
     groupBy(allCards, 'deckId')
   ), [allCards]);
 
+  debugger
+
   const decksToDisplay =
     filteredDecks &&
     filteredDecks.map((deck) => (
@@ -33,7 +36,7 @@ const DeckList = ({
         onToggleFavorite={onToggleFavorite}
         onRemove={onRemove}
         cardCount={cardsGroupedByDeck[deck.id]?.length || 0}
-        cards={cardsGroupedByDeck[deck.id]}
+        deckProgress={deckProgressMap.get(deck.id)}
         {...deck}
       />
     ));
@@ -56,7 +59,7 @@ const getStatus = (allDecks, filteredDecks, isFetching) => {
 
   if (isFetching) {
     notification = <ClipLoader color="#ffffff" size={50} />;
-  } else if (!allDecks.length) {
+  } else if (!allDecks?.length) {
     notification = (
       <Notify
         title={"Add a Deck"}
@@ -64,7 +67,7 @@ const getStatus = (allDecks, filteredDecks, isFetching) => {
         Icon={MdAddCard}
       />
     );
-  } else if (!filteredDecks.length) {
+  } else if (!filteredDecks?.length) {
     notification = (
       <Notify
         title={"No Deck Found"}

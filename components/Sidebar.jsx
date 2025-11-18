@@ -103,8 +103,8 @@ const MobileSidebar = ({
         <aside
           ref={sidebarRef}
           className={`${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-64"
-          } fixed left-0 top-0 h-screen bg-black-xl border-r border-black-md w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } fixed left-0 top-0 h-screen bg-black-xl border-r border-black-md w-screen sm:w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
         >
           <div className="px-4 py-5 flex flex-col gap-my-md">
             <div className="flex justify-between items-center w-full">
@@ -190,8 +190,10 @@ const Sidebar = ({
   setIsSidebarOpen,
   isLargeScreen,
 }) => {
-  const { user } = useSessionContext();
+
+  const session = useSessionContext();
   const supabase = createClient();
+  const user = session?.user;
 
   const [profile, setProfile] = useState({ is_loading: true });
   const { openModal, closeModal } = useModalContext();
