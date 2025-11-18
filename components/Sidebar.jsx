@@ -191,52 +191,12 @@ const Sidebar = ({
   isLargeScreen,
 }) => {
 
-  const session = useSessionContext();
-  const supabase = createClient();
+  const { session, profile } = useSessionContext();
   const user = session?.user;
 
-  const [profile, setProfile] = useState({ is_loading: true });
   const { openModal, closeModal } = useModalContext();
   const handleSignOut = () =>
     openModal(null, <SignOut {...{ closeModal }} />, true);
-
-  useEffect(() => {
-    if (!user?.id) return;
-
-    const getProfile = async () => {
-      const { data: profile, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
-
-      if (profile) {
-        setProfile(profile);
-      }
-    };
-
-    getProfile();
-
-    const channel = supabase
-      .channel("realtime profiles")
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "profiles",
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          setProfile(payload.new);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user, supabase]);
 
   const sidebarLinks = [
     { text: "dashboard", Icon: HomeIcon, href: "/" },
