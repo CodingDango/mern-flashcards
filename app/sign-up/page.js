@@ -47,7 +47,7 @@ const SignUpPage = () => {
   };
 
   const handleSignInGitHub = async () => {
-    alert('Spent too much time trying to make this work');
+    alert('Coming soon (Never)');
   };
 
   let componentToRender = null;
