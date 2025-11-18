@@ -9,7 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSiteUrl } from "@/utils/url";
 import Button from "@/components/Button";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
+import { useSessionContext } from "@/context/SessionContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +18,15 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFormMode, setIsFormMode] = useState(true);
   const supabase = createClient();
+  const router = useRouter();
+  const session = useSessionContext();
+
+  useEffect(() => {
+    if (session?.user !== null) {
+      router.push('/');
+    }
+    
+  }, [router, supabase, session]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -47,7 +57,7 @@ const LoginPage = () => {
   };
 
   const handleSignInGitHub = async () => {
-    alert('Coming soon. (Never)');
+    alert("Coming soon. (Never)");
   };
 
   return (
