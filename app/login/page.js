@@ -8,6 +8,7 @@ import { createClient } from "@/libs/supabase/browser";
 import Image from "next/image";
 import Link from "next/link";
 import { getSiteUrl } from "@/utils/url";
+import Button from "@/components/Button";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -66,17 +67,12 @@ const LoginPage = () => {
                 type="email"
                 required
               />
-              {isLoading ? (
-                <button
-                  type="submit"
-                  className="button button--white brightness-85"
-                  disabled
-                >
-                  Logging in...
-                </button>
-              ) : (
-                <button className="button button--white">Log In</button>
-              )}
+              <Button
+                isLoading={isLoading}
+                text={'Log In'}
+                type="submit"
+                classModifiers={'button--white'}
+              />
             </div>
 
             <div className="grid grid-cols-[2fr_1fr_2fr] justify-between items-center">
