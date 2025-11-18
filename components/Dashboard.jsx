@@ -132,7 +132,7 @@ const Dashboard = () => {
           <DeckListMini
             Icon={HeartBeat}
             title={"Recently Studied"}
-            decks={[]}
+            decks={newestReviewedDecks}
             datePrefix={"Reviewed"}
             emptyText={'Go and review some decks...'}
           />

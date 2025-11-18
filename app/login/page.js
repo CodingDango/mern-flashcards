@@ -43,19 +43,8 @@ const LoginPage = () => {
     setIsFormMode(false);
   };
 
-  const handleGoogleLogin = async () => {
-    setError(null);
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github", // <-- THE ONLY CODE CHANGE!
-      options: {
-        redirectTo: `${getSiteUrl()}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      setError(error);
-    }
+  const handleSignInGitHub = async () => {
+    alert('Spent too much time trying to make this work');
   };
 
   return (
@@ -102,7 +91,7 @@ const LoginPage = () => {
 
             <div className="flex gap-my-md">
               <button
-                onClick={handleGoogleLogin}
+                onClick={handleSignInGitHub}
                 type="button"
                 className="w-full button button--dark flex gap-my-xs"
               >
@@ -111,7 +100,7 @@ const LoginPage = () => {
                   height={24}
                   width={24}
                   className="invert-100"
-                  alt="Icon of google"
+                  alt="Icon of github"
                 />
                 Continue With GitHub
               </button>

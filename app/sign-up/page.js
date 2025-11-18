@@ -47,18 +47,7 @@ const SignUpPage = () => {
   };
 
   const handleSignInGitHub = async () => {
-    setError(null);
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github", // <-- THE ONLY CODE CHANGE!
-      options: {
-        redirectTo: `${getSiteUrl()}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      setError(error);
-    }
+    alert('Spent too much time trying to make this work');
   };
 
   let componentToRender = null;
