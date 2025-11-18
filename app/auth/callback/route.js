@@ -1,5 +1,6 @@
 import { createClient } from "@/libs/supabase/server";
 import { NextResponse } from "next/server"; // <-- Use NextResponse for API routes
+import { getSiteUrl } from "@/utils/url";
 
 export async function GET(request) {
   // --- DIAGNOSTIC LOGS ---
