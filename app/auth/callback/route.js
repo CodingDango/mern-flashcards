@@ -16,6 +16,6 @@ export async function GET(request) {
     }
   }
 
-  // Redirect to an error page if code is missing or exchange fails
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  // If it fails, i dont know.
+  return NextResponse.redirect(`${origin}/`);
 }
