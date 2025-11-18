@@ -1,9 +1,15 @@
 export function getSiteUrl() {
-  console.log(process.env);
+  
+  const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV;
 
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+  if (vercelEnv === 'production') {
+    return process.env.NEXT_PUBLIC_SITE_URL; // We will set this in Vercel's dashboard
+  }
+
+  if (vercelEnv === 'preview') {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
 
-  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // 3. Fallback for Local Development
+  return 'http://localhost:3000';
 }
