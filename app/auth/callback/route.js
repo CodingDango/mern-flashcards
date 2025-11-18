@@ -30,4 +30,5 @@ export async function GET(request) {
   }
 
   // If there's an error or no code, redirect to an error page
-  return NextResponse.redirect(`${getSiteUrl()}/auth/auth-code-error`)
+  return NextResponse.redirect(`${getSiteUrl()}/auth/auth-code-error`);
+}
