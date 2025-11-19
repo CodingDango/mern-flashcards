@@ -17,7 +17,7 @@ const InfoPanel = ({ cardsStatuses }) => {
   }, [cardsStatuses]);
 
   return (
-    <div className="grid grid-rows-[auto_1fr] gap-my-md flex-1">
+    <div className="min-h-[360px] justify-self-end w-full xs:max-w-[281px] grid grid-rows-[auto_1fr] gap-my-md flex-1">
       <div className="bg-black-xl p-6 rounded-lg text-lg text-black-light flex items-center gap-my-xs">
         <StackIcon size={20} /> Precalculus
       </div>

@@ -19,6 +19,7 @@ import ReviewCard from "@/components/ReviewCard";
 import InfoPanel from "@/components/InfoPanel";
 import ReviewResults from "@/components/ReviewResults";
 import Notify from "@/components/Notify";
+import Main from "@/components/Main";
 
 const StudyPage = ({ params }) => {
   const unwrappedParams = use(params);
@@ -42,14 +43,11 @@ const StudyPage = ({ params }) => {
         }
 
         return {
-          ...oldData, 
+          ...oldData,
           data: {
-            ...oldData.data, 
-            cards: oldData.data.cards.map(
-              (card) =>
-                card.id === itemId
-                  ? { ...card, answered: true }
-                  : card
+            ...oldData.data,
+            cards: oldData.data.cards.map((card) =>
+              card.id === itemId ? { ...card, answered: true } : card
             ),
           },
         };
@@ -121,10 +119,13 @@ const StudyPage = ({ params }) => {
   return (
     <AppLayout>
       <div className="h-full w-full flex justify-center items-center">
-        <div className="relative max-w-5xl w-full h-full grid grid-rows-[360px] items-start gap-my-md pt-16 pb-8 px-10 mr-50">
+        <Main
+          isLoading={isLoading}
+          className="relative max-w-5xl w-full h-full grid grid-rows-[360px] items-start gap-my-md pt-16 pb-8 px-4 lg:px-10 xl:mr-50"
+        >
           {originalCards.length > 0 && (
             <AnimatePresence mode="wait">
-              {!isReviewDone ? (
+              {!isReviewDone && (
                 <motion.div
                   className="h-full"
                   key={"quiz"}
@@ -133,7 +134,7 @@ const StudyPage = ({ params }) => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="grid grid-cols-[1fr_auto] gap-my-md h-full">
+                  <div className="grid grid-cols-1 grid-rows-[360px_auto] md:grid-cols-[1fr_auto] gap-my-md h-full">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={cardIdx}
@@ -155,7 +156,9 @@ const StudyPage = ({ params }) => {
                     <InfoPanel cardsStatuses={cardsInSession} />
                   </div>
                 </motion.div>
-              ) : (
+              )}
+
+              {isReviewDone && (
                 <motion.div
                   className="h-full"
                   key={"results"}
@@ -206,7 +209,7 @@ const StudyPage = ({ params }) => {
               <ClipLoader color="#ffffff" size={50} />
             </div>
           )}
-        </div>
+        </Main>
       </div>
     </AppLayout>
   );
