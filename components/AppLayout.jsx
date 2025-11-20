@@ -8,7 +8,7 @@ import Sidebar from "./Sidebar";
 const AppLayout = ({ children, activeRoute }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(true);
-  
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth >= 1024); // 64rem = 1024px
@@ -30,7 +30,7 @@ const AppLayout = ({ children, activeRoute }) => {
     <div
       className="
       w-full overflow-x-hidden
-      bg-black min-h-screen grid grid-cols-1
+      bg-black min-h-[100dvh] grid grid-cols-1
       grid-rows-[auto_1fr] lg:grid-rows-1 lg:grid-cols-[auto_1fr] 
     "
     >

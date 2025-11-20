@@ -52,13 +52,13 @@ const Modal = ({
 
   return (
     <>
-      <div className="bg-black/25 backdrop-blur-xs fixed inset-0 w-screen h-screen z-75"></div>
+      <div className="bg-black/25 backdrop-blur-xs fixed inset-0 w-screen h-[100dvh] z-75"></div>
       <div
         className="
         fixed inset-0 w-screen 
-        h-screen z-100 "
+        h-[100dvh] z-100 "
       >
-        <div className="flex items-center justify-center w-screen h-screen p-4">
+        <div className="flex items-center justify-center w-screen h-[100dvh] p-4">
           <div className="w-full flex justify-center">
             {!overrideTemplate ? (
               <div

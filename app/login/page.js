@@ -24,7 +24,7 @@ const LoginPage = () => {
   //   if (session?.user !== null) {
   //     router.push('/');
   //   }
-    
+
   // }, [router, supabase, session]);
 
   const handleLogin = async (event) => {
@@ -60,7 +60,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg-black p-4 min-h-screen flex justify-center">
+    <div className="bg-black p-4 min-h-[100dvh] flex justify-center">
       <div className="flex gap-8 flex-col max-w-xs w-full items-center justify-center">
         {isFormMode ? (
           <form

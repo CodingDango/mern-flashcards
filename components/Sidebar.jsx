@@ -24,7 +24,7 @@ const DesktopSidebar = ({
   handleSignOut,
   profile,
 }) => (
-  <nav className="top-0 left-0 max-h-screen sticky w-56 bg-black-xl py-8 px-my-sm border-r border-black-md h-full">
+  <nav className="top-0 left-0 max-h-[100dvh] sticky w-56 bg-black-xl py-8 px-my-sm border-r border-black-md h-full">
     <div className="flex flex-col gap-my-md h-full">
       <div className="flex gap-my-xs items-end">
         <BrandIcon size={32} className="text-my-primary" />
@@ -93,7 +93,7 @@ const MobileSidebar = ({
         {isSidebarOpen && (
           <div
             onClick={() => setIsSidebarOpen(false)}
-            className={`h-screen w-screen fixed inset-0 transition-colors duration-300 ${
+            className={`h-[100dvh] w-screen fixed inset-0 transition-colors duration-300 ${
               isSidebarOpen ? "bg-black/60 z-50" : "bg-transparent -z-1"
             }`}
           ></div>
@@ -104,7 +104,7 @@ const MobileSidebar = ({
           ref={sidebarRef}
           className={`${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } fixed left-0 top-0 h-screen bg-black-xl border-r border-black-md w-screen sm:w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
+          } fixed left-0 top-0 h-[100dvh] bg-black-xl border-r border-black-md w-screen sm:w-64 rounded-tr-2xl rounded-bl-2xl transition-transform duration-300 z-50`}
         >
           <div className="px-4 py-5 flex flex-col gap-my-md">
             <div className="flex justify-between items-center w-full">
@@ -190,7 +190,6 @@ const Sidebar = ({
   setIsSidebarOpen,
   isLargeScreen,
 }) => {
-
   const { session, profile } = useSessionContext();
   const user = session?.user;
 

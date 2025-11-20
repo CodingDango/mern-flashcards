@@ -47,7 +47,7 @@ const SignUpPage = () => {
   };
 
   const handleSignInGitHub = async () => {
-    alert('Coming soon (Never)');
+    alert("Coming soon (Never)");
   };
 
   let componentToRender = null;
@@ -145,7 +145,7 @@ const SignUpPage = () => {
   }
 
   return (
-    <div className="bg-black p-4 min-h-screen flex justify-center items-center flex-col gap-10">
+    <div className="bg-black p-4 min-h-[100dvh] flex justify-center items-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-full max-w-lg text-center bg-black-xl py-my-lg px-my-md sm:p-my-lg rounded-xl border border-black-md">
         {!isEmailMode ? (
           <h1 className="text-3xl font-medium">
