@@ -11,8 +11,9 @@ import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/libs/supabase/browser";
 
 const AccountPage = () => {
-  const { user } = useSessionContext();
+  const { session, profile: userProfile } = useSessionContext();
   const supabase = createClient();
+  const user = session?.user;
 
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
@@ -61,29 +62,18 @@ const AccountPage = () => {
   }, [previewUrl]);
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!userProfile) return;
 
-    const getProfile = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", user?.id)
-        .single();
-
-      if (data && data.display_name) {
-        setProfile(data);
-      }
-
-      setIsLoading(false);
-    };
-
-    getProfile();
-  }, [supabase, user]);
+    setIsLoading(false);
+    setProfile(userProfile);
+  }, [supabase, userProfile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError(null);
+
+    debugger
 
     if (!profileImage || !user) {
       setError("Please select a file first.");
@@ -143,7 +133,7 @@ const AccountPage = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-11">
           <div className="flex gap-10">
             <div className="flex flex-col gap-my-md items-center bg-black rounded-xl p-my-sm border border-black-md">
-              {!profile.profile_url && !previewUrl ? (
+              {!profile?.profile_url && !previewUrl ? (
                 <PlaceholderAvatar size={110} />
               ) : (
                 <Image
@@ -191,7 +181,6 @@ const AccountPage = () => {
 
           <div>
             <Button
-              onClick={() => console.log("please fucking help me")}
               isLoading={isUpdatingProfile}
               type="submit"
               text={"Update profile"}

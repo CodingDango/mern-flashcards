@@ -31,8 +31,6 @@ const DeckCard = ({
 }) => {
   if (!title) return;
 
-  debugger
-
   const color = deckThemeColors[colorIdx];
   const Icon = deckIcons[iconIdx];
 

@@ -30,8 +30,7 @@ export function useEditMutation(
         if (dataKey === "cards") {
           newDataPayload = { cards: updatedItems, decks: oldData.data.decks };
         } else {
-          // Assuming 'decks'
-          newDataPayload = { decks: updatedItems };
+          newDataPayload = { decks: updatedItems, cards: oldData.data.cards };
         }
 
         return {
