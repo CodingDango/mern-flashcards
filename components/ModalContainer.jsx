@@ -63,7 +63,7 @@ const Modal = ({
             {!overrideTemplate ? (
               <div
                 ref={modalRef}
-                className="overflow-y-auto max-h-[700px] px-my-sm py-my-md rounded-xl bg-black-xl border border-black-md text-white max-w-xl w-full"
+                className="overflow-y-auto max-h-[500px] px-my-sm py-my-md rounded-xl bg-black-xl border border-black-md text-white max-w-xl w-full"
               >
                 <div className="flex flex-col">
                   <div className="pb-my-sm w-full flex justify-between items-center">
